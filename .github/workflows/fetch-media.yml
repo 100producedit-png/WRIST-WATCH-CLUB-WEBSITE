@@ -7,6 +7,9 @@ name: Fetch generated media
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'media.request'
 
 permissions:
   contents: write
