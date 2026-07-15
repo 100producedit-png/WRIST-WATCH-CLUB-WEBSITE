@@ -1,0 +1,40 @@
+{{ 'corum.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'corum.js' | asset_url }}" defer></script>
+
+<section class="m-section m-edit">
+  <div class="m-edit__grid{% if section.settings.flip %} m-edit__grid--flip{% endif %}">
+    <div class="m-edit__media" data-reveal-media>
+      {%- if section.settings.image -%}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 100vw, 50vw' }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+    <div class="m-edit__body">
+      {%- if section.settings.overline != blank -%}
+        <p class="m-overline" data-reveal>{{ section.settings.overline | escape }}</p>
+      {%- endif -%}
+      <h2 class="m-display m-edit__title" data-reveal data-reveal-delay="100">{{ section.settings.title }}</h2>
+      <div class="m-lede" data-reveal data-reveal-delay="200">{{ section.settings.body }}</div>
+      {%- if section.settings.cta_label != blank -%}
+        <a class="m-link" data-reveal data-reveal-delay="300" href="{{ section.settings.cta_link | default: routes.root_url }}">{{ section.settings.cta_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Maison — Editorial",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "checkbox", "id": "flip", "label": "Image on the right", "default": false },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "THE MAISON" },
+    { "type": "textarea", "id": "title", "label": "Title", "default": "Crafted in <em>darkness</em>, finished in light" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Every calibre is assembled by a single watchmaker, from first wheel to final regulation. No lines, no shortcuts — only the slow accumulation of perfect gestures.</p>" },
+    { "type": "text", "id": "cta_label", "label": "Link label", "default": "Our craft" },
+    { "type": "url", "id": "cta_link", "label": "Link" }
+  ],
+  "presets": [{ "name": "Maison — Editorial" }]
+}
+{% endschema %}

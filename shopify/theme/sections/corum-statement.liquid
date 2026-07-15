@@ -1,0 +1,20 @@
+{{ 'corum.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'corum.js' | asset_url }}" defer></script>
+
+<section class="m-section m-statement">
+  {%- if section.settings.overline != blank -%}
+    <p class="m-overline" data-reveal>{{ section.settings.overline | escape }}</p>
+  {%- endif -%}
+  <h2 class="m-display m-statement__text" data-reveal data-reveal-delay="120">{{ section.settings.text }}</h2>
+</section>
+
+{% schema %}
+{
+  "name": "Maison — Statement",
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "SINCE 2026" },
+    { "type": "textarea", "id": "text", "label": "Statement", "default": "A watch is the only machine you wear <em>against your pulse</em>." }
+  ],
+  "presets": [{ "name": "Maison — Statement" }]
+}
+{% endschema %}

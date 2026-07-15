@@ -1,0 +1,84 @@
+{{ 'corum.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'corum.js' | asset_url }}" defer></script>
+
+{%- assign product = section.settings.product -%}
+
+<section class="m-section m-spot">
+  <div class="m-spot__grid">
+    <div class="m-spot__media" data-reveal-media>
+      {%- if product != blank and product.featured_image -%}
+        {{ product.featured_image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 100vw, 55vw' }}
+      {%- elsif section.settings.image -%}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 100vw, 55vw' }}
+      {%- else -%}
+        {{ 'product-2' | placeholder_svg_tag }}
+      {%- endif -%}
+    </div>
+
+    <div>
+      {%- if section.settings.overline != blank -%}
+        <p class="m-overline" data-reveal>{{ section.settings.overline | escape }}</p>
+      {%- endif -%}
+      <h2 class="m-display m-spot__title" data-reveal data-reveal-delay="100">
+        {%- if section.settings.title != blank -%}{{ section.settings.title }}{%- elsif product != blank -%}{{ product.title | escape }}{%- else -%}Featured timepiece{%- endif -%}
+      </h2>
+      {%- if section.settings.body != blank -%}
+        <div class="m-lede" data-reveal data-reveal-delay="180">{{ section.settings.body }}</div>
+      {%- endif -%}
+
+      {%- if product != blank -%}
+        <p class="m-spot__price" data-reveal data-reveal-delay="240">{{ product.price | money }}</p>
+        {%- if section.settings.note != blank -%}
+          <p class="m-spot__note" data-reveal data-reveal-delay="260">{{ section.settings.note | escape }}</p>
+        {%- endif -%}
+        <div class="m-spot__actions" data-reveal data-reveal-delay="320">
+          <a class="m-btn" href="{{ product.url }}">{{ section.settings.cta_label | default: 'Discover' | escape }}</a>
+          {%- unless product.available -%}
+            <span class="m-spot__note" style="align-self:center;">Currently unavailable</span>
+          {%- endunless -%}
+        </div>
+      {%- endif -%}
+
+      {%- assign has_specs = false -%}
+      {%- if section.settings.spec1_value != blank or section.settings.spec2_value != blank or section.settings.spec3_value != blank -%}
+        {%- assign has_specs = true -%}
+      {%- endif -%}
+      {%- if has_specs -%}
+        <div class="m-spot__specs" data-reveal data-reveal-delay="380">
+          {%- if section.settings.spec1_value != blank -%}
+            <div class="m-spot__spec"><b>{{ section.settings.spec1_value | escape }}</b><span>{{ section.settings.spec1_label | escape }}</span></div>
+          {%- endif -%}
+          {%- if section.settings.spec2_value != blank -%}
+            <div class="m-spot__spec"><b>{{ section.settings.spec2_value | escape }}</b><span>{{ section.settings.spec2_label | escape }}</span></div>
+          {%- endif -%}
+          {%- if section.settings.spec3_value != blank -%}
+            <div class="m-spot__spec"><b>{{ section.settings.spec3_value | escape }}</b><span>{{ section.settings.spec3_label | escape }}</span></div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Maison — Spotlight",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "image_picker", "id": "image", "label": "Image override" },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "THE SIGNATURE PIECE" },
+    { "type": "textarea", "id": "title", "label": "Title override (defaults to product title)" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>The house signature: a tourbillon that hides its light until the dial turns past midnight.</p>" },
+    { "type": "text", "id": "note", "label": "Note under price", "default": "LIMITED EDITION" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Discover" },
+    { "type": "header", "content": "Specifications" },
+    { "type": "text", "id": "spec1_value", "label": "Spec 1 value", "default": "42 mm" },
+    { "type": "text", "id": "spec1_label", "label": "Spec 1 label", "default": "Case" },
+    { "type": "text", "id": "spec2_value", "label": "Spec 2 value", "default": "72 h" },
+    { "type": "text", "id": "spec2_label", "label": "Spec 2 label", "default": "Power reserve" },
+    { "type": "text", "id": "spec3_value", "label": "Spec 3 value", "default": "217" },
+    { "type": "text", "id": "spec3_label", "label": "Spec 3 label", "default": "Components" }
+  ],
+  "presets": [{ "name": "Maison — Spotlight" }]
+}
+{% endschema %}

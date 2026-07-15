@@ -1,0 +1,76 @@
+{{ 'corum.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'corum.js' | asset_url }}" defer></script>
+
+<section class="m-section m-panels">
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign col = block.settings.collection
+      assign panel_name = block.settings.title
+      if panel_name == blank and col != blank
+        assign panel_name = col.title
+      endif
+      assign panel_url = block.settings.link
+      if panel_url == blank and col != blank
+        assign panel_url = col.url
+      endif
+      assign panel_image = block.settings.image
+      if panel_image == blank and col != blank
+        assign panel_image = col.featured_image
+      endif
+    -%}
+    <article class="m-panel" {{ block.shopify_attributes }}>
+      <div class="m-panel__media" data-parallax>
+        {%- if panel_image -%}
+          {{ panel_image | image_url: width: 2600 | image_tag: loading: 'lazy', sizes: '100vw' }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag }}
+        {%- endif -%}
+      </div>
+      <div class="m-panel__body">
+        <p class="m-panel__index" data-reveal>{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ forloop.length | prepend: '0' | slice: -2, 2 }}</p>
+        <h2 class="m-display m-panel__name" data-reveal data-reveal-delay="100">{{ panel_name | default: 'Collection' | escape }}</h2>
+        {%- if block.settings.tagline != blank -%}
+          <p class="m-panel__tagline" data-reveal data-reveal-delay="200">{{ block.settings.tagline | escape }}</p>
+        {%- endif -%}
+        <a class="m-link" data-reveal data-reveal-delay="300" href="{{ panel_url | default: routes.all_products_collection_url }}">{{ block.settings.cta_label | default: 'Discover' | escape }}</a>
+      </div>
+    </article>
+  {%- endfor -%}
+
+  {%- if section.blocks.size == 0 -%}
+    <article class="m-panel">
+      <div class="m-panel__media">{{ 'lifestyle-2' | placeholder_svg_tag }}</div>
+      <div class="m-panel__body">
+        <h2 class="m-display m-panel__name">Add collection blocks</h2>
+        <p class="m-panel__tagline">Each block becomes a full-screen collection panel.</p>
+      </div>
+    </article>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Maison — Collection panels",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Collection panel",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image (falls back to collection image)" },
+        { "type": "text", "id": "title", "label": "Title override" },
+        { "type": "text", "id": "tagline", "label": "Tagline", "default": "An icon of the maison, reinterpreted for the modern wrist." },
+        { "type": "text", "id": "cta_label", "label": "Link label", "default": "Discover" },
+        { "type": "url", "id": "link", "label": "Link override" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Maison — Collection panels",
+      "blocks": [{ "type": "panel" }, { "type": "panel" }, { "type": "panel" }]
+    }
+  ]
+}
+{% endschema %}

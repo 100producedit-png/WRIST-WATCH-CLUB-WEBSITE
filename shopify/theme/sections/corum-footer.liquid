@@ -1,0 +1,78 @@
+{{ 'corum.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'corum.js' | asset_url }}" defer></script>
+
+<footer class="m-section m-foot">
+  <div class="m-foot__inner">
+    <div class="m-foot__top">
+      <div data-reveal>
+        {%- if section.settings.overline != blank -%}
+          <p class="m-overline">{{ section.settings.overline | escape }}</p>
+        {%- endif -%}
+        <h2 class="m-display m-foot__title">{{ section.settings.title }}</h2>
+        <p class="m-lede">{{ section.settings.subtitle | escape }}</p>
+        {%- form 'customer', class: 'm-foot__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter" />
+          <input class="m-foot__input" type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | default: 'Your email address' | escape }}" required aria-label="Email" />
+          <button class="m-btn" type="submit">{{ section.settings.button_label | default: 'Join' | escape }}</button>
+          {%- if form.posted_successfully? -%}
+            <p class="m-lede" style="margin-left:1rem;align-self:center;">Welcome to the club.</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+
+      <div class="m-foot__cols" data-reveal data-reveal-delay="150">
+        {%- for block in section.blocks -%}
+          <div class="m-foot__col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.heading | escape }}</h4>
+            {%- if block.settings.menu != blank -%}
+              {%- for link in block.settings.menu.links -%}
+                <a href="{{ link.url }}">{{ link.title | escape }}</a>
+              {%- endfor -%}
+            {%- else -%}
+              <a href="{{ routes.all_products_collection_url }}">All timepieces</a>
+              <a href="/collections">Collections</a>
+              <a href="{{ routes.cart_url }}">Cart</a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <p class="m-foot__wordmark" aria-hidden="true">{{ section.settings.wordmark | default: shop.name | escape }}</p>
+
+    <div class="m-foot__bottom">
+      <span class="m-foot__legal">© {{ 'now' | date: '%Y' }} {{ shop.name }} — {{ section.settings.legal | escape }}</span>
+      <span class="m-foot__legal">{{ section.settings.tagline | escape }}</span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Maison — Footer",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "PRIVATE CIRCLE" },
+    { "type": "textarea", "id": "title", "label": "Title", "default": "Join the <em>waitlist</em>" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "First allocations, private viewings and atelier news. Rarely, and only when it matters." },
+    { "type": "text", "id": "placeholder", "label": "Input placeholder", "default": "Your email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Join" },
+    { "type": "text", "id": "wordmark", "label": "Large wordmark (defaults to shop name)" },
+    { "type": "text", "id": "legal", "label": "Legal note", "default": "All rights reserved" },
+    { "type": "text", "id": "tagline", "label": "Bottom tagline", "default": "Maison d'horlogerie — Genève" }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Explore" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Maison — Footer", "blocks": [{ "type": "links" }, { "type": "links", "settings": { "heading": "The Maison" } }] }
+  ]
+}
+{% endschema %}

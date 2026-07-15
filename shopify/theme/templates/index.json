@@ -1,11 +1,27 @@
 {
   "sections": {
-    "hero": { "type": "eclipse-hero" },
-    "story": { "type": "eclipse-story" },
-    "macro": { "type": "eclipse-macro" },
-    "engineering": { "type": "eclipse-engineering" },
-    "edition": { "type": "eclipse-edition" },
-    "waitlist": { "type": "eclipse-waitlist" }
+    "hero": { "type": "corum-hero" },
+    "novelties": { "type": "corum-novelties" },
+    "panels": {
+      "type": "corum-collections",
+      "blocks": {
+        "panel-1": { "type": "panel", "settings": { "tagline": "The house icon. A dial that keeps its secrets until the light moves." } },
+        "panel-2": { "type": "panel", "settings": { "tagline": "Skeletonised architecture suspended between two sapphire skies." } },
+        "panel-3": { "type": "panel", "settings": { "tagline": "Instruments for the open water, finished like jewellery." } }
+      },
+      "block_order": ["panel-1", "panel-2", "panel-3"]
+    },
+    "statement": { "type": "corum-statement" },
+    "editorial": { "type": "corum-editorial" },
+    "spotlight": { "type": "corum-spotlight" },
+    "footer": {
+      "type": "corum-footer",
+      "blocks": {
+        "links-1": { "type": "links", "settings": { "heading": "Explore" } },
+        "links-2": { "type": "links", "settings": { "heading": "The Maison" } }
+      },
+      "block_order": ["links-1", "links-2"]
+    }
   },
-  "order": ["hero", "story", "macro", "engineering", "edition", "waitlist"]
+  "order": ["hero", "novelties", "panels", "statement", "editorial", "spotlight", "footer"]
 }

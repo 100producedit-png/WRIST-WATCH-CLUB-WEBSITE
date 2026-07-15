@@ -1,0 +1,74 @@
+{{ 'corum.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'corum.js' | asset_url }}" defer></script>
+
+{%- if section.settings.show_chrome -%}
+<header class="m-chrome">
+  <nav class="m-chrome__group m-chrome__group--left">
+    <a class="m-chrome__link" href="{{ section.settings.nav_link_1 | default: routes.all_products_collection_url }}">{{ section.settings.nav_label_1 | escape }}</a>
+    <a class="m-chrome__link" href="{{ section.settings.nav_link_2 | default: '/collections' }}">{{ section.settings.nav_label_2 | escape }}</a>
+  </nav>
+  <a class="m-chrome__brand" href="{{ routes.root_url }}">{{ section.settings.brand | default: shop.name | escape }}</a>
+  <div class="m-chrome__group m-chrome__group--right">
+    <a class="m-chrome__link" href="{{ routes.search_url }}">Search</a>
+    <a class="m-chrome__link" href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+  </div>
+</header>
+{%- endif -%}
+
+<section class="m-section m-hero">
+  <div class="m-hero__media" aria-hidden="true">
+    {%- if section.settings.video_url != blank -%}
+      <video autoplay muted loop playsinline poster="{% if section.settings.image %}{{ section.settings.image | image_url: width: 2400 }}{% endif %}">
+        <source src="{{ section.settings.video_url }}" type="video/mp4" />
+      </video>
+    {%- elsif section.settings.image -%}
+      {{ section.settings.image | image_url: width: 2800 | image_tag: loading: 'eager', sizes: '100vw' }}
+    {%- else -%}
+      <img src="https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/orbit/frame_0001.jpg" alt="" loading="eager" />
+    {%- endif -%}
+  </div>
+
+  <div class="m-hero__body">
+    {%- if section.settings.overline != blank -%}
+      <p class="m-overline" data-reveal>{{ section.settings.overline | escape }}</p>
+    {%- endif -%}
+    <h1 class="m-display m-hero__title" data-reveal data-reveal-delay="120">{{ section.settings.title }}</h1>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="m-lede m-hero__sub" data-reveal data-reveal-delay="240">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+    <div class="m-hero__actions" data-reveal data-reveal-delay="360">
+      {%- if section.settings.cta_label != blank -%}
+        <a class="m-btn" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_label != blank -%}
+        <a class="m-btn m-btn--ghost" href="{{ section.settings.cta2_link | default: '/collections' }}">{{ section.settings.cta2_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="m-hero__cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+</section>
+
+{% schema %}
+{
+  "name": "Maison — Hero",
+  "settings": [
+    { "type": "checkbox", "id": "show_chrome", "label": "Show overlay navigation", "default": true },
+    { "type": "text", "id": "brand", "label": "Brand name (defaults to shop name)" },
+    { "type": "text", "id": "nav_label_1", "label": "Nav link 1 label", "default": "Timepieces" },
+    { "type": "url", "id": "nav_link_1", "label": "Nav link 1" },
+    { "type": "text", "id": "nav_label_2", "label": "Nav link 2 label", "default": "Collections" },
+    { "type": "url", "id": "nav_link_2", "label": "Nav link 2" },
+    { "type": "image_picker", "id": "image", "label": "Hero image" },
+    { "type": "text", "id": "video_url", "label": "Background video URL (.mp4, optional)", "info": "Overrides the image. Keep it short and muted." },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "MAISON D'HORLOGERIE — GENÈVE" },
+    { "type": "textarea", "id": "title", "label": "Title", "default": "Time, <em>reimagined</em>" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Independent haute horlogerie for those who collect moments, not minutes." },
+    { "type": "text", "id": "cta_label", "label": "Primary button label", "default": "Discover the timepieces" },
+    { "type": "url", "id": "cta_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary button label", "default": "The collections" },
+    { "type": "url", "id": "cta2_link", "label": "Secondary button link" }
+  ],
+  "presets": [{ "name": "Maison — Hero" }]
+}
+{% endschema %}
