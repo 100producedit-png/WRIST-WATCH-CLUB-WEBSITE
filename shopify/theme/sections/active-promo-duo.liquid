@@ -1,0 +1,56 @@
+{{ 'active.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'active.js' | asset_url }}" defer></script>
+
+<section class="a-section a-duo">
+  <div class="a-wrap">
+    <div class="a-duo__grid">
+      {%- for block in section.blocks -%}
+        <a class="a-promo" href="{{ block.settings.link | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image -%}
+            {{ block.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 100vw, 50vw' }}
+          {%- endif -%}
+          <div class="a-promo__body">
+            {%- if block.settings.kicker != blank -%}
+              <p class="a-kicker" style="color:rgba(255,255,255,0.7);">{{ block.settings.kicker | escape }}</p>
+            {%- endif -%}
+            <h3 class="a-h a-promo__title">{{ block.settings.title | escape }}</h3>
+            {%- if block.settings.subtitle != blank -%}
+              <p class="a-promo__sub">{{ block.settings.subtitle | escape }}</p>
+            {%- endif -%}
+            <span class="a-btn a-btn--invert">{{ block.settings.cta_label | default: 'Shop now' | escape }}</span>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Active — Promo duo",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "promo",
+      "name": "Promo",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "kicker", "label": "Kicker" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The dive collection" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "100M water resistance, built to be used." },
+        { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop now" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Active — Promo duo",
+      "blocks": [
+        { "type": "promo" },
+        { "type": "promo", "settings": { "title": "Automatic icons", "subtitle": "Mechanical movements you can see breathe." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

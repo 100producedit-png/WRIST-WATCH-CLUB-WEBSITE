@@ -1,27 +1,63 @@
 {
   "sections": {
-    "hero": { "type": "corum-hero" },
-    "novelties": { "type": "corum-novelties" },
-    "panels": {
-      "type": "corum-collections",
+    "announcement": {
+      "type": "active-announcement",
       "blocks": {
-        "panel-1": { "type": "panel", "settings": { "tagline": "The house icon. A dial that keeps its secrets until the light moves." } },
-        "panel-2": { "type": "panel", "settings": { "tagline": "Skeletonised architecture suspended between two sapphire skies." } },
-        "panel-3": { "type": "panel", "settings": { "tagline": "Instruments for the open water, finished like jewellery." } }
+        "msg-1": { "type": "message", "settings": { "text": "Free shipping on orders over $50" } },
+        "msg-2": { "type": "message", "settings": { "text": "New arrivals just dropped — shop the latest" } },
+        "msg-3": { "type": "message", "settings": { "text": "2-year warranty on every watch" } }
       },
-      "block_order": ["panel-1", "panel-2", "panel-3"]
+      "block_order": ["msg-1", "msg-2", "msg-3"]
     },
-    "statement": { "type": "corum-statement" },
-    "editorial": { "type": "corum-editorial" },
-    "spotlight": { "type": "corum-spotlight" },
-    "footer": {
-      "type": "corum-footer",
+    "header": { "type": "active-header" },
+    "hero": { "type": "active-hero" },
+    "categories": {
+      "type": "active-categories",
       "blocks": {
-        "links-1": { "type": "links", "settings": { "heading": "Explore" } },
-        "links-2": { "type": "links", "settings": { "heading": "The Maison" } }
+        "tile-1": { "type": "tile", "settings": { "collection": "mens-watches", "label": "Men's" } },
+        "tile-2": { "type": "tile", "settings": { "collection": "womens-watches", "label": "Women's" } },
+        "tile-3": { "type": "tile", "settings": { "collection": "automatic-watches", "label": "Automatic" } },
+        "tile-4": { "type": "tile", "settings": { "collection": "new-arrivals", "label": "New arrivals" } }
       },
-      "block_order": ["links-1", "links-2"]
+      "block_order": ["tile-1", "tile-2", "tile-3", "tile-4"]
+    },
+    "bestsellers": {
+      "type": "active-shelf",
+      "settings": { "collection": "frontpage", "kicker": "MOST WANTED", "title": "Best sellers", "cta_label": "Shop all" }
+    },
+    "promos": {
+      "type": "active-promo-duo",
+      "blocks": {
+        "promo-1": { "type": "promo", "settings": { "kicker": "DEPTH RATED", "title": "The dive collection", "subtitle": "100M water resistance, built to be used." } },
+        "promo-2": { "type": "promo", "settings": { "kicker": "SELF-WINDING", "title": "Automatic icons", "subtitle": "Mechanical movements you can see breathe.", "link": "/collections/automatic-watches" } }
+      },
+      "block_order": ["promo-1", "promo-2"]
+    },
+    "newarrivals": {
+      "type": "active-shelf",
+      "settings": { "collection": "new-arrivals", "kicker": "JUST LANDED", "title": "New arrivals", "cta_label": "View all", "max_products": 8 }
+    },
+    "story": { "type": "active-story" },
+    "values": {
+      "type": "active-values",
+      "blocks": {
+        "v-1": { "type": "value", "settings": { "icon": "🚚", "title": "Free shipping", "text": "On all orders over $50." } },
+        "v-2": { "type": "value", "settings": { "icon": "↩️", "title": "30-day returns", "text": "Changed your mind? No problem." } },
+        "v-3": { "type": "value", "settings": { "icon": "🛡️", "title": "2-year warranty", "text": "Every watch, covered." } },
+        "v-4": { "type": "value", "settings": { "icon": "💬", "title": "Real support", "text": "Humans, 7 days a week." } }
+      },
+      "block_order": ["v-1", "v-2", "v-3", "v-4"]
+    },
+    "newsletter": { "type": "active-newsletter" },
+    "footer": {
+      "type": "active-footer",
+      "blocks": {
+        "col-1": { "type": "links", "settings": { "heading": "Shop" } },
+        "col-2": { "type": "links", "settings": { "heading": "Support" } },
+        "col-3": { "type": "links", "settings": { "heading": "Company" } }
+      },
+      "block_order": ["col-1", "col-2", "col-3"]
     }
   },
-  "order": ["hero", "novelties", "panels", "statement", "editorial", "spotlight", "footer"]
+  "order": ["announcement", "header", "hero", "categories", "bestsellers", "promos", "newarrivals", "story", "values", "newsletter", "footer"]
 }

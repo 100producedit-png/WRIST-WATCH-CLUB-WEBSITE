@@ -1,0 +1,40 @@
+{{ 'active.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'active.js' | asset_url }}" defer></script>
+
+<section class="a-section a-story">
+  {%- if section.settings.image -%}
+    <div class="a-story__media" aria-hidden="true">
+      {{ section.settings.image | image_url: width: 2800 | image_tag: loading: 'lazy', sizes: '100vw' }}
+    </div>
+  {%- else -%}
+    <div class="a-hero__fallback" aria-hidden="true" data-word="{{ section.settings.watermark | default: 'CREW' | escape }}"></div>
+  {%- endif -%}
+  <div class="a-story__body">
+    {%- if section.settings.kicker != blank -%}
+      <p class="a-kicker" style="color:rgba(255,255,255,0.72);">{{ section.settings.kicker | escape }}</p>
+    {%- endif -%}
+    <h2 class="a-h a-story__title">{{ section.settings.title | escape }}</h2>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="a-sub a-story__sub">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+    {%- if section.settings.cta_label != blank -%}
+      <a class="a-btn a-btn--invert" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Active — Story banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "watermark", "label": "Fallback watermark word" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "THE CLUB" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Worn by people who do things" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Surfers, skaters, musicians and makers. One club, every wrist." },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Our story" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Active — Story banner" }]
+}
+{% endschema %}

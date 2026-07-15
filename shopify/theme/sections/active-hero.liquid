@@ -1,0 +1,56 @@
+{{ 'active.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'active.js' | asset_url }}" defer></script>
+
+<section class="a-section a-hero{% if section.settings.short %} a-hero--short{% endif %}">
+  {%- if section.settings.video_url != blank -%}
+    <div class="a-hero__media" aria-hidden="true">
+      <video autoplay muted loop playsinline poster="{% if section.settings.image %}{{ section.settings.image | image_url: width: 2400 }}{% endif %}">
+        <source src="{{ section.settings.video_url }}" type="video/mp4" />
+      </video>
+    </div>
+  {%- elsif section.settings.image -%}
+    <div class="a-hero__media" aria-hidden="true">
+      {{ section.settings.image | image_url: width: 2800 | image_tag: loading: 'eager', sizes: '100vw' }}
+    </div>
+  {%- else -%}
+    <div class="a-hero__fallback" aria-hidden="true" data-word="{{ section.settings.watermark | default: shop.name | escape }}"></div>
+  {%- endif -%}
+
+  <div class="a-wrap a-hero__body">
+    {%- if section.settings.kicker != blank -%}
+      <p class="a-kicker a-hero__kicker">{{ section.settings.kicker | escape }}</p>
+    {%- endif -%}
+    <h1 class="a-h a-hero__title">{{ section.settings.title | escape }}</h1>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="a-sub a-hero__sub">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+    <div class="a-hero__actions">
+      {%- if section.settings.cta_label != blank -%}
+        <a class="a-btn a-btn--invert" href="{{ section.settings.cta_link | default: routes.all_products_collection_url }}">{{ section.settings.cta_label | escape }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_label != blank -%}
+        <a class="a-btn" style="border-color:#fff;color:#fff;background:transparent;" href="{{ section.settings.cta2_link | default: '/collections/new-arrivals' }}">{{ section.settings.cta2_label | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Active — Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "video_url", "label": "Background video URL (.mp4, optional)" },
+    { "type": "text", "id": "watermark", "label": "Fallback watermark word", "info": "Shown when no image/video is set." },
+    { "type": "checkbox", "id": "short", "label": "Short height", "default": false },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "BUILT FOR EVERY SECOND" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Time won't wait" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Watches engineered for the water, the street and everything in between." },
+    { "type": "text", "id": "cta_label", "label": "Primary button", "default": "Shop watches" },
+    { "type": "url", "id": "cta_link", "label": "Primary link" },
+    { "type": "text", "id": "cta2_label", "label": "Secondary button", "default": "New arrivals" },
+    { "type": "url", "id": "cta2_link", "label": "Secondary link" }
+  ],
+  "presets": [{ "name": "Active — Hero" }]
+}
+{% endschema %}

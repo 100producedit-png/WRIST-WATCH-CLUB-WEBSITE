@@ -1,0 +1,75 @@
+{{ 'active.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'active.js' | asset_url }}" defer></script>
+
+<footer class="a-foot">
+  <div class="a-wrap">
+    <div class="a-foot__main">
+      <div>
+        <a class="a-foot__logo" href="{{ routes.root_url }}">{{ section.settings.logo_text | default: shop.name | escape }}</a>
+        <p class="a-foot__blurb">{{ section.settings.blurb | escape }}</p>
+        <div class="a-foot__social">
+          {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+          {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
+          {%- if section.settings.youtube != blank -%}<a href="{{ section.settings.youtube }}" target="_blank" rel="noopener">YouTube</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div class="a-foot__col" {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.heading | escape }}</h4>
+          {%- if block.settings.menu != blank -%}
+            {%- for link in block.settings.menu.links -%}
+              <a href="{{ link.url }}">{{ link.title | escape }}</a>
+            {%- endfor -%}
+          {%- else -%}
+            <a href="{{ routes.all_products_collection_url }}">All watches</a>
+            <a href="/collections/new-arrivals">New arrivals</a>
+            <a href="{{ routes.cart_url }}">Cart</a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="a-foot__bottom">
+      <span class="a-foot__legal">© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+      <span class="a-foot__legal">
+        <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy</a> ·
+        <a href="{{ shop.terms_of_service.url | default: '#' }}">Terms</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Active — Footer",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text (defaults to shop name)" },
+    { "type": "text", "id": "blurb", "label": "Blurb", "default": "Watches engineered for the water, the street and everything in between." },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
+    { "type": "url", "id": "youtube", "label": "YouTube URL" }
+  ],
+  "blocks": [
+    {
+      "type": "links",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Active — Footer",
+      "blocks": [
+        { "type": "links" },
+        { "type": "links", "settings": { "heading": "Support" } },
+        { "type": "links", "settings": { "heading": "Company" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

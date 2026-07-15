@@ -1,0 +1,43 @@
+{{ 'active.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'active.js' | asset_url }}" defer></script>
+
+<section class="a-section a-values">
+  <div class="a-values__grid">
+    {%- for block in section.blocks -%}
+      <div class="a-value" {{ block.shopify_attributes }}>
+        <div class="a-value__icon">{{ block.settings.icon | escape }}</div>
+        <h3>{{ block.settings.title | escape }}</h3>
+        <p>{{ block.settings.text | escape }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Active — Value props",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🚚" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free shipping" },
+        { "type": "text", "id": "text", "label": "Text", "default": "On all orders over $50." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Active — Value props",
+      "blocks": [
+        { "type": "value" },
+        { "type": "value", "settings": { "icon": "↩️", "title": "30-day returns", "text": "Changed your mind? No problem." } },
+        { "type": "value", "settings": { "icon": "🛡️", "title": "2-year warranty", "text": "Every watch, covered." } },
+        { "type": "value", "settings": { "icon": "💬", "title": "Real support", "text": "Humans, 7 days a week." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

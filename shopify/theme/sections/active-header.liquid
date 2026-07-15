@@ -1,0 +1,70 @@
+{{ 'active.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'active.js' | asset_url }}" defer></script>
+
+{%- assign menu = section.settings.menu -%}
+{%- if menu == blank -%}{%- assign menu = linklists['main-menu'] -%}{%- endif -%}
+
+<header class="a-head">
+  <div class="a-wrap a-head__bar">
+    <a class="a-head__logo" href="{{ routes.root_url }}">{{ section.settings.logo_text | default: shop.name | escape }}</a>
+
+    <nav class="a-head__nav" aria-label="Main">
+      {%- if menu != blank and menu.links.size > 0 -%}
+        {%- for link in menu.links -%}
+          <div class="a-head__item">
+            <a class="a-head__link" href="{{ link.url }}">{{ link.title | escape }}</a>
+            {%- if link.links.size > 0 -%}
+              <div class="a-head__drop">
+                {%- for child in link.links -%}
+                  <a href="{{ child.url }}">{{ child.title | escape }}</a>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        <div class="a-head__item"><a class="a-head__link" href="{{ routes.all_products_collection_url }}">Shop</a></div>
+        <div class="a-head__item"><a class="a-head__link" href="/collections/mens-watches">Men</a></div>
+        <div class="a-head__item"><a class="a-head__link" href="/collections/womens-watches">Women</a></div>
+        <div class="a-head__item"><a class="a-head__link" href="/collections/new-arrivals">New</a></div>
+      {%- endif -%}
+    </nav>
+
+    <div class="a-head__tools">
+      <a class="a-head__tool a-head__tool--search" href="{{ routes.search_url }}">Search</a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="a-head__tool" href="{{ routes.account_url }}">Account</a>
+      {%- endif -%}
+      <a class="a-head__tool" href="{{ routes.cart_url }}">Cart <span class="a-head__cartcount">{{ cart.item_count }}</span></a>
+      <button class="a-head__burger" type="button" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="a-mobilenav" aria-label="Mobile">
+    {%- if menu != blank and menu.links.size > 0 -%}
+      {%- for link in menu.links -%}
+        <a href="{{ link.url }}">{{ link.title | escape }}</a>
+        {%- for child in link.links -%}
+          <a class="a-mobilenav__sub" href="{{ child.url }}">{{ child.title | escape }}</a>
+        {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      <a href="{{ routes.all_products_collection_url }}">Shop</a>
+      <a href="/collections/new-arrivals">New</a>
+    {%- endif -%}
+    <a href="{{ routes.search_url }}">Search</a>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Active — Header",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text (defaults to shop name)" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "info": "Defaults to Main menu. Nested links become dropdowns." }
+  ],
+  "presets": [{ "name": "Active — Header" }]
+}
+{% endschema %}

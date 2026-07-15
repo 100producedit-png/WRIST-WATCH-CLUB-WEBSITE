@@ -1,0 +1,47 @@
+{% comment %} Nixon-style product card: hover image swap, badges, variant swatches. {% endcomment %}
+<a class="a-pcard" href="{{ product.url }}">
+  <div class="a-pcard__media">
+    {%- if product.compare_at_price > product.price -%}
+      <span class="a-pcard__badge a-pcard__badge--sale">Sale</span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="a-pcard__badge">New</span>
+    {%- endif -%}
+    {%- if product.featured_image -%}
+      {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 68vw, 288px' }}
+      {%- if product.images[1] -%}
+        {{ product.images[1] | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 68vw, 288px' }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag }}
+    {%- endif -%}
+  </div>
+  {%- if product.type != blank and product.type != '0' -%}
+    <p class="a-pcard__type">{{ product.type | escape }}</p>
+  {%- endif -%}
+  <h3 class="a-pcard__title">{{ product.title | escape }}</h3>
+  <p class="a-pcard__price">
+    {%- if product.price_varies -%}From {% endif -%}{{ product.price | money }}
+    {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+  </p>
+  {%- if product.variants.size > 1 -%}
+    <div class="a-pcard__swatches" aria-hidden="true">
+      {%- for variant in product.variants limit: 5 -%}
+        {%- assign v = variant.title | downcase -%}
+        {%- assign sw = '#c9c9cd' -%}
+        {%- if v contains 'black' -%}{%- assign sw = '#17181c' -%}
+        {%- elsif v contains 'rose' -%}{%- assign sw = '#d8a29a' -%}
+        {%- elsif v contains 'gold' -%}{%- assign sw = '#cfa54e' -%}
+        {%- elsif v contains 'silver' or v contains 'white' or v contains 'grey' or v contains 'gray' -%}{%- assign sw = '#d4d5d9' -%}
+        {%- elsif v contains 'blue' -%}{%- assign sw = '#2c4d7e' -%}
+        {%- elsif v contains 'green' -%}{%- assign sw = '#3d6b4f' -%}
+        {%- elsif v contains 'red' -%}{%- assign sw = '#a13a33' -%}
+        {%- elsif v contains 'brown' or v contains 'belt' or v contains 'leather' -%}{%- assign sw = '#6e4f39' -%}
+        {%- endif -%}
+        <span class="a-pcard__swatch" style="background:{{ sw }};" title="{{ variant.title | escape }}"></span>
+      {%- endfor -%}
+      {%- if product.variants.size > 5 -%}
+        <span class="a-pcard__more">+{{ product.variants.size | minus: 5 }}</span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</a>
