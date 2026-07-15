@@ -1,0 +1,29 @@
+<div class="wwc-section-pad">
+  <div class="wwc-iwt">
+    <div>
+      {% if section.settings.image %}
+        <img src="{{ section.settings.image | image_url: width: 1100 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy" />
+      {% else %}
+        <div class="wwc-card__media"></div>
+      {% endif %}
+    </div>
+    <div>
+      <p class="wwc-overline">{{ section.settings.overline }}</p>
+      <h2 class="wwc-title">{{ section.settings.heading }}</h2>
+      <div class="wwc-prose">{{ section.settings.body }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "THE DETAIL" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Crafted in darkness." },
+    { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Eight years. One movement. No compromise.</p>" }
+  ],
+  "presets": [{ "name": "Image with text" }]
+}
+{% endschema %}

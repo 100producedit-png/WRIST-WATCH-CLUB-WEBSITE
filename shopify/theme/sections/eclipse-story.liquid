@@ -1,0 +1,34 @@
+{% render 'eclipse-assets' %}
+
+<section class="story" id="story">
+  <div class="story-sticky">
+    <div class="story__inner">
+      <p class="overline overline--gold story-el">{{ section.settings.overline | escape }}</p>
+      <h2 class="story__title">
+        <span class="story-line"><span>{{ section.settings.title_line1 | escape }}</span></span>
+        <span class="story-line"><span>{{ section.settings.title_line2 | escape }}</span></span>
+      </h2>
+      <div class="story__body">
+        <p class="story-el">{{ section.settings.line1 | escape }}</p>
+        <p class="story-el">{{ section.settings.line2 | escape }}</p>
+        <p class="story-el story-el--gold">{{ section.settings.line3 | escape }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eclipse — Story",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "CHAPTER I" },
+    { "type": "text", "id": "title_line1", "label": "Title line 1", "default": "Crafted" },
+    { "type": "text", "id": "title_line2", "label": "Title line 2", "default": "in Darkness." },
+    { "type": "text", "id": "line1", "label": "Body line 1", "default": "Eight years in a blackened atelier above Lac Léman." },
+    { "type": "text", "id": "line2", "label": "Body line 2", "default": "One movement. No compromise." },
+    { "type": "text", "id": "line3", "label": "Body line 3 (gold)", "default": "The rest is silence." }
+  ],
+  "presets": [{ "name": "Eclipse — Story" }]
+}
+{% endschema %}

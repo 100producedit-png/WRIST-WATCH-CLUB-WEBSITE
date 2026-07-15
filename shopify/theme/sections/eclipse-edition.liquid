@@ -1,0 +1,37 @@
+{% render 'eclipse-assets' %}
+
+<section class="edition" id="edition">
+  <div class="edition__inner">
+    <p class="overline overline--gold edition-el">{{ section.settings.overline | escape }}</p>
+    <h2 class="edition__title edition-el">{{ section.settings.title_before | escape }} <em>{{ section.settings.title_em | escape }}</em> {{ section.settings.title_after | escape }}</h2>
+    <div class="edition__rule edition-el"></div>
+    <p class="edition__price edition-el">{{ section.settings.price | escape }}</p>
+    <p class="edition__note edition-el">{{ section.settings.note | escape }}</p>
+    {% if section.settings.product != blank %}
+      {% assign ep = all_products[section.settings.product] %}
+      {% if ep %}
+        <p class="edition-el" style="margin-top:2.6rem">
+          <a class="chrome__cta" style="padding:1rem 2.4rem" href="{{ ep.url }}">{{ section.settings.button_label | escape }}</a>
+        </p>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eclipse — Edition & price",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "THE ALLOCATION" },
+    { "type": "text", "id": "title_before", "label": "Title (before italic)", "default": "Edition" },
+    { "type": "text", "id": "title_em", "label": "Title (italic word)", "default": "of" },
+    { "type": "text", "id": "title_after", "label": "Title (after italic)", "default": "88" },
+    { "type": "text", "id": "price", "label": "Price line", "default": "$48,000" },
+    { "type": "text", "id": "note", "label": "Note", "default": "Numbered. Never repeated." },
+    { "type": "product", "id": "product", "label": "Link to product (optional)" },
+    { "type": "text", "id": "button_label", "label": "Product button label", "default": "Acquire the Eclipse" }
+  ],
+  "presets": [{ "name": "Eclipse — Edition & price" }]
+}
+{% endschema %}

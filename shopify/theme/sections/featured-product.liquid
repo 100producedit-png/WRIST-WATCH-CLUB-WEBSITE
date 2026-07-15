@@ -1,0 +1,38 @@
+{% assign fp = all_products[section.settings.product] %}
+<div class="wwc-section-pad">
+  <div class="wwc-featured">
+    <div class="wwc-featured__media">
+      {% if fp and fp.featured_image %}
+        <img src="{{ fp.featured_image | image_url: width: 1100 }}" alt="{{ fp.featured_image.alt | escape }}" loading="lazy" />
+      {% else %}
+        <div class="wwc-card__media"></div>
+      {% endif %}
+    </div>
+    <div>
+      <p class="wwc-overline">{{ section.settings.overline }}</p>
+      <h2 class="wwc-title">{% if fp %}{{ fp.title }}{% else %}Select a product{% endif %}</h2>
+      {% if fp %}
+        <p class="wwc-price">{{ fp.price | money }}</p>
+        {% if section.settings.show_description %}
+          <div class="wwc-prose" style="margin:1.4rem 0 2rem">{{ fp.description | strip_html | truncate: 220 }}</div>
+        {% endif %}
+        <a class="wwc-btn" href="{{ fp.url }}">{{ section.settings.button_label }}</a>
+      {% else %}
+        <p class="wwc-prose">Choose a product for this section in the theme editor.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured product",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "THE PIECE" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "View the piece" },
+    { "type": "checkbox", "id": "show_description", "label": "Show description", "default": true }
+  ],
+  "presets": [{ "name": "Featured product" }]
+}
+{% endschema %}

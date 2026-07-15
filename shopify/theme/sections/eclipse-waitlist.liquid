@@ -1,0 +1,52 @@
+{% render 'eclipse-assets' %}
+
+<section class="waitlist" id="waitlist">
+  <div class="waitlist__inner">
+    <p class="overline overline--gold wl-el">{{ section.settings.overline | escape }}</p>
+    <h2 class="waitlist__title wl-el">{{ section.settings.title | escape }}</h2>
+
+    {% form 'customer', class: 'wl-el' %}
+      {% if form.posted_successfully? %}
+        <p class="waitlist__confirm" style="display:block" aria-live="polite">{{ section.settings.confirm | escape }}</p>
+      {% else %}
+        <input type="hidden" name="contact[tags]" value="waitlist" />
+        <div class="waitlist__form">
+          <input type="email" name="contact[email]" placeholder="{{ section.settings.placeholder | escape }}" autocomplete="email" required aria-label="Email address" />
+          <button type="submit"><span>{{ section.settings.button_label | escape }}</span></button>
+        </div>
+        {% if form.errors %}<p class="waitlist__small" style="color:#c9a35c">Please enter a valid email.</p>{% endif %}
+      {% endif %}
+    {% endform %}
+
+    <p class="waitlist__small wl-el">{{ section.settings.smallprint | escape }}</p>
+  </div>
+
+  <footer class="footer">
+    <div class="footer__brand">{{ section.settings.footer_brand | escape }}</div>
+    <div class="footer__meta">
+      <span>{{ section.settings.footer_meta1 | escape }}</span>
+      <span>{{ section.settings.footer_meta2 | escape }}</span>
+    </div>
+    <div class="footer__legal">{{ section.settings.footer_legal | escape }}</div>
+  </footer>
+</section>
+
+{% schema %}
+{
+  "name": "Eclipse — Waitlist & footer",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "PRIVATE WAITLIST" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Few will be asked." },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Your email" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Request allocation" },
+    { "type": "text", "id": "confirm", "label": "Confirmation message", "default": "Noted. If a piece becomes yours, we will write." },
+    { "type": "text", "id": "smallprint", "label": "Small print", "default": "Discretion assured. One enquiry per collector." },
+    { "type": "text", "id": "footer_brand", "label": "Footer brand", "default": "WRIST WATCH CLUB" },
+    { "type": "text", "id": "footer_meta1", "label": "Footer meta 1", "default": "GENÈVE · MMXXVI" },
+    { "type": "text", "id": "footer_meta2", "label": "Footer meta 2", "default": "ECLIPSE — TOURBILLON CHRONOGRAPH" },
+    { "type": "text", "id": "footer_legal", "label": "Footer legal line", "default": "A fictional maison, imagined for the love of the craft." }
+  ],
+  "presets": [{ "name": "Eclipse — Waitlist & footer" }]
+}
+{% endschema %}

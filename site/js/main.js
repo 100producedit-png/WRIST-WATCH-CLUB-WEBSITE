@@ -2,18 +2,27 @@
    WRIST WATCH CLUB — ECLIPSE
    Scroll-scrubbed cinematic engine
    Lenis smooth scroll + GSAP ScrollTrigger + canvas sequences
+
+   Section-tolerant: every animation binds only if its markup is
+   present, so the experience can be composed from independent
+   Shopify sections (hero / story / macro / engineering / edition /
+   waitlist) in any combination and order.
    ═══════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
+  if (window.__WWC_INIT__) return; /* idempotent under section re-injection */
+  window.__WWC_INIT__ = true;
+
   gsap.registerPlugin(ScrollTrigger);
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (sel) { return document.querySelector(sel); };
 
   /* ── Sequence manifest (generated from Seedance 2.0 clips) ──
      When the page is served away from the static files (e.g. embedded in a
-     Shopify template), set window.WWC_ASSET_BASE to the absolute URL of the
+     Shopify theme), set window.WWC_ASSET_BASE to the absolute URL of the
      site/ folder before this script loads. Defaults to same-folder. */
   var BASE = window.WWC_ASSET_BASE || '';
   var SEQ = {
@@ -133,58 +142,66 @@
 
   document.querySelectorAll('[data-scrollto]').forEach(function (a) {
     a.addEventListener('click', function (e) {
+      var target = $(a.getAttribute('href'));
+      if (!target) return; /* section may have been removed in the editor */
       e.preventDefault();
-      lenis.scrollTo(a.getAttribute('href'), { duration: 2.2 });
+      lenis.scrollTo(target, { duration: 2.2 });
     });
   });
 
-  /* ═════════════════════ Sequences ═════════════════════ */
+  /* ═════════════════════ Sequences (each optional) ═════════════════════ */
 
-  var orbit    = new FrameSequence(document.getElementById('canvasOrbit'),    SEQ.orbit);
-  var macro    = new FrameSequence(document.getElementById('canvasMacro'),    SEQ.macro);
-  var assembly = new FrameSequence(document.getElementById('canvasAssembly'), SEQ.assembly);
+  var orbit    = $('#canvasOrbit')    ? new FrameSequence($('#canvasOrbit'),    SEQ.orbit)    : null;
+  var macro    = $('#canvasMacro')    ? new FrameSequence($('#canvasMacro'),    SEQ.macro)    : null;
+  var assembly = $('#canvasAssembly') ? new FrameSequence($('#canvasAssembly'), SEQ.assembly) : null;
 
   window.addEventListener('resize', function () {
-    orbit.resize(); macro.resize(); assembly.resize();
+    if (orbit) orbit.resize();
+    if (macro) macro.resize();
+    if (assembly) assembly.resize();
   });
 
-  /* ═════════════════════ Preloader ═════════════════════ */
+  /* ═════════════════════ Preloader (optional) ═════════════════════ */
 
-  var loaderEl  = document.getElementById('loader');
-  var loaderBar = document.getElementById('loaderBar');
-  var loaderPct = document.getElementById('loaderPct');
+  var loaderEl  = $('#loader');
+  var loaderBar = $('#loaderBar');
+  var loaderPct = $('#loaderPct');
   var revealed = false;
 
   function reveal() {
     if (revealed) return;
     revealed = true;
-    loaderEl.classList.add('is-done');
+    if (loaderEl) loaderEl.classList.add('is-done');
     document.body.classList.remove('is-loading');
-    lenis.scrollTo(0, { immediate: true });
     ScrollTrigger.refresh();
-    orbit.render();
+    if (orbit) orbit.render();
     heroIntro();
     /* stream the remaining sequences in the background */
-    macro.load();
-    assembly.load();
+    if (macro) macro.load();
+    if (assembly) assembly.load();
   }
 
-  orbit.onProgress = function (p) {
-    var pct = Math.round(p * 100);
-    loaderBar.style.transform = 'scaleX(' + p + ')';
-    loaderPct.textContent = pct < 10 ? '0' + pct : '' + pct;
-    if (p >= 0.999) reveal();
-  };
-  orbit.load();
-  /* Safety net: never trap the visitor on the loader */
-  setTimeout(function () {
-    if (!revealed && orbit.loadedCount > SEQ.orbit.count * 0.35) reveal();
-  }, 9000);
-  setTimeout(reveal, 20000);
+  if (orbit) {
+    orbit.onProgress = function (p) {
+      var pct = Math.round(p * 100);
+      if (loaderBar) loaderBar.style.transform = 'scaleX(' + p + ')';
+      if (loaderPct) loaderPct.textContent = pct < 10 ? '0' + pct : '' + pct;
+      if (p >= 0.999) reveal();
+    };
+    orbit.load();
+    /* Safety net: never trap the visitor on the loader */
+    setTimeout(function () {
+      if (!revealed && orbit.loadedCount > SEQ.orbit.count * 0.35) reveal();
+    }, 9000);
+    setTimeout(reveal, 20000);
+  } else {
+    reveal();
+  }
 
   /* ═════════════════ Hero intro (tracking-in) ═════════════════ */
 
   function heroIntro() {
+    if (!$('#heroBrand')) return;
     var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     tl.fromTo('#heroBrand .overline',
         { opacity: 0 }, { opacity: 1, duration: 1.6 }, 0.15)
@@ -192,115 +209,137 @@
         { opacity: 0, letterSpacing: '0.34em', filter: 'blur(6px)' },
         { opacity: 1, letterSpacing: '0.06em', filter: 'blur(0px)', duration: 2.6, ease: 'power2.inOut' }, 0.3)
       .fromTo('#heroBrand .hero-sub',
-        { opacity: 0, y: 12 }, { opacity: 0.9, y: 0, duration: 1.4 }, 1.9)
-      .fromTo('#scrollCue',
-        { opacity: 0 }, { opacity: 1, duration: 1.2 }, 2.4);
+        { opacity: 0, y: 12 }, { opacity: 0.9, y: 0, duration: 1.4 }, 1.9);
+    if ($('#scrollCue')) {
+      tl.fromTo('#scrollCue', { opacity: 0 }, { opacity: 1, duration: 1.2 }, 2.4);
+    }
   }
 
   /* ═════════════════ Hero orbit scrub ═════════════════ */
 
-  ScrollTrigger.create({
-    trigger: '#hero',
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: true,
-    onUpdate: function (st) { orbit.setProgress(st.progress); }
-  });
+  if ($('#hero') && orbit) {
+    ScrollTrigger.create({
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: function (st) { orbit.setProgress(st.progress); }
+    });
 
-  /* text stages keyed to the orbit progress */
-  gsap.timeline({
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: true },
-    defaults: { ease: 'none' }
-  })
-    .to('#heroBrand', { opacity: 0, y: -46, duration: 0.16 }, 0.06)
-    .to('#scrollCue', { opacity: 0, duration: 0.08 }, 0.05)
-    .fromTo('#heroName',
-      { opacity: 0, scale: 0.96 },
-      { opacity: 1, scale: 1, duration: 0.2 }, 0.34)
-    .to('#heroName', { opacity: 0, y: -40, duration: 0.16 }, 0.72);
+    /* text stages keyed to the orbit progress */
+    var heroTl = gsap.timeline({
+      scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom bottom', scrub: true },
+      defaults: { ease: 'none' }
+    });
+    if ($('#heroBrand')) heroTl.to('#heroBrand', { opacity: 0, y: -46, duration: 0.16 }, 0.06);
+    if ($('#scrollCue')) heroTl.to('#scrollCue', { opacity: 0, duration: 0.08 }, 0.05);
+    if ($('#heroName')) {
+      heroTl
+        .fromTo('#heroName',
+          { opacity: 0, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 0.2 }, 0.34)
+        .to('#heroName', { opacity: 0, y: -40, duration: 0.16 }, 0.72);
+    }
+  }
 
   /* ═════════════════ Story reveals (pinned) ═════════════════ */
 
-  gsap.timeline({
-    scrollTrigger: { trigger: '#story', start: 'top top', end: 'bottom bottom', scrub: true },
-    defaults: { ease: 'none' }
-  })
-    .fromTo('#story .overline', { opacity: 0 }, { opacity: 1, duration: 0.07 }, 0.05)
-    .fromTo('#story .story-line > span',
-      { yPercent: 115 },
-      { yPercent: 0, duration: 0.2, stagger: 0.07, ease: 'power2.out' }, 0.1)
-    .fromTo('#story .story__body p',
-      { opacity: 0, y: 26 },
-      { opacity: 1, y: 0, duration: 0.12, stagger: 0.12 }, 0.34)
-    .to('#story .story__inner', { opacity: 0, y: -60, duration: 0.15 }, 0.85);
+  if ($('#story')) {
+    gsap.timeline({
+      scrollTrigger: { trigger: '#story', start: 'top top', end: 'bottom bottom', scrub: true },
+      defaults: { ease: 'none' }
+    })
+      .fromTo('#story .overline', { opacity: 0 }, { opacity: 1, duration: 0.07 }, 0.05)
+      .fromTo('#story .story-line > span',
+        { yPercent: 115 },
+        { yPercent: 0, duration: 0.2, stagger: 0.07, ease: 'power2.out' }, 0.1)
+      .fromTo('#story .story__body p',
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.12, stagger: 0.12 }, 0.34)
+      .to('#story .story__inner', { opacity: 0, y: -60, duration: 0.15 }, 0.85);
+  }
 
   /* ═════════════════ Macro scrub + captions ═════════════════ */
 
-  ScrollTrigger.create({
-    trigger: '#macro',
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: true,
-    onUpdate: function (st) { macro.setProgress(st.progress); }
-  });
+  if ($('#macro') && macro) {
+    ScrollTrigger.create({
+      trigger: '#macro',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: function (st) { macro.setProgress(st.progress); }
+    });
 
-  [ { sel: '[data-caption="0"]', inAt: 0.05, outAt: 0.30 },
-    { sel: '[data-caption="1"]', inAt: 0.37, outAt: 0.62 },
-    { sel: '[data-caption="2"]', inAt: 0.68, outAt: 0.93 }
-  ].forEach(function (c) {
-    gsap.timeline({
-      scrollTrigger: { trigger: '#macro', start: 'top top', end: 'bottom bottom', scrub: true },
-      defaults: { ease: 'none' }
-    })
-      .fromTo(c.sel, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.07 }, c.inAt)
-      .to(c.sel, { opacity: 0, y: -26, duration: 0.06 }, c.outAt);
-  });
+    [ { sel: '[data-caption="0"]', inAt: 0.05, outAt: 0.30 },
+      { sel: '[data-caption="1"]', inAt: 0.37, outAt: 0.62 },
+      { sel: '[data-caption="2"]', inAt: 0.68, outAt: 0.93 }
+    ].forEach(function (c) {
+      if (!$(c.sel)) return;
+      gsap.timeline({
+        scrollTrigger: { trigger: '#macro', start: 'top top', end: 'bottom bottom', scrub: true },
+        defaults: { ease: 'none' }
+      })
+        .fromTo(c.sel, { opacity: 0, y: 34 }, { opacity: 1, y: 0, duration: 0.07 }, c.inAt)
+        .to(c.sel, { opacity: 0, y: -26, duration: 0.06 }, c.outAt);
+    });
+  }
 
   /* ═════════════ Assembly scrub + spec callouts ═════════════ */
 
-  ScrollTrigger.create({
-    trigger: '#engineering',
-    start: 'top top',
-    end: 'bottom bottom',
-    scrub: true,
-    onUpdate: function (st) { assembly.setProgress(st.progress); }
-  });
+  if ($('#engineering') && assembly) {
+    ScrollTrigger.create({
+      trigger: '#engineering',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: function (st) { assembly.setProgress(st.progress); }
+    });
 
-  gsap.timeline({
-    scrollTrigger: { trigger: '#engineering', start: 'top top', end: 'bottom bottom', scrub: true },
-    defaults: { ease: 'none' }
-  })
-    .fromTo('.eng-header', { opacity: 0 }, { opacity: 1, duration: 0.06 }, 0.04)
-    .fromTo('[data-spec="0"]', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.08 }, 0.18)
-    .fromTo('[data-spec="1"]', { opacity: 0, x: 40 },  { opacity: 1, x: 0, duration: 0.08 }, 0.40)
-    .fromTo('[data-spec="2"]', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.08 }, 0.62)
-    .to('.eng-header, .spec', { opacity: 0, duration: 0.08 }, 0.9);
+    var engTl = gsap.timeline({
+      scrollTrigger: { trigger: '#engineering', start: 'top top', end: 'bottom bottom', scrub: true },
+      defaults: { ease: 'none' }
+    });
+    if ($('.eng-header')) engTl.fromTo('.eng-header', { opacity: 0 }, { opacity: 1, duration: 0.06 }, 0.04);
+    if ($('[data-spec="0"]')) engTl.fromTo('[data-spec="0"]', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.08 }, 0.18);
+    if ($('[data-spec="1"]')) engTl.fromTo('[data-spec="1"]', { opacity: 0, x: 40 },  { opacity: 1, x: 0, duration: 0.08 }, 0.40);
+    if ($('[data-spec="2"]')) engTl.fromTo('[data-spec="2"]', { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.08 }, 0.62);
+    engTl.to('.eng-header, .spec', { opacity: 0, duration: 0.08 }, 0.9);
+  }
 
   /* ═════════════ Edition + waitlist entrances ═════════════ */
 
-  gsap.timeline({
-    scrollTrigger: { trigger: '#edition', start: 'top 62%', end: 'top 8%', scrub: true },
-    defaults: { ease: 'none' }
-  })
-    .fromTo('.edition-el', { opacity: 0, y: 44 }, { opacity: 1, y: 0, stagger: 0.12, duration: 0.5 });
+  if ($('#edition')) {
+    gsap.timeline({
+      scrollTrigger: { trigger: '#edition', start: 'top 62%', end: 'top 8%', scrub: true },
+      defaults: { ease: 'none' }
+    })
+      .fromTo('.edition-el', { opacity: 0, y: 44 }, { opacity: 1, y: 0, stagger: 0.12, duration: 0.5 });
+  }
 
-  gsap.timeline({
-    scrollTrigger: { trigger: '#waitlist', start: 'top 68%', end: 'top 18%', scrub: true },
-    defaults: { ease: 'none' }
-  })
-    .fromTo('.wl-el', { opacity: 0, y: 38 }, { opacity: 1, y: 0, stagger: 0.14, duration: 0.5 });
+  if ($('#waitlist') && $('.wl-el')) {
+    gsap.timeline({
+      scrollTrigger: { trigger: '#waitlist', start: 'top 68%', end: 'top 18%', scrub: true },
+      defaults: { ease: 'none' }
+    })
+      .fromTo('.wl-el', { opacity: 0, y: 38 }, { opacity: 1, y: 0, stagger: 0.14, duration: 0.5 });
+  }
 
-  /* ═════════════════════ Waitlist form ═════════════════════ */
+  /* ═════════════════════ Waitlist form (static demo only) ═════════════════════
+     The Shopify theme replaces this with a real {% form 'customer' %}, which
+     has no #waitlistForm id and therefore posts normally. */
 
-  document.getElementById('waitlistForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-    var email = document.getElementById('wlEmail').value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      gsap.fromTo('#waitlistForm', { x: 0 }, { x: 8, duration: 0.07, repeat: 5, yoyo: true, clearProps: 'x' });
-      return;
-    }
-    document.getElementById('waitlist').classList.add('is-confirmed');
-  });
+  var wlForm = document.getElementById('waitlistForm');
+  if (wlForm) {
+    wlForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = document.getElementById('wlEmail').value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        gsap.fromTo('#waitlistForm', { x: 0 }, { x: 8, duration: 0.07, repeat: 5, yoyo: true, clearProps: 'x' });
+        return;
+      }
+      document.getElementById('waitlist').classList.add('is-confirmed');
+    });
+  }
 
   /* ═════════════════ Reduced motion fallback ═════════════════ */
 

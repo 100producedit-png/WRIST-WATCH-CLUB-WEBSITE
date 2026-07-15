@@ -1,0 +1,22 @@
+<div class="wwc-section-pad wwc-center" style="max-width:44rem">
+  <p class="wwc-overline">{{ section.settings.overline }}</p>
+  <h2 class="wwc-title">{{ section.settings.heading }}</h2>
+  <div class="wwc-prose">{{ section.settings.body }}</div>
+  {% if section.settings.button_label != blank %}
+    <p style="margin-top:2rem"><a class="wwc-btn wwc-btn--ghost" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a></p>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "WRIST WATCH CLUB" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Quiet words." },
+    { "type": "richtext", "id": "body", "label": "Text", "default": "<p>Very few of them.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Rich text" }]
+}
+{% endschema %}

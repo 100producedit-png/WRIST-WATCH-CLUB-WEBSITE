@@ -1,0 +1,21 @@
+{% comment %}
+  Loads the Eclipse experience CSS/JS exactly once, no matter how many
+  Eclipse sections are on the page or in what order they appear.
+  Assets are hosted on GitHub Pages (see repo README / SHOPIFY.md).
+{% endcomment %}
+{% assign wwc_base = 'https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/' %}
+<link rel="stylesheet" href="{{ wwc_base }}css/style.css" />
+<script>
+  (function () {
+    window.WWC_ASSET_BASE = window.WWC_ASSET_BASE || '{{ wwc_base }}';
+    if (window.__WWC_BOOT__) return;
+    window.__WWC_BOOT__ = true;
+    ['js/vendor/lenis.min.js', 'js/vendor/gsap.min.js', 'js/vendor/ScrollTrigger.min.js', 'js/main.js']
+      .forEach(function (src) {
+        var s = document.createElement('script');
+        s.src = window.WWC_ASSET_BASE + src;
+        s.async = false; /* preserve execution order */
+        document.head.appendChild(s);
+      });
+  })();
+</script>

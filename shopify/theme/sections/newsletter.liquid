@@ -1,0 +1,26 @@
+<div class="wwc-section-pad wwc-news">
+  <p class="wwc-overline">{{ section.settings.overline }}</p>
+  <h2 class="wwc-title">{{ section.settings.heading }}</h2>
+  {% form 'customer' %}
+    {% if form.posted_successfully? %}
+      <p class="wwc-prose" style="color:var(--gold)">Noted. If a piece becomes yours, we will write.</p>
+    {% else %}
+      <input type="hidden" name="contact[tags]" value="waitlist" />
+      <input class="wwc-input" type="email" name="contact[email]" placeholder="Your email" required aria-label="Email" />
+      <button type="submit" class="wwc-btn">{{ section.settings.button_label }}</button>
+    {% endif %}
+    {% if form.errors %}<p class="wwc-prose">Please enter a valid email.</p>{% endif %}
+  {% endform %}
+</div>
+
+{% schema %}
+{
+  "name": "Waitlist signup",
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "PRIVATE WAITLIST" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Few will be asked." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Request allocation" }
+  ],
+  "presets": [{ "name": "Waitlist signup" }]
+}
+{% endschema %}

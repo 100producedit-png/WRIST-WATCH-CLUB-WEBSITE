@@ -1,0 +1,37 @@
+{% render 'eclipse-assets' %}
+
+<section class="seq-section" id="macro" data-seq="macro">
+  <div class="seq-sticky">
+    <canvas class="seq-canvas" id="canvasMacro" aria-label="Macro detail of the Eclipse dial"></canvas>
+    <div class="vignette"></div>
+
+    <div class="macro-caption" data-caption="0">
+      <p class="overline overline--gold">{{ section.settings.overline1 | escape }}</p>
+      <p class="macro-caption__text">{{ section.settings.caption1 | newline_to_br }}</p>
+    </div>
+    <div class="macro-caption" data-caption="1">
+      <p class="overline overline--gold">{{ section.settings.overline2 | escape }}</p>
+      <p class="macro-caption__text">{{ section.settings.caption2 | newline_to_br }}</p>
+    </div>
+    <div class="macro-caption" data-caption="2">
+      <p class="overline overline--gold">{{ section.settings.overline3 | escape }}</p>
+      <p class="macro-caption__text">{{ section.settings.caption3 | newline_to_br }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eclipse — Macro details",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "overline1", "label": "Caption 1 overline", "default": "CHAPTER II — THE SURFACE" },
+    { "type": "textarea", "id": "caption1", "label": "Caption 1", "default": "Indices engraved by one hand.\nThe same hand, for every piece." },
+    { "type": "text", "id": "overline2", "label": "Caption 2 overline", "default": "THE HEART" },
+    { "type": "textarea", "id": "caption2", "label": "Caption 2", "default": "A gold tourbillon, breathing\nat 21,600 beats per hour." },
+    { "type": "text", "id": "overline3", "label": "Caption 3 overline", "default": "THE FINISH" },
+    { "type": "textarea", "id": "caption3", "label": "Caption 3", "default": "Titanium, brushed until\nit forgets it is metal." }
+  ],
+  "presets": [{ "name": "Eclipse — Macro details" }]
+}
+{% endschema %}

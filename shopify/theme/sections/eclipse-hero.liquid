@@ -1,0 +1,73 @@
+{% render 'eclipse-assets' %}
+<script>document.body.classList.add('is-loading');</script>
+
+<!-- ═ Preloader ═ -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">
+    <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true">
+      <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="1" opacity=".35"/>
+      <path d="M32 6a26 26 0 0 0 0 52 21 21 0 0 1 0-52z" fill="currentColor"/>
+    </svg>
+  </div>
+  <div class="loader__wordmark">{{ section.settings.brand | escape }}</div>
+  <div class="loader__bar"><span id="loaderBar"></span></div>
+  <div class="loader__pct" id="loaderPct">0</div>
+</div>
+
+<!-- ═ Fixed chrome ═ -->
+<header class="chrome" id="chrome">
+  <div class="chrome__brand">{{ section.settings.brand | escape }}</div>
+  <div class="chrome__right">
+    <span class="chrome__edition">{{ section.settings.chrome_note | escape }}</span>
+    <a class="chrome__cta" href="{{ section.settings.cta_link | default: '#waitlist' }}" data-scrollto>{{ section.settings.cta_label | escape }}</a>
+  </div>
+</header>
+
+<!-- ═ HERO ORBIT ═ -->
+<section class="seq-section" id="hero" data-seq="orbit">
+  <div class="seq-sticky">
+    <canvas class="seq-canvas" id="canvasOrbit" aria-label="The Eclipse watch, rotating"></canvas>
+    <div class="vignette"></div>
+
+    <div class="hero-stage hero-stage--brand" id="heroBrand">
+      <p class="overline">{{ section.settings.overline | escape }}</p>
+      <h1 class="hero-title" id="heroTitle" aria-label="{{ section.settings.brand | escape }}">
+        <span class="hero-title__line" data-track>{{ section.settings.title | escape }}</span>
+      </h1>
+      <p class="hero-sub">{{ section.settings.subtitle | escape }}</p>
+    </div>
+
+    <div class="hero-stage hero-stage--name" id="heroName" aria-hidden="true">
+      <p class="overline overline--gold">{{ section.settings.product_overline | escape }}</p>
+      <h2 class="eclipse-title">{{ section.settings.product_name | escape }}</h2>
+      <p class="hero-sub hero-sub--wide">{{ section.settings.product_tagline | escape }}</p>
+    </div>
+
+    <div class="scroll-cue" id="scrollCue">
+      <span>SCROLL</span>
+      <i></i>
+    </div>
+  </div>
+</section>
+
+<div class="grain" aria-hidden="true"></div>
+
+{% schema %}
+{
+  "name": "Eclipse — Hero orbit",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Brand name", "default": "WRIST WATCH CLUB" },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "MAISON D'HORLOGERIE — GENÈVE" },
+    { "type": "text", "id": "title", "label": "Hero title", "default": "Wrist Watch Club" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "presents" },
+    { "type": "text", "id": "product_overline", "label": "Product overline", "default": "TOURBILLON CHRONOGRAPH" },
+    { "type": "text", "id": "product_name", "label": "Product name", "default": "Eclipse" },
+    { "type": "text", "id": "product_tagline", "label": "Product tagline", "default": "Light, withheld." },
+    { "type": "text", "id": "chrome_note", "label": "Top-right note", "default": "ECLIPSE — EDITION OF 88" },
+    { "type": "text", "id": "cta_label", "label": "Top-right button label", "default": "Enquire" },
+    { "type": "url", "id": "cta_link", "label": "Top-right button link" }
+  ],
+  "presets": [{ "name": "Eclipse — Hero orbit" }]
+}
+{% endschema %}

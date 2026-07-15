@@ -1,0 +1,38 @@
+<div class="wwc-shell wwc-shell--narrow">
+  <div class="wwc-center">
+    <p class="wwc-overline">YOUR SELECTION</p>
+    <h1 class="wwc-title">Cart</h1>
+  </div>
+
+  {% if cart.item_count == 0 %}
+    <p class="wwc-prose wwc-center">Your cart is empty. <a href="{{ routes.all_products_collection_url }}">View the collection.</a></p>
+  {% else %}
+    <form action="{{ routes.cart_url }}" method="post">
+      {% for item in cart.items %}
+        <div class="wwc-cart-line">
+          {% if item.image %}<img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" />{% endif %}
+          <div style="flex:1">
+            <a class="wwc-cart-line__title" href="{{ item.url }}">{{ item.product.title }}</a>
+            {% unless item.product.has_only_default_variant %}<div class="wwc-prose">{{ item.variant.title }}</div>{% endunless %}
+            <a class="wwc-remove" href="{{ item.url_to_remove }}">Remove</a>
+          </div>
+          <input class="wwc-input" style="width:5rem" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity" />
+          <div class="wwc-price" style="font-size:1.1rem">{{ item.final_line_price | money }}</div>
+        </div>
+      {% endfor %}
+
+      <div class="wwc-cart__foot">
+        <p class="wwc-price">{{ cart.total_price | money }}</p>
+        <p class="wwc-prose">Taxes and shipping calculated at checkout.</p>
+        <div style="margin-top:1.4rem; display:flex; gap:1rem; justify-content:flex-end">
+          <button type="submit" name="update" class="wwc-btn wwc-btn--ghost">Update</button>
+          <button type="submit" name="checkout" class="wwc-btn">Checkout</button>
+        </div>
+      </div>
+    </form>
+  {% endif %}
+</div>
+
+{% schema %}
+{ "name": "Cart", "settings": [] }
+{% endschema %}

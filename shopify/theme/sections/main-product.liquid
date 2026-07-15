@@ -1,0 +1,71 @@
+<div class="wwc-shell">
+  <div class="wwc-product">
+    <div class="wwc-product__media">
+      {% if product.media.size > 0 %}
+        {% for media in product.media limit: section.settings.media_limit %}
+          {% if media.media_type == 'image' %}
+            <img src="{{ media | image_url: width: 1400 }}" alt="{{ media.alt | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" />
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="wwc-card__media"></div>
+      {% endif %}
+    </div>
+
+    <div>
+      <p class="wwc-overline">{{ section.settings.overline }}</p>
+      <h1 class="wwc-title">{{ product.title }}</h1>
+      <p class="wwc-price">
+        {{ product.selected_or_first_available_variant.price | money }}
+        {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+          <span class="wwc-price--compare">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </p>
+
+      {% form 'product', product, class: 'wwc-product__form' %}
+        {% unless product.has_only_default_variant %}
+          <select name="id" class="wwc-input" aria-label="Variant">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}"
+                {% if variant == product.selected_or_first_available_variant %}selected{% endif %}
+                {% unless variant.available %}disabled{% endunless %}>
+                {{ variant.title }} — {{ variant.price | money }}{% unless variant.available %} (sold out){% endunless %}
+              </option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+        {% endunless %}
+
+        {% if section.settings.show_quantity %}
+          <div class="wwc-qty">
+            <label for="Quantity">Qty</label>
+            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="wwc-input" style="width:5.5rem" />
+          </div>
+        {% endif %}
+
+        <button type="submit" name="add" class="wwc-btn" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {% if product.selected_or_first_available_variant.available %}{{ section.settings.buy_label }}{% else %}Sold out{% endif %}
+        </button>
+        {% if section.settings.show_dynamic_checkout %}
+          {{ form | payment_button }}
+        {% endif %}
+      {% endform %}
+
+      <div class="wwc-prose" style="margin-top:2rem">{{ product.description }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "WRIST WATCH CLUB" },
+    { "type": "text", "id": "buy_label", "label": "Buy button label", "default": "Acquire" },
+    { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": false },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout button", "default": true },
+    { "type": "range", "id": "media_limit", "label": "Images to show", "min": 1, "max": 8, "default": 4 }
+  ]
+}
+{% endschema %}

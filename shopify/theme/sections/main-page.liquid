@@ -1,0 +1,16 @@
+<div class="wwc-shell wwc-shell--narrow">
+  <div class="wwc-center">
+    <p class="wwc-overline">{{ section.settings.overline }}</p>
+    <h1 class="wwc-title">{{ page.title }}</h1>
+  </div>
+  <div class="wwc-prose">{{ page.content }}</div>
+</div>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "WRIST WATCH CLUB" }
+  ]
+}
+{% endschema %}

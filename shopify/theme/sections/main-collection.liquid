@@ -1,0 +1,41 @@
+<div class="wwc-shell">
+  <div class="wwc-center">
+    <p class="wwc-overline">{{ section.settings.overline }}</p>
+    <h1 class="wwc-title">{{ collection.title }}</h1>
+    {% if collection.description != blank %}<div class="wwc-prose">{{ collection.description }}</div>{% endif %}
+  </div>
+
+  {% paginate collection.products by section.settings.per_page %}
+    <div class="wwc-grid">
+      {% for product in collection.products %}
+        <a class="wwc-card" href="{{ product.url }}">
+          <div class="wwc-card__media">
+            {% if product.featured_image %}
+              <img src="{{ product.featured_image | image_url: width: 720 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" />
+            {% endif %}
+          </div>
+          <div class="wwc-card__title">{{ product.title }}</div>
+          <div class="wwc-card__price">{{ product.price | money }}</div>
+        </a>
+      {% else %}
+        <p class="wwc-prose">Nothing here yet.</p>
+      {% endfor %}
+    </div>
+    {% if paginate.pages > 1 %}
+      <div class="wwc-center" style="margin-top:3rem">
+        {% if paginate.previous %}<a class="wwc-btn--ghost wwc-btn" href="{{ paginate.previous.url }}">Previous</a>{% endif %}
+        {% if paginate.next %}<a class="wwc-btn--ghost wwc-btn" href="{{ paginate.next.url }}">Next</a>{% endif %}
+      </div>
+    {% endif %}
+  {% endpaginate %}
+</div>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "THE COLLECTION" },
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 4, "max": 24, "default": 12 }
+  ]
+}
+{% endschema %}

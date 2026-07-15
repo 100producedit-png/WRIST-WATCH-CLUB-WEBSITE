@@ -1,0 +1,48 @@
+{% render 'eclipse-assets' %}
+
+<section class="seq-section seq-section--tall" id="engineering" data-seq="assembly">
+  <div class="seq-sticky">
+    <canvas class="seq-canvas" id="canvasAssembly" aria-label="The Eclipse assembling from its components"></canvas>
+    <div class="vignette"></div>
+
+    <div class="eng-header">
+      <p class="overline overline--gold">{{ section.settings.overline | escape }}</p>
+    </div>
+
+    <div class="spec" data-spec="0">
+      <div class="spec__rule"></div>
+      <div class="spec__num">{{ section.settings.spec1_value | escape }}<span> {{ section.settings.spec1_unit | escape }}</span></div>
+      <div class="spec__label">{{ section.settings.spec1_label | escape }}</div>
+    </div>
+    <div class="spec spec--right" data-spec="1">
+      <div class="spec__rule"></div>
+      <div class="spec__num">{{ section.settings.spec2_value | escape }}<span> {{ section.settings.spec2_unit | escape }}</span></div>
+      <div class="spec__label">{{ section.settings.spec2_label | escape }}</div>
+    </div>
+    <div class="spec" data-spec="2">
+      <div class="spec__rule"></div>
+      <div class="spec__num">{{ section.settings.spec3_value | escape }}{% if section.settings.spec3_unit != blank %}<span> {{ section.settings.spec3_unit | escape }}</span>{% endif %}</div>
+      <div class="spec__label">{{ section.settings.spec3_label | escape }}</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Eclipse — Engineering",
+  "limit": 1,
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "CHAPTER III — THE ASSEMBLY" },
+    { "type": "text", "id": "spec1_value", "label": "Spec 1 value", "default": "42" },
+    { "type": "text", "id": "spec1_unit", "label": "Spec 1 unit", "default": "mm" },
+    { "type": "text", "id": "spec1_label", "label": "Spec 1 label", "default": "GRADE-5 TITANIUM CASE" },
+    { "type": "text", "id": "spec2_value", "label": "Spec 2 value", "default": "72" },
+    { "type": "text", "id": "spec2_unit", "label": "Spec 2 unit", "default": "h" },
+    { "type": "text", "id": "spec2_label", "label": "Spec 2 label", "default": "POWER RESERVE" },
+    { "type": "text", "id": "spec3_value", "label": "Spec 3 value", "default": "217" },
+    { "type": "text", "id": "spec3_unit", "label": "Spec 3 unit" },
+    { "type": "text", "id": "spec3_label", "label": "Spec 3 label", "default": "COMPONENTS, PLACED BY HAND" }
+  ],
+  "presets": [{ "name": "Eclipse — Engineering" }]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "hero": { "type": "eclipse-hero" },
+    "story": { "type": "eclipse-story" },
+    "macro": { "type": "eclipse-macro" },
+    "engineering": { "type": "eclipse-engineering" },
+    "edition": { "type": "eclipse-edition" },
+    "waitlist": { "type": "eclipse-waitlist" }
+  },
+  "order": ["hero", "story", "macro", "engineering", "edition", "waitlist"]
+}
