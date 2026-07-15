@@ -11,15 +11,17 @@ The site already supports this split: `js/main.js` reads
 
 ---
 
-## Step 1 — Turn on GitHub Pages (asset hosting, ~2 min)
+## Step 1 — Asset hosting: ALREADY DONE ✓
 
-1. Open the repo on GitHub → **Settings → Pages**.
-2. Under **Build and deployment**, set **Source** to *Deploy from a branch*.
-3. Pick your branch (`main`, or this working branch) and folder **/ (root)**, save.
-4. After a minute your assets are live at
-   `https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/`
-   — open that URL and you should see the site itself running. That URL
-   (with the trailing `/`) is your **asset base**.
+A `gh-pages` branch in this repo serves the assets via GitHub Pages. Nothing
+to do — the asset base is:
+
+```
+https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/
+```
+
+Open that URL in a browser: you should see the site itself running. (If you
+ever regenerate frames, copy `site/` onto the `gh-pages` branch and push.)
 
 ## Step 2 — Add the blank layout to your theme
 
