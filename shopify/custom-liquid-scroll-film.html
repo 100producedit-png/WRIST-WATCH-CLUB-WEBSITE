@@ -1,0 +1,148 @@
+<div id="wwcx-film1" class="wwcx" style="--wwcx-h: 400vh;">
+  <div class="wwcx__sticky">
+    <canvas class="wwcx__canvas" aria-label="The Eclipse, rotating"></canvas>
+    <div class="wwcx__vignette"></div>
+    <div class="wwcx__stage" data-wwcx-stage>
+      <p class="wwcx__overline">TOURBILLON CHRONOGRAPH</p>
+      <h2 class="wwcx__title">Eclipse</h2>
+      <p class="wwcx__tagline">Light, withheld.</p>
+    </div>
+    
+      <div class="wwcx__cue" data-wwcx-cue><span>SCROLL</span><i></i></div>
+    
+  </div>
+</div>
+
+<style>
+  #wwcx-film1 { position: relative; height: var(--wwcx-h); background: #08080a; }
+  #wwcx-film1 .wwcx__sticky { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; }
+  #wwcx-film1 .wwcx__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: #08080a; }
+  #wwcx-film1 .wwcx__vignette { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(5,5,6,.55) 100%); }
+  #wwcx-film1 .wwcx__stage { position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; text-align: center; pointer-events: none;
+    padding: 0 1.5rem; opacity: 0; transform: translateY(20px); will-change: opacity, transform; }
+  #wwcx-film1 .wwcx__overline { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif;
+    font-size: .64rem; letter-spacing: .5em; text-indent: .5em; color: #c9a35c; text-transform: uppercase; }
+  #wwcx-film1 .wwcx__title { margin: 1.2rem 0 .8rem; font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    font-weight: 500; font-size: clamp(3rem, 9vw, 7.5rem); line-height: 1.02; color: #ece7dd; letter-spacing: .03em; }
+  #wwcx-film1 .wwcx__tagline { margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+    font-size: clamp(1rem, 1.8vw, 1.35rem); color: rgba(236,231,221,.6); }
+  #wwcx-film1 .wwcx__cue { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: .6rem;
+    font-family: ui-sans-serif, system-ui, sans-serif; font-size: .55rem; letter-spacing: .45em;
+    text-indent: .45em; color: rgba(236,231,221,.55); transition: opacity .5s ease; }
+  #wwcx-film1 .wwcx__cue i { width: 1px; height: 46px; display: block;
+    background: linear-gradient(#c9a35c, transparent); }
+</style>
+
+<script>
+(function () {
+  var root = document.getElementById('wwcx-film1');
+  if (!root || root.dataset.wwcxInit) return;
+  root.dataset.wwcxInit = '1';
+
+  var BASE = 'https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/';
+  var CLIPS = { orbit: 161, macro: 121, assembly: 121 };
+  var clip = 'orbit';
+  var count = CLIPS[clip] || 161;
+
+  var canvas = root.querySelector('.wwcx__canvas');
+  var stage = root.querySelector('[data-wwcx-stage]');
+  var cue = root.querySelector('[data-wwcx-cue]');
+  var ctx = canvas.getContext('2d');
+  var images = new Array(count), loaded = new Array(count);
+  var progress = 0;
+
+  function src(i) {
+    var n = String(i + 1);
+    while (n.length < 4) n = '0' + n;
+    return BASE + clip + '/frame_' + n + '.jpg';
+  }
+
+  /* coarse pass first so scrubbing works almost immediately */
+  var order = [], stride = 8, i;
+  for (i = 0; i < count; i += stride) order.push(i);
+  for (i = 0; i < count; i++) if (i % stride !== 0) order.push(i);
+  var inFlight = 0, cursor = 0;
+  function pump() {
+    while (inFlight < 8 && cursor < order.length) {
+      (function (idx) {
+        inFlight++;
+        var img = new Image();
+        img.decoding = 'async';
+        img.onload = img.onerror = function (e) {
+          inFlight--;
+          if (e.type === 'load') { images[idx] = img; loaded[idx] = true; if (idx === target()) render(); }
+          pump();
+        };
+        img.src = src(idx);
+      })(order[cursor++]);
+    }
+  }
+
+  function target() {
+    var t = Math.round(progress * (count - 1));
+    return Math.max(0, Math.min(count - 1, t));
+  }
+
+  function best() {
+    var t = target();
+    if (loaded[t]) return images[t];
+    for (var d = 1; d < count; d++) {
+      if (t - d >= 0 && loaded[t - d]) return images[t - d];
+      if (t + d < count && loaded[t + d]) return images[t + d];
+    }
+    return null;
+  }
+
+  function resize() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(canvas.clientWidth * dpr);
+    canvas.height = Math.round(canvas.clientHeight * dpr);
+    render();
+  }
+
+  function render() {
+    var img = best();
+    if (!img) return;
+    var cw = canvas.width, ch = canvas.height, iw = img.naturalWidth, ih = img.naturalHeight;
+    if (!cw || !ch || !iw || !ih) return;
+    var s = Math.max(cw / iw, ch / ih);
+    ctx.drawImage(img, (cw - iw * s) / 2, (ch - ih * s) / 2, iw * s, ih * s);
+  }
+
+  /* text: fades in over the middle of the scrub, out near the end */
+  function updateStage() {
+    if (stage) {
+      var vIn = (progress - 0.35) / 0.12;
+      var vOut = (0.75 - progress) / 0.12;
+      var o = Math.max(0, Math.min(1, Math.min(vIn, vOut)));
+      stage.style.opacity = o;
+      stage.style.transform = 'translateY(' + (20 - o * 20) + 'px)';
+    }
+    if (cue) cue.style.opacity = progress > 0.04 ? 0 : 1;
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      ticking = false;
+      var rect = root.getBoundingClientRect();
+      var span = rect.height - window.innerHeight;
+      var p = span > 0 ? -rect.top / span : 0;
+      progress = Math.max(0, Math.min(1, p));
+      render();
+      updateStage();
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { resize(); onScroll(); }, { passive: true });
+  resize();
+  pump();
+  onScroll();
+})();
+</script>
