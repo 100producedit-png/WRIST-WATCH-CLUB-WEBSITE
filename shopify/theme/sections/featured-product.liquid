@@ -3,7 +3,7 @@
   <div class="wwc-featured">
     <div class="wwc-featured__media">
       {% if fp and fp.featured_image %}
-        <img src="{{ fp.featured_image | image_url: width: 1100 }}" alt="{{ fp.featured_image.alt | escape }}" loading="lazy" />
+        <img src="{{ fp.featured_image | image_url: width: 1100 }}" alt="{{ fp.featured_image.alt | escape }}" width="1100" height="{{ 1100 | divided_by: fp.featured_image.aspect_ratio | round }}" loading="lazy" />
       {% else %}
         <div class="wwc-card__media"></div>
       {% endif %}

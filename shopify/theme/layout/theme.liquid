@@ -4,29 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ page_title }}{% unless page_title contains shop.name %} — {{ shop.name }}{% endunless %}</title>
-  <meta name="description" content="{{ page_description | default: 'The Eclipse tourbillon chronograph. Edition of 88.' | escape }}" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23c9a35c' stroke-width='1.5'/%3E%3Cpath d='M16 3a13 13 0 0 0 0 26 10.5 10.5 0 0 1 0-26z' fill='%23c9a35c'/%3E%3C/svg%3E" />
+  <meta name="description" content="{{ page_description | default: shop.description | escape }}" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%230c0c0c' stroke-width='2'/%3E%3Cpath d='M16 3a13 13 0 0 0 0 26 10.5 10.5 0 0 1 0-26z' fill='%230c0c0c'/%3E%3C/svg%3E" />
   {{ content_for_header }}
   {{ 'wwc-shop.css' | asset_url | stylesheet_tag }}
+  {{ 'wwc-store.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'wwc-store.js' | asset_url }}" defer></script>
   <style>
-    /* Base shell for utility pages; the Eclipse experience ships its own CSS. */
-    html, body { margin: 0; padding: 0; background: #08080a; color: #ece7dd; }
-    body { font-family: 'Inter', 'Helvetica Neue', sans-serif; font-weight: 300; }
-    .wwc-util { max-width: 40rem; margin: 0 auto; padding: 18vh 1.5rem 6rem; text-align: center; }
-    .wwc-util h1 { font-family: 'Cormorant Garamond', 'Times New Roman', serif; font-weight: 500; font-size: 2.6rem; }
-    .wwc-util a { color: #c9a35c; }
+    body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+    .wwc-util { max-width: 40rem; margin: 0 auto; padding: 14vh 1.5rem 6rem; text-align: center; }
+    .wwc-util h1 { font-size: 2.2rem; }
+    .wwc-util a { color: var(--ink); }
     .wwc-util input, .wwc-util button {
       font: inherit; padding: .8rem 1.2rem; margin: .3rem 0;
-      background: transparent; color: #ece7dd; border: 1px solid rgba(201,163,92,.4);
+      background: transparent; color: var(--ink); border: 1px solid var(--hair);
     }
-    .wwc-util button { background: #c9a35c; color: #0a0a0a; cursor: pointer; letter-spacing: .2em; text-transform: uppercase; font-size: .7rem; }
+    .wwc-util button { background: var(--ink); color: var(--bg); cursor: pointer; letter-spacing: .2em; text-transform: uppercase; font-size: .7rem; font-weight: 700; }
   </style>
 </head>
-<body>
-  {% comment %} The Eclipse pages bring their own fixed chrome; shop pages get the simple nav. {% endcomment %}
-  {% unless template.name == 'index' or template.suffix == 'eclipse' %}
-    {% render 'wwc-nav' %}
-  {% endunless %}
-  {{ content_for_layout }}
+<body class="wwc-store">
+  {% sections 'header-group' %}
+  <main id="MainContent">
+    {{ content_for_layout }}
+  </main>
+  {% sections 'footer-group' %}
 </body>
 </html>

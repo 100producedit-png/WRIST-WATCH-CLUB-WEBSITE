@@ -1,0 +1,82 @@
+{%- comment -%}
+  Large editorial banners, side by side (collabs / campaigns). One block =
+  full width, two blocks = split, nixon.com-style.
+{%- endcomment -%}
+
+<section class="st-section--tight">
+  <div class="st-wrap">
+    <div class="st-split" style="--st-split-cols: {% if section.blocks.size > 1 %}2{% else %}1{% endif %}">
+      {%- for block in section.blocks -%}
+        <a class="st-banner" href="{{ block.settings.link | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+          <div class="st-banner__media">
+            {%- if block.settings.image -%}
+              <img src="{{ block.settings.image | image_url: width: 1400 }}" alt="{{ block.settings.heading | escape }}" width="1400" height="1000" loading="lazy" />
+            {%- elsif block.settings.fallback_url != blank -%}
+              <img src="{{ block.settings.fallback_url }}" alt="" width="1400" height="1000" loading="lazy" />
+            {%- endif -%}
+          </div>
+          <span class="st-banner__shade"></span>
+          <div class="st-banner__content">
+            {%- if block.settings.eyebrow != blank -%}<p class="st-banner__eyebrow">{{ block.settings.eyebrow }}</p>{%- endif -%}
+            <h3 class="st-banner__title">{{ block.settings.heading }}</h3>
+            {%- if block.settings.text != blank -%}<p class="st-banner__text">{{ block.settings.text }}</p>{%- endif -%}
+            {%- if block.settings.button_label != blank -%}
+              <span class="st-btn st-btn--invert">{{ block.settings.button_label }}</span>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Split banner",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "Banner",
+      "limit": 2,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_url", "label": "Fallback image URL" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "LIMITED EDITION" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "The Eclipse" },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Discover" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Split banner",
+      "blocks": [
+        {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "EDITION OF 88",
+            "heading": "The Eclipse",
+            "text": "A tourbillon chronograph, crafted in darkness. Scroll the film.",
+            "button_label": "Enter the experience",
+            "link": "/pages/eclipse",
+            "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/orbit/frame_0120.jpg"
+          }
+        },
+        {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "THE MOVEMENT",
+            "heading": "Built, not assembled",
+            "text": "217 components. 72 hours of reserve. Zero shortcuts.",
+            "button_label": "Shop automatic",
+            "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/assembly/frame_0060.jpg"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

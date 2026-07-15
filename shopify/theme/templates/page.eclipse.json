@@ -1,4 +1,5 @@
 {
+  "layout": "full-bleed",
   "sections": {
     "hero": { "type": "eclipse-hero" },
     "story": { "type": "eclipse-story" },

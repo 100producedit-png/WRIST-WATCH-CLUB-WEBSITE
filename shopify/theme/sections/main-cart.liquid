@@ -10,7 +10,7 @@
     <form action="{{ routes.cart_url }}" method="post">
       {% for item in cart.items %}
         <div class="wwc-cart-line">
-          {% if item.image %}<img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" />{% endif %}
+          {% if item.image %}<img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" width="72" height="72" />{% endif %}
           <div style="flex:1">
             <a class="wwc-cart-line__title" href="{{ item.url }}">{{ item.product.title }}</a>
             {% unless item.product.has_only_default_variant %}<div class="wwc-prose">{{ item.variant.title }}</div>{% endunless %}

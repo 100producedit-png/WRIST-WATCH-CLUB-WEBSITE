@@ -1,0 +1,27 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "store-footer",
+      "settings": {
+        "pitch": "Team-designed, custom-built. Watches and accessories engineered for whatever you're into.",
+        "placeholder": "Enter your email",
+        "button_label": "Sign up",
+        "success_text": "You're in. Watch your inbox."
+      },
+      "blocks": {
+        "col-shop": {
+          "type": "menu",
+          "settings": { "heading": "Shop", "menu": "main-menu" }
+        },
+        "col-support": {
+          "type": "menu",
+          "settings": { "heading": "Support", "menu": "footer" }
+        }
+      },
+      "block_order": ["col-shop", "col-support"]
+    }
+  },
+  "order": ["footer"]
+}

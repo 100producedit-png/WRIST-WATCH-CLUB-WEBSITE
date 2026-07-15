@@ -4,7 +4,7 @@
       {% if product.media.size > 0 %}
         {% for media in product.media limit: section.settings.media_limit %}
           {% if media.media_type == 'image' %}
-            <img src="{{ media | image_url: width: 1400 }}" alt="{{ media.alt | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" />
+            <img src="{{ media | image_url: width: 1400 }}" alt="{{ media.alt | escape }}" width="1400" height="{{ 1400 | divided_by: media.aspect_ratio | round }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" />
           {% endif %}
         {% endfor %}
       {% else %}

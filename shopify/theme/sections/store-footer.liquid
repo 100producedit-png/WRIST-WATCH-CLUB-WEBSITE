@@ -1,0 +1,93 @@
+{%- comment -%}
+  Storefront footer: newsletter signup + menu columns (blocks) + legal bar
+  with payment icons, nixon.com-style on a black ground.
+{%- endcomment -%}
+
+<footer class="st-footer">
+  <div class="st-wrap">
+    <div class="st-footer__grid">
+      <div>
+        <p class="st-footer__brand">{{ shop.name }}</p>
+        <p class="st-footer__pitch">{{ section.settings.pitch }}</p>
+        {%- form 'customer', id: 'FooterNewsletter' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="st-footer__ok">{{ section.settings.success_text }}</p>
+          {%- else -%}
+            <input type="hidden" name="contact[tags]" value="newsletter" />
+            <div class="st-footer__form">
+              <input type="email" name="contact[email]" placeholder="{{ section.settings.placeholder }}" required aria-label="Email" autocomplete="email" />
+              <button type="submit" class="st-btn st-btn--invert">{{ section.settings.button_label }}</button>
+            </div>
+            {%- if form.errors -%}<p class="st-footer__ok">Please enter a valid email address.</p>{%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+        <div class="st-footer__social">
+          {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">Instagram</a>{%- endif -%}
+          {%- if section.settings.youtube != blank -%}<a href="{{ section.settings.youtube }}" target="_blank" rel="noopener">YouTube</a>{%- endif -%}
+          {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TikTok</a>{%- endif -%}
+        </div>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div class="st-footer__col" {{ block.shopify_attributes }}>
+          <p class="st-footer__head">{{ block.settings.heading }}</p>
+          {%- if linklists[block.settings.menu].links.size > 0 -%}
+            <ul>
+              {%- for link in linklists[block.settings.menu].links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="st-footer__legal">
+      <span>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</span>
+      <div class="st-footer__pay">
+        {%- for type in shop.enabled_payment_types -%}
+          {{ type | payment_type_svg_tag }}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "wwc-store-footer",
+  "settings": [
+    { "type": "text", "id": "pitch", "label": "Text", "default": "Team-designed, custom-built. Watches and accessories engineered for whatever you're into." },
+    { "type": "text", "id": "placeholder", "label": "Email placeholder", "default": "Enter your email" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Sign up" },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "You're in. Watch your inbox." },
+    { "type": "header", "content": "Social" },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "youtube", "label": "YouTube URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu column",
+      "limit": 3,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "blocks": [
+        { "type": "menu", "settings": { "heading": "Shop" } },
+        { "type": "menu", "settings": { "heading": "Support" } },
+        { "type": "menu", "settings": { "heading": "Company" } }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["footer"] }
+}
+{% endschema %}

@@ -1,11 +1,93 @@
 {
   "sections": {
-    "hero": { "type": "eclipse-hero" },
-    "story": { "type": "eclipse-story" },
-    "macro": { "type": "eclipse-macro" },
-    "engineering": { "type": "eclipse-engineering" },
-    "edition": { "type": "eclipse-edition" },
-    "waitlist": { "type": "eclipse-waitlist" }
+    "hero": {
+      "type": "store-hero",
+      "settings": {
+        "eyebrow": "NEW FOR 2026",
+        "heading": "Time. Well spent.",
+        "subheading": "Team-designed watches built to take a beating and keep perfect time doing it.",
+        "button_label": "Shop watches",
+        "button2_label": "Explore the Eclipse",
+        "button2_link": "shopify://pages/eclipse",
+        "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/orbit/frame_0001.jpg"
+      }
+    },
+    "props": {
+      "type": "store-value-props",
+      "blocks": {
+        "p1": { "type": "prop", "settings": { "title": "Free shipping", "text": "On all orders over $50" } },
+        "p2": { "type": "prop", "settings": { "title": "2-year warranty", "text": "On every watch we make" } },
+        "p3": { "type": "prop", "settings": { "title": "30-day returns", "text": "No questions asked" } },
+        "p4": { "type": "prop", "settings": { "title": "Secure checkout", "text": "Powered by Shopify" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
+    },
+    "tiles": {
+      "type": "store-category-tiles",
+      "settings": { "eyebrow": "FIND YOURS", "heading": "Shop by category", "columns": 4 },
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "label": "Men's watches", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/orbit/frame_0040.jpg" } },
+        "t2": { "type": "tile", "settings": { "label": "Women's watches", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/macro/frame_0030.jpg" } },
+        "t3": { "type": "tile", "settings": { "label": "Automatic", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/assembly/frame_0100.jpg" } },
+        "t4": { "type": "tile", "settings": { "label": "Bands & accessories", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/macro/frame_0090.jpg" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "bestsellers": {
+      "type": "store-featured-collection",
+      "settings": {
+        "collection": "all",
+        "eyebrow": "MOST WANTED",
+        "heading": "Bestsellers",
+        "view_all_label": "Shop all",
+        "limit": 8
+      }
+    },
+    "banners": {
+      "type": "store-split-banner",
+      "blocks": {
+        "b1": {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "EDITION OF 88",
+            "heading": "The Eclipse",
+            "text": "A tourbillon chronograph, crafted in darkness. Scroll the film.",
+            "button_label": "Enter the experience",
+            "link": "shopify://pages/eclipse",
+            "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/orbit/frame_0120.jpg"
+          }
+        },
+        "b2": {
+          "type": "banner",
+          "settings": {
+            "eyebrow": "THE MOVEMENT",
+            "heading": "Built, not assembled",
+            "text": "217 components. 72 hours of reserve. Zero shortcuts.",
+            "button_label": "Shop automatic",
+            "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/assembly/frame_0060.jpg"
+          }
+        }
+      },
+      "block_order": ["b1", "b2"]
+    },
+    "new-arrivals": {
+      "type": "store-featured-collection",
+      "settings": {
+        "collection": "frontpage",
+        "eyebrow": "JUST LANDED",
+        "heading": "New arrivals",
+        "view_all_label": "View all",
+        "limit": 8
+      }
+    },
+    "story": {
+      "type": "rich-text",
+      "settings": {
+        "overline": "WRIST WATCH CLUB",
+        "heading": "We make time.",
+        "body": "<p>Born from a crew of designers, riders and machinists who couldn't find a watch worth wearing, Wrist Watch Club builds instruments for people who use their time hard. Every case is machined, tested and torn back down before it earns the dial.</p>"
+      }
+    }
   },
-  "order": ["hero", "story", "macro", "engineering", "edition", "waitlist"]
+  "order": ["hero", "props", "tiles", "bestsellers", "banners", "new-arrivals", "story"]
 }

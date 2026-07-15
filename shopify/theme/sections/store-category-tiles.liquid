@@ -1,0 +1,72 @@
+{%- comment -%}
+  "Shop by category" tile grid. Each block is a tile: pick a collection (its
+  image and title fill the tile automatically) or override with a custom
+  image/label/link.
+{%- endcomment -%}
+
+<section class="st-section">
+  <div class="st-wrap">
+    <div class="st-section-head">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="st-eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="st-h2">{{ section.settings.heading }}</h2>
+      </div>
+    </div>
+    <div class="st-tiles" style="--st-tile-cols: {{ section.settings.columns }}">
+      {%- for block in section.blocks -%}
+        {%- assign col = collections[block.settings.collection] -%}
+        {%- assign tile_url = block.settings.link -%}
+        {%- if tile_url == blank and col -%}{%- assign tile_url = col.url -%}{%- endif -%}
+        {%- assign tile_label = block.settings.label -%}
+        {%- if tile_label == blank and col -%}{%- assign tile_label = col.title -%}{%- endif -%}
+        <a class="st-tile" href="{{ tile_url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image -%}
+            <img src="{{ block.settings.image | image_url: width: 900 }}" alt="{{ tile_label | escape }}" width="900" height="1125" loading="lazy" />
+          {%- elsif col.featured_image -%}
+            <img src="{{ col.featured_image | image_url: width: 900 }}" alt="{{ tile_label | escape }}" width="900" height="1125" loading="lazy" />
+          {%- elsif block.settings.fallback_url != blank -%}
+            <img src="{{ block.settings.fallback_url }}" alt="" width="900" height="1125" loading="lazy" />
+          {%- endif -%}
+          <span class="st-tile__shade"></span>
+          <span class="st-tile__label">{{ tile_label | default: 'Shop' }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category tiles",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FIND YOURS" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" },
+    { "type": "range", "id": "columns", "label": "Tiles per row (desktop)", "min": 2, "max": 4, "default": 4 }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "limit": 8,
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "fallback_url", "label": "Fallback image URL" },
+        { "type": "text", "id": "label", "label": "Label override" },
+        { "type": "url", "id": "link", "label": "Link override" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category tiles",
+      "blocks": [
+        { "type": "tile", "settings": { "label": "Men's watches", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/orbit/frame_0040.jpg" } },
+        { "type": "tile", "settings": { "label": "Women's watches", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/macro/frame_0030.jpg" } },
+        { "type": "tile", "settings": { "label": "Automatic", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/assembly/frame_0100.jpg" } },
+        { "type": "tile", "settings": { "label": "Bands & accessories", "fallback_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/macro/frame_0090.jpg" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

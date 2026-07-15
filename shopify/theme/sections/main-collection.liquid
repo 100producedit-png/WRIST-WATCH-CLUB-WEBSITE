@@ -11,7 +11,7 @@
         <a class="wwc-card" href="{{ product.url }}">
           <div class="wwc-card__media">
             {% if product.featured_image %}
-              <img src="{{ product.featured_image | image_url: width: 720 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" />
+              <img src="{{ product.featured_image | image_url: width: 720 }}" alt="{{ product.featured_image.alt | escape }}" width="720" height="720" loading="lazy" />
             {% endif %}
           </div>
           <div class="wwc-card__title">{{ product.title }}</div>

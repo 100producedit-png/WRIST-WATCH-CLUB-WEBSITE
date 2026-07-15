@@ -1,0 +1,28 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "header": {
+      "type": "store-header",
+      "settings": {
+        "menu": "main-menu"
+      },
+      "blocks": {
+        "announce-1": {
+          "type": "announcement",
+          "settings": { "text": "FREE SHIPPING ON ORDERS OVER $50" }
+        },
+        "announce-2": {
+          "type": "announcement",
+          "settings": { "text": "2-YEAR WARRANTY ON EVERY WATCH" }
+        },
+        "announce-3": {
+          "type": "announcement",
+          "settings": { "text": "THE ECLIPSE — EDITION OF 88 — NOW TAKING ALLOCATIONS", "link": "shopify://pages/eclipse" }
+        }
+      },
+      "block_order": ["announce-1", "announce-2", "announce-3"]
+    }
+  },
+  "order": ["header"]
+}

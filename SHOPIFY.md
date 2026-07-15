@@ -1,109 +1,100 @@
-# Putting the Eclipse site on Shopify — step by step
+# WRIST WATCH CLUB on Shopify
 
-The experience is heavy (403 scrub frames ≈ 33 MB, fonts, JS). Shopify's
-theme editor is not a good home for hundreds of image files, so the setup is:
+The repo now ships a **complete Shopify Online Store 2.0 theme** in
+[`shopify/theme/`](shopify/theme/): a nixon.com-style storefront (announcement
+bar, mega-menu header, hero, category tiles, product carousels, split banners,
+newsletter footer) **plus** the cinematic Eclipse scroll-film page on its own
+full-bleed layout.
 
-> **Markup lives in your Shopify theme. Assets stay on GitHub Pages (free),
-> served from this repo.**
+## Install the theme (5 minutes)
 
-The site already supports this split: `js/main.js` reads
-`window.WWC_ASSET_BASE` and loads all frames from there.
+1. Run `tools/package_theme.sh` (or grab
+   [`dist/wrist-watch-club-theme.zip`](dist/wrist-watch-club-theme.zip) from
+   this repo).
+2. Shopify admin → **Online Store → Themes → Add theme → Upload zip file**.
+3. Pick the uploaded **Wrist Watch Club** theme → **Customize** to preview,
+   **Publish** when ready.
 
----
+Using the Shopify CLI instead: `cd shopify/theme && shopify theme push`.
 
-## Step 1 — Asset hosting: ALREADY DONE ✓
+## After installing — 3 things to wire up
 
-A `gh-pages` branch in this repo serves the assets via GitHub Pages. Nothing
-to do — the asset base is:
+### 1. Navigation (powers the mega menu)
+**Online Store → Navigation → Main menu.** Top-level items become the nav bar;
+their sub-items become mega-menu columns; third-level items become the links
+in each column. Example:
 
 ```
-https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/
+Shop watches
+├── By style
+│   ├── Analog / Digital / Automatic / Chronograph
+├── By fit
+│   ├── Men's / Women's / Oversized
+Accessories
+The Eclipse            → /pages/eclipse
+Explore
 ```
 
-Open that URL in a browser: you should see the site itself running. (If you
-ever regenerate frames, copy `site/` onto the `gh-pages` branch and push.)
+The **Footer menu** fills the footer's link columns.
 
-## Step 2 — Add the blank layout to your theme
+### 2. Collections (power the carousels & tiles)
+The homepage ships pointing at the built-in `all` and `frontpage` (Home page)
+collections, so it works immediately. For real merchandising, create
+collections (e.g. *Bestsellers*, *New arrivals*, *Men's*, *Women's*) and pick
+them in the theme editor on the **Featured collection** and **Category tiles**
+sections. Tiles use the collection's featured image automatically — or set an
+image override per tile.
 
-1. Shopify admin → **Online Store → Themes → ⋯ → Edit code**.
-2. Under **Layout**, click **Add a new layout** → name it `full-bleed`.
-3. Delete the boilerplate and paste in the contents of
-   [`shopify/layout/full-bleed.liquid`](shopify/layout/full-bleed.liquid).
-4. **Save.** (This layout hides your theme's normal header/footer so the
-   cinematic page runs edge to edge. Your other pages are untouched.)
+### 3. The Eclipse page
+**Online Store → Pages → Add page**, title `Eclipse`, and set **Theme
+template** to `eclipse`. That page renders the scroll film full-bleed (no
+store header/footer — it has its own chrome). The homepage hero button and
+split banner already link to `/pages/eclipse`.
 
-## Step 3 — Add the page template
+## What's in the theme
 
-1. Still in **Edit code**, under **Templates**, click **Add a new template**.
-2. Choose type **page**, format **liquid**, name it `eclipse`.
-3. Paste in the contents of
-   [`shopify/templates/page.eclipse.liquid`](shopify/templates/page.eclipse.liquid).
-4. If your GitHub Pages URL differs from the default, update the one
-   `assign wwc_base = '...'` line near the top.
-5. **Save.**
+| Piece | File(s) |
+| --- | --- |
+| Store layout (header/footer groups) | `layout/theme.liquid` |
+| Full-bleed layout (Eclipse) | `layout/full-bleed.liquid` |
+| Header: announcements + mega menu + drawer | `sections/store-header.liquid` |
+| Footer: newsletter + link columns + payment icons | `sections/store-footer.liquid` |
+| Hero banner | `sections/store-hero.liquid` |
+| Category tiles | `sections/store-category-tiles.liquid` |
+| Product carousel | `sections/store-featured-collection.liquid` |
+| Split/collab banners | `sections/store-split-banner.liquid` |
+| Value props strip | `sections/store-value-props.liquid` |
+| Storefront design system | `assets/wwc-store.css`, `assets/wwc-store.js` |
+| Eclipse scroll film | `sections/eclipse-*.liquid`, `snippets/eclipse-assets.liquid` |
+| Product / collection / cart / search / customer pages | `sections/main-*.liquid`, `templates/` |
 
-## Step 4 — Create the page
+Every section is editable in the theme editor (**Customize**): all copy,
+images, links, collections and menus are settings — no code edits needed for
+day-to-day changes.
 
-1. Shopify admin → **Online Store → Pages → Add page**.
-2. Title: `Eclipse` (leave the content box empty — the template is the page).
-3. In the right sidebar, set **Theme template** to `eclipse`.
-4. **Save**, then **View page**. Scroll. The watch should turn.
+## Asset hosting
 
-## Step 5 (optional) — Make it your homepage
+The Eclipse experience streams its 400+ scrub frames from GitHub Pages
+(free, already live):
 
-Shopify's homepage always uses the `index` template, so either:
-- **Redirect:** Online Store → Navigation → URL Redirects → from `/` is not
-  allowed, so instead point your main menu's first item at `/pages/eclipse`; or
-- **Duplicate:** create `templates/index.eclipse-test.liquid`? Not supported —
-  the practical route is simply linking the nav/hero of your theme to
-  `/pages/eclipse`, or pasting the same template body into `templates/index.liquid`
-  on a **duplicated theme** (test first).
-
-## Hooking the waitlist to real customers (later)
-
-The form is presentation-only. When you want real signups, replace the
-`<form class="waitlist__form">` block in the template with a Shopify customer
-form (`{% form 'customer' %}` with `contact[tags] = waitlist`) — happy to wire
-that up on request.
-
----
-
-# How to write / edit the HTML (a working primer)
-
-HTML is nested boxes. Every visible thing on the page is an *element*:
-an opening tag, content, a closing tag:
-
-```html
-<p class="overline">PRIVATE WAITLIST</p>
-└┬┘ └───────┬─────┘└──────┬───────┘└─┬┘
- tag    attribute      content    closing tag
+```
+https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/…
 ```
 
-- The **tag** says what it is (`h1` heading, `p` paragraph, `section` a page
-  band, `canvas` a drawing surface, `a` a link, `form`/`input`/`button` forms).
-- **Attributes** add settings. `class` is the important one here — it's how
-  the CSS file (`site/css/style.css`) finds elements to style, and how the
-  JS (`site/js/main.js`) finds elements to animate. `id` must be unique and
-  is used for anchors (`#waitlist`) and scripts.
-- Elements nest, and the closing tags must un-nest in the same order.
+The storefront also uses a few of those frames as **fallback imagery** so the
+homepage never looks empty. Replace them any time by picking images in the
+theme editor — picked images always win over fallbacks and are served from
+Shopify's CDN.
 
-Rules of thumb for THIS site:
+## Newsletter & waitlist signups
 
-1. **To change copy, edit text between tags — never the tags or classes.**
-   Example: to change the price, find `<p class="edition__price edition-el">$48,000</p>`
-   and edit only `$48,000`. The classes `edition__price` (styling) and
-   `edition-el` (scroll reveal) must stay or the styling/animation breaks.
-2. **Special characters are escaped:** `&` is written `&amp;`, and `&nbsp;`
-   is a non-breaking space (keeps "in Darkness." on one line).
-3. **`<br/>` forces a line break** inside a caption — move it to control
-   where lines split.
-4. **Adding a new caption or spec:** copy an existing block (e.g. a whole
-   `<div class="macro-caption" data-caption="1">…</div>`), bump the
-   `data-caption` number, then register its scroll window in `js/main.js`
-   (the array of `{ sel, inAt, outAt }` entries — values are 0→1 scroll
-   progress within that section).
-5. **Two copies of the markup exist** — `site/index.html` (localhost) and
-   `shopify/templates/page.eclipse.liquid` (Shopify). They are line-for-line
-   the same body; when you edit one, make the same edit in the other.
-6. After editing, test locally: `cd site && python3 -m http.server 4173`,
-   open `http://localhost:4173`, hard-refresh (Ctrl/Cmd-Shift-R).
+Both the footer signup and the Eclipse waitlist use Shopify's native
+`{% form 'customer' %}` — signups appear under **Customers**, tagged
+`newsletter` (footer) or `waitlist` (Eclipse page). No app needed.
+
+## Previewing the storefront without Shopify
+
+Open `preview-home.html` through any local server from the repo root
+(`python3 -m http.server 4173`) to see a static mock of the homepage using
+the exact theme CSS/JS. The Eclipse film still previews via `site/`
+(see README).

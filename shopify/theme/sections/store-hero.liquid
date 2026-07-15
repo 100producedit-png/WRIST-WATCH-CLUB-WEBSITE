@@ -1,0 +1,52 @@
+{%- comment -%}
+  Full-bleed homepage hero. Uses the picked image, otherwise falls back to the
+  hosted Eclipse imagery so the section never renders empty.
+{%- endcomment -%}
+
+<section class="st-hero{% if section.settings.height == 'short' %} st-hero--short{% endif %}">
+  <div class="st-hero__media">
+    {%- if section.settings.image -%}
+      <img src="{{ section.settings.image | image_url: width: 2400 }}"
+           srcset="{{ section.settings.image | image_url: width: 1000 }} 1000w, {{ section.settings.image | image_url: width: 1600 }} 1600w, {{ section.settings.image | image_url: width: 2400 }} 2400w"
+           sizes="100vw" alt="{{ section.settings.image.alt | escape }}" width="2400" height="1350" fetchpriority="high" />
+    {%- elsif section.settings.fallback_url != blank -%}
+      <img src="{{ section.settings.fallback_url }}" alt="" width="1920" height="1080" fetchpriority="high" />
+    {%- endif -%}
+  </div>
+  <div class="st-hero__shade"></div>
+  <div class="st-hero__content{% if section.settings.align == 'center' %} st-hero__content--center{% endif %}">
+    {%- if section.settings.eyebrow != blank -%}<p class="st-hero__eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1 class="st-hero__title">{{ section.settings.heading }}</h1>
+    {%- if section.settings.subheading != blank -%}<p class="st-hero__sub">{{ section.settings.subheading }}</p>{%- endif -%}
+    <div class="st-hero__actions">
+      {%- if section.settings.button_label != blank -%}
+        <a class="st-btn st-btn--invert" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.button2_label != blank -%}
+        <a class="st-btn st-btn--ghost" style="color:#fff;border-color:#fff" href="{{ section.settings.button2_link | default: routes.all_products_collection_url }}">{{ section.settings.button2_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "fallback_url", "label": "Fallback image URL", "info": "Used when no image is picked.", "default": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/frames/orbit/frame_0001.jpg" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "NEW FOR 2026" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Time. Well spent." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Team-designed watches built to take a beating and keep perfect time doing it." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop watches" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "button2_label", "label": "Second button label", "default": "Explore the Eclipse" },
+    { "type": "url", "id": "button2_link", "label": "Second button link" },
+    { "type": "select", "id": "height", "label": "Height", "default": "full",
+      "options": [ { "value": "full", "label": "Full screen" }, { "value": "short", "label": "Short" } ] },
+    { "type": "select", "id": "align", "label": "Text alignment", "default": "left",
+      "options": [ { "value": "left", "label": "Left" }, { "value": "center", "label": "Center" } ] }
+  ],
+  "presets": [{ "name": "Hero banner" }]
+}
+{% endschema %}
