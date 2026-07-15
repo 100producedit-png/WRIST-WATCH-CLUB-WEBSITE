@@ -13,9 +13,9 @@
 
   /* ── Sequence manifest (generated from Seedance 2.0 clips) ── */
   var SEQ = {
-    orbit:    { dir: 'assets/frames/orbit/',    count: 160, pad: 4, ext: '.jpg' },
-    macro:    { dir: 'assets/frames/macro/',    count: 120, pad: 4, ext: '.jpg' },
-    assembly: { dir: 'assets/frames/assembly/', count: 120, pad: 4, ext: '.jpg' }
+    orbit:    { dir: 'assets/frames/orbit/',    count: 161, pad: 4, ext: '.jpg' },
+    macro:    { dir: 'assets/frames/macro/',    count: 121, pad: 4, ext: '.jpg' },
+    assembly: { dir: 'assets/frames/assembly/', count: 121, pad: 4, ext: '.jpg' }
   };
 
   /* ═════════════════════ Frame sequence ═════════════════════ */
@@ -122,6 +122,7 @@
     smoothWheel: true,
     syncTouch: false
   });
+  window.lenis = lenis;
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
   gsap.ticker.lagSmoothing(0);
