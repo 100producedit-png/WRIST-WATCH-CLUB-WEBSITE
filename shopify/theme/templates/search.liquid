@@ -1,0 +1,10 @@
+<div class="wwc-util">
+  <h1>Search</h1>
+  <form action="{{ routes.search_url }}" method="get">
+    <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Search" />
+    <button type="submit">Search</button>
+  </form>
+  {% if search.performed %}
+    {% for item in search.results %}<p><a href="{{ item.url }}">{{ item.title }}</a></p>{% endfor %}
+  {% endif %}
+</div>

@@ -1,0 +1,6 @@
+<div class="wwc-util">
+  <h1>{{ blog.title }}</h1>
+  {% for article in blog.articles %}
+    <p><a href="{{ article.url }}">{{ article.title }}</a></p>
+  {% endfor %}
+</div>

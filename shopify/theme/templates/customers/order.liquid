@@ -1,0 +1,4 @@
+<div class="wwc-util">
+  <h1>Order {{ order.name }}</h1>
+  {% for line_item in order.line_items %}<p>{{ line_item.quantity }} × {{ line_item.title }}</p>{% endfor %}
+</div>
