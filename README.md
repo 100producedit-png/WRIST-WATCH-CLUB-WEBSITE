@@ -1,7 +1,7 @@
-# AURUM & NOIR — Eclipse
+# WRIST WATCH CLUB — Eclipse
 
 A cinematic “3D scroll” launch site for the Eclipse tourbillon chronograph, a
-fictional Swiss luxury watch. Scrolling scrubs three Seedance 2.0 clips
+fictional Swiss luxury watch by Wrist Watch Club. Scrolling scrubs three Seedance 2.0 clips
 (generated on Higgsfield from a single hero image reference) as canvas frame
 sequences, so the watch rotates, the dial glides by, and the movement
 assembles itself under your fingertips.

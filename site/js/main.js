@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════
-   AURUM & NOIR — ECLIPSE
+   WRIST WATCH CLUB — ECLIPSE
    Scroll-scrubbed cinematic engine
    Lenis smooth scroll + GSAP ScrollTrigger + canvas sequences
    ═══════════════════════════════════════════════════════════ */
@@ -11,11 +11,15 @@
 
   var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ── Sequence manifest (generated from Seedance 2.0 clips) ── */
+  /* ── Sequence manifest (generated from Seedance 2.0 clips) ──
+     When the page is served away from the static files (e.g. embedded in a
+     Shopify template), set window.WWC_ASSET_BASE to the absolute URL of the
+     site/ folder before this script loads. Defaults to same-folder. */
+  var BASE = window.WWC_ASSET_BASE || '';
   var SEQ = {
-    orbit:    { dir: 'assets/frames/orbit/',    count: 161, pad: 4, ext: '.jpg' },
-    macro:    { dir: 'assets/frames/macro/',    count: 121, pad: 4, ext: '.jpg' },
-    assembly: { dir: 'assets/frames/assembly/', count: 121, pad: 4, ext: '.jpg' }
+    orbit:    { dir: BASE + 'assets/frames/orbit/',    count: 161, pad: 4, ext: '.jpg' },
+    macro:    { dir: BASE + 'assets/frames/macro/',    count: 121, pad: 4, ext: '.jpg' },
+    assembly: { dir: BASE + 'assets/frames/assembly/', count: 121, pad: 4, ext: '.jpg' }
   };
 
   /* ═════════════════════ Frame sequence ═════════════════════ */
@@ -185,7 +189,7 @@
     tl.fromTo('#heroBrand .overline',
         { opacity: 0 }, { opacity: 1, duration: 1.6 }, 0.15)
       .fromTo('#heroTitle [data-track]',
-        { opacity: 0, letterSpacing: '0.55em', filter: 'blur(6px)' },
+        { opacity: 0, letterSpacing: '0.34em', filter: 'blur(6px)' },
         { opacity: 1, letterSpacing: '0.06em', filter: 'blur(0px)', duration: 2.6, ease: 'power2.inOut' }, 0.3)
       .fromTo('#heroBrand .hero-sub',
         { opacity: 0, y: 12 }, { opacity: 0.9, y: 0, duration: 1.4 }, 1.9)
