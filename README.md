@@ -1,5 +1,21 @@
 # WRIST WATCH CLUB — Eclipse
 
+## New: the "Active" storefront (Nixon-inspired) — LIVE
+
+`shopify/theme/` now also ships a bold commerce homepage inspired by
+nixon.com: rotating announcement bar, sticky header with dropdown menus,
+full-bleed hero (image or video), category tiles, draggable product
+shelves, promo banners, story banner, value props, newsletter and a dark
+mega-footer (`sections/active-*.liquid` + `assets/active.css/js`).
+
+Product shelves support two modes: feed from a collection, or hand-picked
+"Product" blocks — each block can **override the card's image, hover image
+and link** in the theme editor. A "fill remaining slots" setting appends
+the rest of the collection after the hand-picked cards.
+
+The hero accepts an mp4 `video_url`; a Higgsfield-generated cinematic
+surf/watch loop is wired in via Shopify-hosted CDN.
+
 ## New: the "Maison" storefront (Corum-inspired)
 
 `shopify/theme/` now ships a cinematic luxury homepage inspired by the
