@@ -234,12 +234,17 @@
     if ($('#heroBrand')) heroTl.to('#heroBrand', { opacity: 0, y: -46, duration: 0.16 }, 0.06);
     if ($('#scrollCue')) heroTl.to('#scrollCue', { opacity: 0, duration: 0.08 }, 0.05);
     if ($('#heroName')) {
+      /* window chosen to sit on the dark edge-on/case-back frames
+         (~55-115 of 161), so the name never fights the lit dial */
       heroTl
         .fromTo('#heroName',
           { opacity: 0, scale: 0.96 },
-          { opacity: 1, scale: 1, duration: 0.2 }, 0.34)
-        .to('#heroName', { opacity: 0, y: -40, duration: 0.16 }, 0.72);
+          { opacity: 1, scale: 1, duration: 0.12 }, 0.30)
+        .to('#heroName', { opacity: 0, y: -40, duration: 0.08 }, 0.62);
     }
+    /* dummy tween pins total duration to 1 so the positions above
+       read as true 0-1 fractions of the hero scroll */
+    heroTl.to({ _: 0 }, { _: 1, duration: 0.001 }, 0.999);
   }
 
   /* ═════════════════ Story reveals (pinned) ═════════════════ */

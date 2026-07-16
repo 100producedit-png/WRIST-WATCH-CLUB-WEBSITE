@@ -63,6 +63,10 @@ body.is-loading { overflow: hidden; height: 100vh; }
 
 ::selection { background: var(--gold); color: #0a0a0a; }
 
+a:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 1px solid var(--gold); outline-offset: 3px;
+}
+
 .amp { font-family: var(--serif); font-style: italic; font-weight: 400; }
 
 /* ── Preloader ─────────────────────────────────────────── */
@@ -108,6 +112,9 @@ body:not(.is-loading) .chrome { opacity: 1; }
   font-size: .72rem; letter-spacing: .42em; color: var(--ink);
   font-weight: 400;
 }
+.chrome__brand, .chrome__edition, .chrome__cta {
+  text-shadow: 0 1px 2px rgba(0,0,0,.7), 0 0 14px rgba(0,0,0,.55);
+}
 .chrome__right { display: flex; align-items: center; gap: 2rem; }
 .chrome__edition {
   font-size: .58rem; letter-spacing: .3em; color: var(--ink-dim);
@@ -135,15 +142,26 @@ body:not(.is-loading) .chrome { opacity: 1; }
   position: absolute; inset: 0; pointer-events: none;
   background:
     radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(5,5,6,.55) 100%),
-    linear-gradient(to bottom, rgba(5,5,6,.5), transparent 18%, transparent 82%, rgba(5,5,6,.6));
+    linear-gradient(to bottom, rgba(5,5,6,.62), transparent 20%, transparent 82%, rgba(5,5,6,.6));
 }
 
 /* ── Hero stages ───────────────────────────────────────── */
 .hero-stage {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 2;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; pointer-events: none;
   padding: 0 1.5rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,.85), 0 0 18px rgba(0,0,0,.75), 0 0 46px rgba(0,0,0,.6);
+}
+/* Legibility scrim: the orbit frames put a bright dial behind the type,
+   so each stage carries its own pool of darkness (same device as the
+   macro captions). Fades with the stage since it belongs to it. */
+.hero-stage::before {
+  content: ''; position: absolute; z-index: -1;
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(140vw, 90rem); height: 72vh;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(5,5,6,.72), transparent 70%);
+  filter: blur(10px); pointer-events: none;
 }
 .overline {
   font-size: .62rem; letter-spacing: .5em; text-indent: .5em;
@@ -211,7 +229,7 @@ body:not(.is-loading) .chrome { opacity: 1; }
 /* ── Macro captions ────────────────────────────────────── */
 .macro-caption {
   position: absolute; left: 8vw; bottom: 14vh; max-width: 34rem;
-  opacity: 0; pointer-events: none;
+  opacity: 0; pointer-events: none; z-index: 2;
 }
 .macro-caption[data-caption="1"] { left: auto; right: 8vw; text-align: right; }
 .macro-caption[data-caption="2"] { bottom: auto; top: 16vh; }
@@ -233,10 +251,18 @@ body:not(.is-loading) .chrome { opacity: 1; }
 /* ── Engineering specs ─────────────────────────────────── */
 .eng-header {
   position: absolute; top: 12vh; left: 0; right: 0; text-align: center;
-  opacity: 0;
+  opacity: 0; z-index: 2;
+}
+.eng-header::before {
+  content: ''; position: absolute; z-index: -1;
+  left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(90vw, 44rem); height: 16rem;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(5,5,6,.68), transparent 72%);
+  filter: blur(8px); pointer-events: none;
 }
 .spec {
   position: absolute; left: 7vw; top: 30vh; opacity: 0; pointer-events: none;
+  z-index: 2;
 }
 .spec--right { left: auto; right: 7vw; text-align: right; top: 42vh; }
 .spec[data-spec="2"] { top: 62vh; }
@@ -288,6 +314,13 @@ body:not(.is-loading) .chrome { opacity: 1; }
   background: var(--bg);
 }
 .waitlist__inner { text-align: center; max-width: 40rem; width: 100%; }
+/* Eclipse monogram seal (same mark as the loader/favicon) */
+.waitlist__inner::before {
+  content: ''; display: block; width: 44px; height: 44px;
+  margin: 0 auto 2rem;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23c9a35c' stroke-width='1' opacity='.4'/%3E%3Cpath d='M16 3a13 13 0 0 0 0 26 10.5 10.5 0 0 1 0-26z' fill='%23c9a35c'/%3E%3C/svg%3E") center / contain no-repeat;
+  opacity: .85;
+}
 .waitlist__title {
   font-family: var(--serif); font-weight: 500;
   font-size: clamp(2.6rem, 6.5vw, 5.4rem); line-height: 1.08;
@@ -296,7 +329,9 @@ body:not(.is-loading) .chrome { opacity: 1; }
 .waitlist__form {
   display: flex; gap: 0; max-width: 30rem; margin: 0 auto;
   border: 1px solid var(--hair);
+  transition: border-color .4s ease;
 }
+.waitlist__form:focus-within { border-color: var(--gold); }
 .waitlist__form input {
   flex: 1; min-width: 0; background: transparent; border: 0; outline: 0;
   color: var(--ink); font-family: var(--sans); font-weight: 300;
@@ -323,7 +358,7 @@ body:not(.is-loading) .chrome { opacity: 1; }
 }
 
 .footer {
-  margin-top: 18vh; width: 100%; padding: 3rem 2.4rem 2.6rem;
+  margin-top: 11vh; width: 100%; padding: 3rem 2.4rem 2.6rem;
   border-top: 1px solid rgba(236,231,221,.08);
   display: flex; flex-direction: column; align-items: center; gap: 1.1rem;
 }
@@ -348,6 +383,9 @@ body:not(.is-loading) .chrome { opacity: 1; }
 @media (max-width: 720px) {
   .chrome { padding: 1.2rem 1.3rem; }
   .chrome__edition { display: none; }
+  .hero-title { font-size: clamp(1.9rem, 8.5vw, 3rem); }
+  .hero-stage .overline { font-size: .55rem; letter-spacing: .4em; text-indent: .4em; }
+  .hero-stage::before { width: 160vw; height: 58vh; }
   .macro-caption { left: 6vw; right: 6vw; max-width: none; }
   .macro-caption[data-caption="1"] { left: 6vw; right: 6vw; }
   .spec { left: 8vw; }
