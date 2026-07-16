@@ -72,6 +72,34 @@ Every section is editable in the theme editor (**Customize**): all copy,
 images, links, collections and menus are settings — no code edits needed for
 day-to-day changes.
 
+## The hero video
+
+The homepage hero plays a 5-second 2K loop of the Gravity tourbillon
+(generated with Seedance 2.0 from the product hero image, upscaled to
+2560×1440). It autoplays muted, loops, and falls back to the hero image as
+its poster.
+
+- The theme ships streaming it from the generation CDN, so it works out of
+  the box.
+- The durable master copy lives in this repo at
+  `site/assets/video/hero-loop.mp4`. For production, the most robust option
+  is to upload that file in the theme editor: **Customize → Hero banner →
+  Video** — Shopify then serves it from its own CDN and it takes priority
+  automatically. (It also becomes available at the GitHub Pages URL
+  `…/site/assets/video/hero-loop.mp4` once the `gh-pages` branch is synced
+  with this branch's `site/` folder.)
+
+## Overriding product images in the carousels
+
+The **Featured collection** sections (Bestsellers / New arrivals) have two
+modes. With just a collection picked, products render automatically. To
+control cards individually — including **changing or overriding a product's
+image** — add **Product** blocks to the section in the theme editor: each
+block picks a product (title, price, link, sale badge come from it) and can
+override the card image (picked image or external URL), the hover image,
+the title, and the link. As soon as one block exists, blocks replace the
+collection listing.
+
 ## Asset hosting
 
 The Eclipse experience streams its 400+ scrub frames from GitHub Pages
