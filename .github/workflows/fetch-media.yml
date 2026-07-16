@@ -1,12 +1,21 @@
 name: Fetch generated media
 
-# One-shot helper: the Claude Code session that built this site runs in a
-# sandbox whose egress policy only allows GitHub, so this workflow pulls the
-# Higgsfield-generated media (hero image + three Seedance 2.0 clips) onto the
-# branch where the sandbox can reach it.
+# Helper: the Claude Code session that builds this site runs in a sandbox
+# whose egress policy only allows GitHub, so this workflow pulls
+# Higgsfield-generated media onto the branch where the sandbox can reach it.
+# Dispatch it with a media URL + destination path to fetch any new asset.
 
 on:
   workflow_dispatch:
+    inputs:
+      url:
+        description: "HTTPS URL of the media file to download"
+        required: true
+        type: string
+      dest:
+        description: "Repo-relative destination path (e.g. media/hero-loop.mp4)"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -17,19 +26,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download generated media
+      - name: Download media
         run: |
-          mkdir -p media
-          curl -fsSL --retry 3 -o media/hero.png "https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260715_133855_1dc9c03c-36ae-417d-b8b3-14e049b1486a.png"
-          curl -fsSL --retry 3 -o media/orbit.mp4 "https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260715_134036_0e6cb178-7545-4f35-9d1a-2c2b567e2481.mp4"
-          curl -fsSL --retry 3 -o media/macro.mp4 "https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260715_134017_23c751d6-b06c-4e23-b8ca-f4cae2b80e30.mp4"
-          curl -fsSL --retry 3 -o media/assembly.mp4 "https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260715_134020_4c069838-ec88-40d6-b2c9-43a38b54f785.mp4"
-          ls -la media
+          case "${{ inputs.dest }}" in
+            *..*|/*) echo "Refusing suspicious destination path" >&2; exit 1 ;;
+          esac
+          mkdir -p "$(dirname "${{ inputs.dest }}")"
+          curl -fsSL --retry 3 -o "${{ inputs.dest }}" "${{ inputs.url }}"
+          ls -la "${{ inputs.dest }}"
 
       - name: Commit media to branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add media
-          git commit -m "Add Higgsfield-generated media (hero image + 3 Seedance clips)"
+          git add "${{ inputs.dest }}"
+          git commit -m "Add generated media: ${{ inputs.dest }}"
           git push
