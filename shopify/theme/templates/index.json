@@ -10,7 +10,12 @@
       "block_order": ["msg-1", "msg-2", "msg-3"]
     },
     "header": { "type": "active-header" },
-    "hero": { "type": "active-hero" },
+    "hero": {
+      "type": "active-hero",
+      "settings": {
+        "video_url": "https://100producedit-png.github.io/WRIST-WATCH-CLUB-WEBSITE/site/assets/video/hero-active.mp4"
+      }
+    },
     "categories": {
       "type": "active-categories",
       "blocks": {
