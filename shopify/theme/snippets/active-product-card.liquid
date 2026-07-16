@@ -1,15 +1,26 @@
-{% comment %} Nixon-style product card: hover image swap, badges, variant swatches. {% endcomment %}
-<a class="a-pcard" href="{{ product.url }}">
+{% comment %}
+  Nixon-style product card.
+  Params: product (required), custom_image / custom_hover (optional image
+  overrides), custom_link (optional URL override).
+{% endcomment %}
+{%- liquid
+  assign card_image = custom_image | default: product.featured_image
+  assign card_hover = custom_hover
+  if card_hover == blank and custom_image == blank
+    assign card_hover = product.images[1]
+  endif
+-%}
+<a class="a-pcard" href="{{ custom_link | default: product.url }}">
   <div class="a-pcard__media">
     {%- if product.compare_at_price > product.price -%}
       <span class="a-pcard__badge a-pcard__badge--sale">Sale</span>
     {%- elsif product.tags contains 'new' -%}
       <span class="a-pcard__badge">New</span>
     {%- endif -%}
-    {%- if product.featured_image -%}
-      {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 68vw, 288px' }}
-      {%- if product.images[1] -%}
-        {{ product.images[1] | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 68vw, 288px' }}
+    {%- if card_image -%}
+      {{ card_image | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 68vw, 288px' }}
+      {%- if card_hover -%}
+        {{ card_hover | image_url: width: 800 | image_tag: loading: 'lazy', sizes: '(max-width: 860px) 68vw, 288px' }}
       {%- endif -%}
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag }}
