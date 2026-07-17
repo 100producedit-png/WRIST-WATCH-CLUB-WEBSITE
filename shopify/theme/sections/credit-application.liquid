@@ -1,0 +1,210 @@
+{% comment %}
+  Credit / financing application. Submits through Shopify's contact form,
+  so every application arrives in the store's email inbox (Settings →
+  Notifications → the "Sender email"). No apps required.
+
+  Deliberately does NOT ask for SSN, date of birth, or account numbers —
+  a storefront form is the wrong place for those. Identity verification
+  belongs with your financing partner's secure portal.
+{% endcomment %}
+
+<div class="wwc-shell wwc-shell--form">
+  <div class="wwc-center">
+    <p class="wwc-overline">{{ section.settings.overline | escape }}</p>
+    <h1 class="wwc-title">{{ section.settings.title | escape }}</h1>
+    <p class="wwc-prose wwc-form__intro">{{ section.settings.intro | escape }}</p>
+  </div>
+
+  {% form 'contact', class: 'wwc-appform' %}
+    {% if form.posted_successfully? %}
+      <div class="wwc-form__success" aria-live="polite">
+        <p class="wwc-overline">RECEIVED</p>
+        <p>{{ section.settings.confirm | escape }}</p>
+      </div>
+    {% else %}
+
+      {% if form.errors %}
+        <p class="wwc-form__error" role="alert">
+          Please review the form — a required field is missing or invalid.
+        </p>
+      {% endif %}
+
+      <input type="hidden" name="contact[form_type_label]" value="Credit application" />
+
+      <fieldset class="wwc-fieldset">
+        <legend>Applicant</legend>
+        <div class="wwc-form__grid">
+          <label class="wwc-field">
+            <span>First name</span>
+            <input class="wwc-input" type="text" name="contact[first_name]" autocomplete="given-name" required />
+          </label>
+          <label class="wwc-field">
+            <span>Last name</span>
+            <input class="wwc-input" type="text" name="contact[last_name]" autocomplete="family-name" required />
+          </label>
+          <label class="wwc-field">
+            <span>Email</span>
+            <input class="wwc-input" type="email" name="contact[email]" autocomplete="email" required />
+          </label>
+          <label class="wwc-field">
+            <span>Phone</span>
+            <input class="wwc-input" type="tel" name="contact[phone]" autocomplete="tel" required />
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="wwc-fieldset">
+        <legend>Residence</legend>
+        <div class="wwc-form__grid">
+          <label class="wwc-field wwc-field--wide">
+            <span>Street address</span>
+            <input class="wwc-input" type="text" name="contact[street_address]" autocomplete="street-address" required />
+          </label>
+          <label class="wwc-field">
+            <span>City</span>
+            <input class="wwc-input" type="text" name="contact[city]" autocomplete="address-level2" required />
+          </label>
+          <label class="wwc-field">
+            <span>State / Province</span>
+            <input class="wwc-input" type="text" name="contact[state]" autocomplete="address-level1" required />
+          </label>
+          <label class="wwc-field">
+            <span>ZIP / Postal code</span>
+            <input class="wwc-input" type="text" name="contact[zip]" autocomplete="postal-code" required />
+          </label>
+          <label class="wwc-field">
+            <span>Country</span>
+            <input class="wwc-input" type="text" name="contact[country]" autocomplete="country-name" required />
+          </label>
+          <label class="wwc-field">
+            <span>Housing</span>
+            <select class="wwc-input" name="contact[housing_status]" required>
+              <option value="" disabled selected>Select…</option>
+              <option>Own</option>
+              <option>Rent</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="wwc-field">
+            <span>Monthly housing payment (USD)</span>
+            <input class="wwc-input" type="number" name="contact[monthly_housing_payment]" min="0" step="1" inputmode="numeric" />
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="wwc-fieldset">
+        <legend>Employment &amp; income</legend>
+        <div class="wwc-form__grid">
+          <label class="wwc-field">
+            <span>Employment status</span>
+            <select class="wwc-input" name="contact[employment_status]" required>
+              <option value="" disabled selected>Select…</option>
+              <option>Employed</option>
+              <option>Self-employed</option>
+              <option>Business owner</option>
+              <option>Retired</option>
+              <option>Other</option>
+            </select>
+          </label>
+          <label class="wwc-field">
+            <span>Employer / Company</span>
+            <input class="wwc-input" type="text" name="contact[employer]" autocomplete="organization" />
+          </label>
+          <label class="wwc-field">
+            <span>Occupation / Title</span>
+            <input class="wwc-input" type="text" name="contact[occupation]" autocomplete="organization-title" />
+          </label>
+          <label class="wwc-field">
+            <span>Years with employer</span>
+            <input class="wwc-input" type="number" name="contact[years_employed]" min="0" max="60" step="1" inputmode="numeric" />
+          </label>
+          <label class="wwc-field wwc-field--wide">
+            <span>Annual income (USD)</span>
+            <select class="wwc-input" name="contact[annual_income]" required>
+              <option value="" disabled selected>Select…</option>
+              <option>Under $100,000</option>
+              <option>$100,000 – $250,000</option>
+              <option>$250,000 – $500,000</option>
+              <option>$500,000 – $1,000,000</option>
+              <option>Over $1,000,000</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset class="wwc-fieldset">
+        <legend>The acquisition</legend>
+        <div class="wwc-form__grid">
+          <label class="wwc-field wwc-field--wide">
+            <span>Timepiece of interest</span>
+            <select class="wwc-input" name="contact[timepiece]" required>
+              <option value="" disabled selected>Select…</option>
+              <option>ECLIPSE — Tourbillon Chronograph ($48,000)</option>
+              <option>A future edition</option>
+              <option>Other / undecided</option>
+            </select>
+          </label>
+          <label class="wwc-field">
+            <span>Intended down payment (USD)</span>
+            <input class="wwc-input" type="number" name="contact[down_payment]" min="0" step="100" inputmode="numeric" />
+          </label>
+          <label class="wwc-field">
+            <span>Financing requested (USD)</span>
+            <input class="wwc-input" type="number" name="contact[financing_amount]" min="0" step="100" inputmode="numeric" required />
+          </label>
+          <label class="wwc-field">
+            <span>Preferred term</span>
+            <select class="wwc-input" name="contact[preferred_term]" required>
+              <option value="" disabled selected>Select…</option>
+              <option>12 months</option>
+              <option>24 months</option>
+              <option>36 months</option>
+              <option>48 months</option>
+            </select>
+          </label>
+          <label class="wwc-field wwc-field--wide">
+            <span>Anything we should know (optional)</span>
+            <textarea class="wwc-input" name="contact[note]" rows="4"></textarea>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="wwc-form__consent">
+        <label class="wwc-check">
+          <input type="checkbox" name="contact[certified_accurate]" value="Yes" required />
+          <span>I certify the information above is accurate, and I authorize
+          {{ section.settings.legal_name | default: shop.name | escape }} to contact me about this application.</span>
+        </label>
+        <label class="wwc-check">
+          <input type="checkbox" name="contact[credit_review_consent]" value="Yes" required />
+          <span>I understand this is a pre-qualification enquiry, not a loan offer.
+          Formal credit review — including identity verification — is completed
+          separately through a secure portal with our financing partner.
+          <strong>Never include your SSN or account numbers in this form.</strong></span>
+        </label>
+      </div>
+
+      <div class="wwc-center">
+        <button type="submit" class="wwc-btn wwc-form__submit">{{ section.settings.button_label | escape }}</button>
+        <p class="wwc-form__small">{{ section.settings.smallprint | escape }}</p>
+      </div>
+
+    {% endif %}
+  {% endform %}
+</div>
+
+{% schema %}
+{
+  "name": "Credit application",
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "PRIVATE CLIENT FINANCING" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Credit Application" },
+    { "type": "textarea", "id": "intro", "label": "Introduction", "default": "Own the Eclipse on your terms. Complete the application below — our private client desk reviews every enquiry personally and responds within two business days." },
+    { "type": "text", "id": "legal_name", "label": "Legal business name (consent line)" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Submit application" },
+    { "type": "text", "id": "confirm", "label": "Confirmation message", "default": "Your application is with our private client desk. Expect a reply within two business days." },
+    { "type": "text", "id": "smallprint", "label": "Small print", "default": "Submitting does not obligate you to purchase, and does not affect your credit score." }
+  ],
+  "presets": [{ "name": "Credit application" }]
+}
+{% endschema %}

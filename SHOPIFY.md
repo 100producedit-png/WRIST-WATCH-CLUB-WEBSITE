@@ -59,6 +59,26 @@ Shopify's homepage always uses the `index` template, so either:
   `/pages/eclipse`, or pasting the same template body into `templates/index.liquid`
   on a **duplicated theme** (test first).
 
+## Credit application page
+
+The theme ships a financing form: `shopify/theme/sections/credit-application.liquid`
+plus the template `shopify/theme/templates/page.credit-application.json`. To use it:
+
+1. Shopify admin → **Online Store → Pages → Add page**. Title: `Credit Application`.
+2. In the right sidebar set **Theme template** to `credit-application`. **Save.**
+3. Applications submit through Shopify's built-in contact form, so each one
+   arrives as an email to your store's sender address (Settings → Notifications).
+4. Link it from your menu: Online Store → Navigation → add `/pages/credit-application`
+   (label it "Financing").
+
+The form intentionally collects **no SSN / DOB / account numbers** — run the actual
+credit check through a financing partner (Affirm, Shop Pay Installments have limits
+far below $48k; for luxury amounts look at partners like Klarna Financing or a
+bank program) and treat this page as the pre-qualification intake.
+
+A static preview lives at `site/credit-application.html` (open it locally or on
+GitHub Pages).
+
 ## Hooking the waitlist to real customers (later)
 
 The form is presentation-only. When you want real signups, replace the

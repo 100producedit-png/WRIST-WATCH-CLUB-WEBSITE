@@ -111,3 +111,26 @@ select.wwc-input option { background: var(--bg); }
   .wwc-nav { padding: 1.2rem 1.3rem; }
   .wwc-nav__links a { margin-left: 1.1rem; }
 }
+
+/* credit application */
+.wwc-shell--form { max-width: 52rem; }
+.wwc-form__intro { max-width: 34rem; margin: 0 auto 3rem; }
+.wwc-appform { display: block; }
+.wwc-fieldset { border: 1px solid rgba(236,231,221,.08); padding: 1.8rem 1.6rem 2rem; margin: 0 0 2rem; }
+.wwc-fieldset legend { font-size: .62rem; letter-spacing: .42em; text-transform: uppercase; color: var(--gold); padding: 0 .8rem; }
+.wwc-form__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem 1.6rem; }
+.wwc-field { display: flex; flex-direction: column; gap: .45rem; }
+.wwc-field--wide { grid-column: 1 / -1; }
+.wwc-field > span { font-size: .6rem; letter-spacing: .28em; text-transform: uppercase; color: var(--ink-dim); }
+.wwc-field .wwc-input { width: 100%; box-sizing: border-box; }
+.wwc-field .wwc-input:focus { outline: none; border-color: var(--gold); }
+textarea.wwc-input { resize: vertical; font-family: var(--sans); }
+.wwc-form__consent { margin: 2.4rem 0; display: flex; flex-direction: column; gap: 1.1rem; }
+.wwc-check { display: flex; gap: .9rem; align-items: flex-start; font-size: .8rem; line-height: 1.7; color: var(--ink-dim); cursor: pointer; }
+.wwc-check input { margin-top: .35rem; accent-color: var(--gold); }
+.wwc-check strong { color: var(--ink); font-weight: 400; }
+.wwc-form__submit { min-width: 18rem; }
+.wwc-form__small { font-size: .68rem; color: var(--ink-dim); letter-spacing: .06em; margin-top: 1.2rem; }
+.wwc-form__error { border: 1px solid rgba(201, 92, 92, .5); color: #d99; padding: 1rem 1.3rem; font-size: .85rem; margin-bottom: 2rem; }
+.wwc-form__success { text-align: center; border: 1px solid var(--hair); padding: 4rem 2rem; font-family: var(--serif); font-size: 1.3rem; color: var(--ink); }
+@media (max-width: 640px) { .wwc-form__grid { grid-template-columns: 1fr; } .wwc-form__submit { width: 100%; min-width: 0; } }

@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "credit-application" } },
+  "order": ["main"]
+}
