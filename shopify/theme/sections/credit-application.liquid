@@ -54,9 +54,28 @@
     .wwc-app-scope .wwc-form__grid { grid-template-columns: 1fr; }
     .wwc-app-scope .wwc-btn { width: 100%; min-width: 0; }
   }
+  /* Light (white) variant — enabled via the section's Background setting */
+  .wwc-app-scope--light { background: #ffffff; color: #1c1a16; }
+  .wwc-app-scope--light .wwc-title { color: #1c1a16; }
+  .wwc-app-scope--light .wwc-form__intro { color: rgba(28,26,22,.65); }
+  .wwc-app-scope--light .wwc-fieldset { border-color: rgba(28,26,22,.12); }
+  .wwc-app-scope--light .wwc-field > span { color: rgba(28,26,22,.6); }
+  .wwc-app-scope--light .wwc-input { color: #1c1a16; border-color: rgba(180,140,60,.5); }
+  .wwc-app-scope--light select.wwc-input option { background: #ffffff; color: #1c1a16; }
+  .wwc-app-scope--light .wwc-check { color: rgba(28,26,22,.65); }
+  .wwc-app-scope--light .wwc-check strong { color: #1c1a16; }
+  .wwc-app-scope--light .wwc-form__small { color: rgba(28,26,22,.55); }
+  .wwc-app-scope--light .wwc-form__success { color: #1c1a16; }
+  .wwc-app-scope--light .wwc-schumer__title { color: #1c1a16; }
+  .wwc-app-scope--light .wwc-schumer__table th { color: #a07c33; }
+  .wwc-app-scope--light .wwc-schumer__table td { color: rgba(28,26,22,.75); }
+  .wwc-app-scope--light .wwc-schumer__table th, .wwc-app-scope--light .wwc-schumer__table td { border-bottom-color: rgba(28,26,22,.15); }
+  .wwc-app-scope--light .wwc-schumer__note { color: rgba(28,26,22,.55); border-top-color: rgba(28,26,22,.15); }
+  .wwc-app-scope--light .wwc-overline { color: #a07c33; }
+  .wwc-app-scope--light .wwc-fieldset legend { color: #a07c33; }
 {% endstyle %}
 
-<div class="wwc-app-scope">
+<div class="wwc-app-scope{% if section.settings.background == 'White' %} wwc-app-scope--light{% endif %}">
 <div class="wwc-shell wwc-shell--form">
   <div class="wwc-center">
     <p class="wwc-overline">{{ section.settings.overline | escape }}</p>
@@ -242,6 +261,7 @@
 {
   "name": "Credit application",
   "settings": [
+    { "type": "select", "id": "background", "label": "Background", "options": [ { "value": "Dark", "label": "Dark" }, { "value": "White", "label": "White" } ], "default": "Dark" },
     { "type": "text", "id": "overline", "label": "Overline", "default": "PRIVATE CLIENT FINANCING" },
     { "type": "text", "id": "title", "label": "Heading", "default": "Credit Application" },
     { "type": "textarea", "id": "intro", "label": "Introduction", "default": "Own the Eclipse on your terms. Complete the application below — our private client desk reviews every enquiry personally and responds within two business days." },

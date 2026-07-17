@@ -3,6 +3,7 @@
     "main": {
       "type": "credit-application",
       "settings": {
+        "background": "White",
         "overline": "MEMBERSHIP",
         "title": "Join Now",
         "intro": "Membership begins with a conversation about your first acquisition. Complete the application below — our private client desk reviews every enquiry personally and responds within two business days.",
