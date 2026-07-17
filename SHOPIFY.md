@@ -79,6 +79,13 @@ bank program) and treat this page as the pre-qualification intake.
 A static preview lives at `site/credit-application.html` (open it locally or on
 GitHub Pages).
 
+### Join Now page
+
+The same application also ships as a membership page: create a page titled
+`Join Now` and assign it the `join-now` template. It reuses the credit
+application form with membership copy ("Join the club"). Static preview:
+`site/join-now.html`.
+
 ## Hooking the waitlist to real customers (later)
 
 The form is presentation-only. When you want real signups, replace the

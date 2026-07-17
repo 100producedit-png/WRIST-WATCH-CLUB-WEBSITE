@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": {
+      "type": "credit-application",
+      "settings": {
+        "overline": "MEMBERSHIP",
+        "title": "Join Now",
+        "intro": "Membership begins with a conversation about your first acquisition. Complete the application below — our private client desk reviews every enquiry personally and responds within two business days.",
+        "button_label": "Join the club",
+        "confirm": "Welcome. Your application is with our private client desk — expect a reply within two business days.",
+        "smallprint": "Applying does not obligate you to purchase, and does not affect your credit score."
+      }
+    }
+  },
+  "order": ["main"]
+}
