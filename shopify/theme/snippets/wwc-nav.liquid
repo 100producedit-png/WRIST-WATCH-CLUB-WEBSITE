@@ -1,7 +1,14 @@
 <nav class="wwc-nav">
   <a class="wwc-nav__brand" href="{{ routes.root_url }}">WRIST WATCH CLUB</a>
   <div class="wwc-nav__links">
-    <a href="{{ routes.all_products_collection_url }}">Collection</a>
+    {%- assign menu = linklists['main-menu'] -%}
+    {%- if menu != blank and menu.links.size > 0 -%}
+      {%- for link in menu.links -%}
+        <a href="{{ link.url }}">{{ link.title | escape }}</a>
+      {%- endfor -%}
+    {%- else -%}
+      <a href="{{ routes.all_products_collection_url }}">Collection</a>
+    {%- endif -%}
     <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
   </div>
 </nav>
