@@ -36,6 +36,19 @@
   .wwc-app-scope .wwc-btn:hover { background: #e3c07e; }
   .wwc-app-scope .wwc-form__small { font-size: .68rem; color: rgba(236,231,221,.55); letter-spacing: .06em; margin-top: 1.2rem; }
   .wwc-app-scope .wwc-form__error { border: 1px solid rgba(201,92,92,.5); color: #d99; padding: 1rem 1.3rem; font-size: .85rem; margin-bottom: 2rem; }
+  .wwc-app-scope .wwc-schumer { border: 2px solid rgba(201,163,92,.6); margin: 3rem 0 2.4rem; }
+  .wwc-app-scope .wwc-schumer__title { font-family: 'Cormorant Garamond','Times New Roman',serif; font-weight: 500; font-size: 1.4rem; color: #ece7dd; margin: 0; padding: 1.3rem 1.5rem; border-bottom: 2px solid rgba(201,163,92,.6); }
+  .wwc-app-scope .wwc-schumer__table { width: 100%; border-collapse: collapse; }
+  .wwc-app-scope .wwc-schumer__table th, .wwc-app-scope .wwc-schumer__table td { border-bottom: 1px solid rgba(236,231,221,.12); padding: 1.1rem 1.5rem; vertical-align: top; text-align: left; }
+  .wwc-app-scope .wwc-schumer__table tr:last-child th, .wwc-app-scope .wwc-schumer__table tr:last-child td { border-bottom: 0; }
+  .wwc-app-scope .wwc-schumer__table th { width: 38%; font-weight: 400; font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: #c9a35c; }
+  .wwc-app-scope .wwc-schumer__table td { font-size: .85rem; line-height: 1.7; color: rgba(236,231,221,.8); }
+  .wwc-app-scope .wwc-schumer__table td p { margin: 0 0 .6em; } .wwc-app-scope .wwc-schumer__table td p:last-child { margin-bottom: 0; }
+  .wwc-app-scope .wwc-schumer__note { padding: 1rem 1.5rem; border-top: 1px solid rgba(236,231,221,.12); font-size: .72rem; line-height: 1.7; color: rgba(236,231,221,.55); margin: 0; }
+  @media (max-width: 640px) {
+    .wwc-app-scope .wwc-schumer__table th, .wwc-app-scope .wwc-schumer__table td { display: block; width: auto; }
+    .wwc-app-scope .wwc-schumer__table th { border-bottom: 0; padding-bottom: .2rem; }
+  }
   .wwc-app-scope .wwc-form__success { text-align: center; border: 1px solid rgba(201,163,92,.28); padding: 4rem 2rem; font-family: 'Cormorant Garamond','Times New Roman',serif; font-size: 1.3rem; color: #ece7dd; }
   @media (max-width: 640px) {
     .wwc-app-scope .wwc-form__grid { grid-template-columns: 1fr; }
@@ -183,6 +196,38 @@
         </label>
       </div>
 
+      {%- liquid
+        assign schumer_rows = section.blocks | where: 'type', 'schumer_row'
+        assign schumer_acks = section.blocks | where: 'type', 'acknowledgment'
+      -%}
+      {% if schumer_rows.size > 0 %}
+        <div class="wwc-schumer">
+          <h2 class="wwc-schumer__title">{{ section.settings.schumer_heading | escape }}</h2>
+          <table class="wwc-schumer__table">
+            {% for block in schumer_rows %}
+              <tr {{ block.shopify_attributes }}>
+                <th scope="row">{{ block.settings.term | escape }}</th>
+                <td>{{ block.settings.value }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+          {% if section.settings.schumer_note != blank %}
+            <p class="wwc-schumer__note">{{ section.settings.schumer_note | escape }}</p>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if schumer_acks.size > 0 %}
+        <div class="wwc-form__consent">
+          {% for block in schumer_acks %}
+            <label class="wwc-check" {{ block.shopify_attributes }}>
+              <input type="checkbox" name="contact[terms_acknowledgment_{{ forloop.index }}]" value="Yes" required />
+              <span>{{ block.settings.text }}</span>
+            </label>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <div class="wwc-center">
         <button type="submit" class="wwc-btn wwc-form__submit">{{ section.settings.button_label | escape }}</button>
         <p class="wwc-form__small">{{ section.settings.smallprint | escape }}</p>
@@ -203,8 +248,29 @@
     { "type": "text", "id": "legal_name", "label": "Legal business name (consent line)" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Submit application" },
     { "type": "text", "id": "confirm", "label": "Confirmation message", "default": "Your application is with our private client desk. Expect a reply within two business days." },
-    { "type": "text", "id": "smallprint", "label": "Small print", "default": "Submitting does not obligate you to purchase, and does not affect your credit score." }
+    { "type": "text", "id": "smallprint", "label": "Small print", "default": "Submitting does not obligate you to purchase, and does not affect your credit score." },
+    { "type": "header", "content": "Schumer box (credit terms disclosure)" },
+    { "type": "text", "id": "schumer_heading", "label": "Schumer box heading", "default": "Interest Rates and Interest Charges" },
+    { "type": "textarea", "id": "schumer_note", "label": "Schumer box footnote (optional)" }
   ],
+  "blocks": [
+    {
+      "type": "schumer_row",
+      "name": "Schumer box row",
+      "settings": [
+        { "type": "text", "id": "term", "label": "Term (left column)", "default": "Annual Percentage Rate (APR)" },
+        { "type": "richtext", "id": "value", "label": "Disclosure text (right column)", "default": "<p>[Add your disclosure text here]</p>" }
+      ]
+    },
+    {
+      "type": "acknowledgment",
+      "name": "Acknowledgment checkbox",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Acknowledgment text", "default": "<p>I acknowledge that I have read and received the credit terms disclosure above.</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 16,
   "presets": [{ "name": "Credit application" }]
 }
 {% endschema %}

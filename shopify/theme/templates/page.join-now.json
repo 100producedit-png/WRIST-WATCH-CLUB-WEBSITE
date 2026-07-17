@@ -9,7 +9,81 @@
         "button_label": "Join the club",
         "confirm": "Welcome. Your application is with our private client desk — expect a reply within two business days.",
         "smallprint": "Applying does not obligate you to purchase, and does not affect your credit score."
-      }
+      },
+      "blocks": {
+        "row_apr": {
+          "type": "schumer_row",
+          "settings": {
+            "term": "Annual Percentage Rate (APR) for Purchases",
+            "value": "<p>[Add your APR terms here]</p>"
+          }
+        },
+        "row_penalty_apr": {
+          "type": "schumer_row",
+          "settings": {
+            "term": "Penalty APR and When It Applies",
+            "value": "<p>[Add your penalty APR terms here]</p>"
+          }
+        },
+        "row_paying_interest": {
+          "type": "schumer_row",
+          "settings": {
+            "term": "Paying Interest",
+            "value": "<p>[Explain your grace period and when interest begins to accrue]</p>"
+          }
+        },
+        "row_min_interest": {
+          "type": "schumer_row",
+          "settings": {
+            "term": "Minimum Interest Charge",
+            "value": "<p>[Add your minimum interest charge here]</p>"
+          }
+        },
+        "row_annual_fee": {
+          "type": "schumer_row",
+          "settings": {
+            "term": "Annual Fee",
+            "value": "<p>[Add your annual fee here]</p>"
+          }
+        },
+        "row_transaction_fees": {
+          "type": "schumer_row",
+          "settings": {
+            "term": "Transaction Fees",
+            "value": "<p>[Add your transaction fees here]</p>"
+          }
+        },
+        "row_penalty_fees": {
+          "type": "schumer_row",
+          "settings": {
+            "term": "Penalty Fees",
+            "value": "<p>[Add your late payment and returned payment fees here]</p>"
+          }
+        },
+        "ack_read": {
+          "type": "acknowledgment",
+          "settings": {
+            "text": "<p>I acknowledge that I have read and received the credit terms disclosure above.</p>"
+          }
+        },
+        "ack_final_terms": {
+          "type": "acknowledgment",
+          "settings": {
+            "text": "<p>I understand final rates and terms are confirmed by the financing partner during formal credit review and may differ based on my credit profile.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "row_apr",
+        "row_penalty_apr",
+        "row_paying_interest",
+        "row_min_interest",
+        "row_annual_fee",
+        "row_transaction_fees",
+        "row_penalty_fees",
+        "ack_read",
+        "ack_final_terms"
+      ]
     }
   },
   "order": ["main"]
