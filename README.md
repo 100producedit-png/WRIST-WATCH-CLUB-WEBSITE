@@ -6,12 +6,24 @@ fictional Swiss luxury watch by Wrist Watch Club. Scrolling scrubs three Seedanc
 sequences, so the watch rotates, the dial glides by, and the movement
 assembles itself under your fingertips.
 
+The site now has two faces:
+
+- **`maison.html`** — a maison homepage in the style of the great Swiss
+  houses (corum.ch was the reference): fixed header with centered wordmark,
+  full-bleed hero, four collection cards (Eclipse · Corona · Penumbra ·
+  Umbra), a featured-piece spread, savoir-faire, journal, boutiques and a
+  newsletter footer. Dependency-free (IntersectionObserver reveals, no
+  libraries).
+- **`index.html`** — the Eclipse cinematic scroll experience, linked from
+  every collection card and cross-linked back via the “Maison” chrome link.
+
 ## Run it
 
 ```bash
 cd site
 python3 -m http.server 4173
-# open http://localhost:4173
+# open http://localhost:4173/maison.html  (maison homepage)
+# open http://localhost:4173             (Eclipse scroll experience)
 ```
 
 Any static file server works — the site is dependency-free at runtime

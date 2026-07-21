@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WRIST WATCH CLUB — Maison d'Horlogerie, Genève</title>
+  <meta name="description" content="Wrist Watch Club, maison d'horlogerie in Geneva. Discover the Eclipse, Corona, Penumbra and Umbra collections — haute horlogerie crafted in darkness since MMXXVI." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23c9a35c' stroke-width='1.5'/%3E%3Cpath d='M16 3a13 13 0 0 0 0 26 10.5 10.5 0 0 1 0-26z' fill='%23c9a35c'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/maison.css" />
+</head>
+<body>
+
+  <!-- ═ Header ═ -->
+  <header class="hd" id="hd">
+    <button class="hd__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <span></span><span></span>
+    </button>
+
+    <nav class="hd__nav hd__nav--left" aria-label="Primary">
+      <a href="#collections">Collections</a>
+      <a href="#savoir-faire">Savoir-Faire</a>
+    </nav>
+
+    <a class="hd__brand" href="maison.html" aria-label="Wrist Watch Club — home">
+      <svg class="hd__mark" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true">
+        <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="2" opacity=".4"/>
+        <path d="M32 6a26 26 0 0 0 0 52 21 21 0 0 1 0-52z" fill="currentColor"/>
+      </svg>
+      <span class="hd__wordmark">Wrist Watch Club</span>
+    </a>
+
+    <nav class="hd__nav hd__nav--right" aria-label="Secondary">
+      <a href="#journal">Journal</a>
+      <a href="#boutiques">Boutiques</a>
+      <a class="hd__cta" href="index.html#waitlist">Enquire</a>
+    </nav>
+  </header>
+
+  <!-- ═ Mobile drawer ═ -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <nav class="drawer__nav" aria-label="Mobile">
+      <a href="#collections">Collections</a>
+      <a href="#savoir-faire">Savoir-Faire</a>
+      <a href="#journal">Journal</a>
+      <a href="#boutiques">Boutiques</a>
+      <a href="index.html">The Eclipse Experience</a>
+      <a class="drawer__cta" href="index.html#waitlist">Enquire</a>
+    </nav>
+    <p class="drawer__foot">GENÈVE · MMXXVI</p>
+  </div>
+
+  <main>
+
+    <!-- ═ Hero ═ -->
+    <section class="hero">
+      <picture class="hero__media">
+        <img src="assets/img/hero.png" alt="The Eclipse tourbillon chronograph in black titanium and gold" fetchpriority="high" />
+      </picture>
+      <div class="hero__shade"></div>
+      <div class="hero__inner">
+        <p class="overline overline--gold rv">Maison d'Horlogerie — Genève</p>
+        <h1 class="hero__title rv rv-d1">Time, kept<br/><em>in darkness.</em></h1>
+        <p class="hero__sub rv rv-d2">The Eclipse tourbillon chronograph. Edition of 88.</p>
+        <div class="hero__actions rv rv-d3">
+          <a class="btn btn--solid" href="index.html">Experience the Eclipse</a>
+          <a class="btn btn--ghost" href="#collections">The Collections</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true"><i></i></div>
+    </section>
+
+    <!-- ═ Manifesto ═ -->
+    <section class="manifesto">
+      <p class="manifesto__text rv">
+        A maison of one obsession — the hours after midnight.
+        Every piece is drawn, decorated and assembled by hand
+        in an atelier above Lac&nbsp;Léman, <em>and&nbsp;nowhere&nbsp;else.</em>
+      </p>
+    </section>
+
+    <!-- ═ Collections ═ -->
+    <section class="collections" id="collections">
+      <header class="sec-head rv">
+        <p class="overline overline--gold">The Collections</p>
+        <h2 class="sec-head__title">Four expressions <em>of night.</em></h2>
+      </header>
+
+      <div class="col-grid">
+        <a class="col-card col-card--wide rv" href="index.html">
+          <figure class="col-card__media">
+            <img src="assets/frames/orbit/frame_0120.jpg" alt="Eclipse — tourbillon chronograph, three-quarter view" loading="lazy" />
+          </figure>
+          <div class="col-card__body">
+            <p class="col-card__kicker">Flagship — Tourbillon Chronograph</p>
+            <h3 class="col-card__name">Eclipse</h3>
+            <p class="col-card__line">Light, withheld. Edition of 88.</p>
+            <span class="col-card__link">Discover<i></i></span>
+          </div>
+        </a>
+
+        <a class="col-card rv" href="index.html">
+          <figure class="col-card__media">
+            <img src="assets/frames/orbit/frame_0060.jpg" alt="Corona — case profile with gold crown and pushers" loading="lazy" />
+          </figure>
+          <div class="col-card__body">
+            <p class="col-card__kicker">Sport Chronograph</p>
+            <h3 class="col-card__name">Corona</h3>
+            <p class="col-card__line">The ring of fire, worn at the wrist.</p>
+            <span class="col-card__link">Discover<i></i></span>
+          </div>
+        </a>
+
+        <a class="col-card rv" href="index.html">
+          <figure class="col-card__media">
+            <img src="assets/frames/macro/frame_0100.jpg" alt="Penumbra — macro of the black dial and gold indices" loading="lazy" />
+          </figure>
+          <div class="col-card__body">
+            <p class="col-card__kicker">Dress</p>
+            <h3 class="col-card__name">Penumbra</h3>
+            <p class="col-card__line">Between shadow and light.</p>
+            <span class="col-card__link">Discover<i></i></span>
+          </div>
+        </a>
+
+        <a class="col-card col-card--wide rv" href="index.html">
+          <figure class="col-card__media">
+            <img src="assets/frames/assembly/frame_0020.jpg" alt="Umbra — the exploded movement, 217 components" loading="lazy" />
+          </figure>
+          <div class="col-card__body">
+            <p class="col-card__kicker">Openworked</p>
+            <h3 class="col-card__name">Umbra</h3>
+            <p class="col-card__line">The movement, laid bare.</p>
+            <span class="col-card__link">Discover<i></i></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═ Featured piece ═ -->
+    <section class="feature">
+      <div class="feature__media rv">
+        <img src="assets/frames/assembly/frame_0110.jpg" alt="The Eclipse tourbillon chronograph, front view" loading="lazy" />
+      </div>
+      <div class="feature__body">
+        <p class="overline overline--gold rv">The Allocation</p>
+        <h2 class="feature__title rv rv-d1">Eclipse — <em>Edition of 88</em></h2>
+        <p class="feature__copy rv rv-d2">
+          Grade-5 titanium, brushed until it forgets it is metal. A gold
+          tourbillon breathing at 21,600 beats per hour. Numbered, never
+          repeated, and offered by private allocation only.
+        </p>
+        <ul class="feature__specs rv rv-d2">
+          <li><strong>42</strong><span>mm case</span></li>
+          <li><strong>72</strong><span>h reserve</span></li>
+          <li><strong>217</strong><span>components</span></li>
+        </ul>
+        <p class="feature__price rv rv-d3">$48,000</p>
+        <div class="hero__actions rv rv-d3">
+          <a class="btn btn--solid" href="index.html">Enter the experience</a>
+          <a class="btn btn--ghost" href="index.html#waitlist">Request allocation</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═ Savoir-faire ═ -->
+    <section class="savoir" id="savoir-faire">
+      <div class="savoir__bg" aria-hidden="true">
+        <img src="assets/frames/macro/frame_0040.jpg" alt="" loading="lazy" />
+      </div>
+      <div class="savoir__inner">
+        <p class="overline overline--gold rv">Savoir-Faire</p>
+        <h2 class="savoir__title rv rv-d1">One hand.<br/><em>Every piece.</em></h2>
+        <p class="savoir__copy rv rv-d2">
+          Indices engraved by a single engraver. Screws blued over an open
+          flame. Eight years were given to the first movement; no piece since
+          has been given less than eight months.
+        </p>
+        <a class="btn btn--ghost rv rv-d3" href="index.html#story">Read the story</a>
+      </div>
+    </section>
+
+    <!-- ═ Journal ═ -->
+    <section class="journal" id="journal">
+      <header class="sec-head rv">
+        <p class="overline overline--gold">Journal</p>
+        <h2 class="sec-head__title">From the <em>atelier.</em></h2>
+      </header>
+
+      <div class="journal__grid">
+        <a class="j-card rv" href="index.html#story">
+          <figure class="j-card__media"><img src="assets/frames/orbit/frame_0001.jpg" alt="The Eclipse resting in darkness" loading="lazy" /></figure>
+          <p class="j-card__date">MMXXVI — Chapter I</p>
+          <h3 class="j-card__title">Crafted in darkness: the making of Eclipse</h3>
+          <span class="col-card__link">Read<i></i></span>
+        </a>
+        <a class="j-card rv" href="index.html#macro">
+          <figure class="j-card__media"><img src="assets/frames/macro/frame_0001.jpg" alt="Macro of the tourbillon cage" loading="lazy" /></figure>
+          <p class="j-card__date">MMXXVI — Chapter II</p>
+          <h3 class="j-card__title">21,600 beats per hour: inside the gold heart</h3>
+          <span class="col-card__link">Read<i></i></span>
+        </a>
+        <a class="j-card rv" href="index.html#engineering">
+          <figure class="j-card__media"><img src="assets/frames/assembly/frame_0060.jpg" alt="Movement components suspended mid-assembly" loading="lazy" /></figure>
+          <p class="j-card__date">MMXXVI — Chapter III</p>
+          <h3 class="j-card__title">217 components, placed by one pair of hands</h3>
+          <span class="col-card__link">Read<i></i></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═ Boutiques ═ -->
+    <section class="boutiques" id="boutiques">
+      <div class="boutiques__inner">
+        <p class="overline overline--gold rv">Boutiques</p>
+        <h2 class="boutiques__title rv rv-d1">By appointment, <em>only.</em></h2>
+        <ul class="boutiques__cities rv rv-d2">
+          <li>Genève</li>
+          <li>London</li>
+          <li>New York</li>
+          <li>Tokyo</li>
+          <li>Dubai</li>
+        </ul>
+        <p class="boutiques__note rv rv-d2">No vitrines. No walk-ins. A salon, a single watchmaker, and one hour that belongs to you.</p>
+        <a class="btn btn--solid rv rv-d3" href="index.html#waitlist">Request an appointment</a>
+      </div>
+    </section>
+
+    <!-- ═ Newsletter ═ -->
+    <section class="news-cta">
+      <div class="news-cta__inner rv">
+        <h2 class="news-cta__title">Correspondence, <em>rarely.</em></h2>
+        <p class="news-cta__sub">A letter from the maison when — and only when — there is something worth saying.</p>
+        <form class="news-cta__form" id="newsForm" novalidate>
+          <input type="email" id="newsEmail" name="email" placeholder="Your email" autocomplete="email" required aria-label="Email address" />
+          <button type="submit"><span>Subscribe</span></button>
+        </form>
+        <p class="news-cta__confirm" id="newsConfirm" aria-live="polite">Noted. We write seldom, and only in gold ink.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═ Footer ═ -->
+  <footer class="ft">
+    <div class="ft__top">
+      <div class="ft__brand">
+        <svg viewBox="0 0 64 64" width="40" height="40" aria-hidden="true">
+          <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="2" opacity=".4"/>
+          <path d="M32 6a26 26 0 0 0 0 52 21 21 0 0 1 0-52z" fill="currentColor"/>
+        </svg>
+        <span>Wrist Watch Club</span>
+        <p>Maison d'horlogerie<br/>Genève — MMXXVI</p>
+      </div>
+      <nav class="ft__col" aria-label="Collections">
+        <h3>Collections</h3>
+        <a href="index.html">Eclipse</a>
+        <a href="index.html">Corona</a>
+        <a href="index.html">Penumbra</a>
+        <a href="index.html">Umbra</a>
+      </nav>
+      <nav class="ft__col" aria-label="Maison">
+        <h3>Maison</h3>
+        <a href="#savoir-faire">Savoir-Faire</a>
+        <a href="#journal">Journal</a>
+        <a href="#boutiques">Boutiques</a>
+        <a href="index.html">The Experience</a>
+      </nav>
+      <nav class="ft__col" aria-label="Care">
+        <h3>Care</h3>
+        <a href="index.html#waitlist">Enquiries</a>
+        <a href="index.html#waitlist">Allocation</a>
+        <a href="index.html#waitlist">Servicing</a>
+      </nav>
+    </div>
+    <div class="ft__bottom">
+      <span>© MMXXVI Wrist Watch Club</span>
+      <span class="ft__legal">A fictional maison, imagined for the love of the craft.</span>
+    </div>
+  </footer>
+
+  <script src="js/maison.js"></script>
+</body>
+</html>
