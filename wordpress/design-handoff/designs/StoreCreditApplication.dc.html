@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap">
+  <style>
+    body { margin:0; background:#fbfaf7; }
+    a { color:inherit; text-decoration:none; }
+    a:hover { opacity:0.8; }
+    ::selection { background:#111214; color:#fbfaf7; }
+    input:focus-visible, select:focus-visible { outline:2px solid #111214; outline-offset:1px; }
+  </style>
+</helmet>
+<div style="font-family:'EB Garamond', Georgia, serif; color:#1c1b18; background:#fbfaf7; min-height:100vh;">
+
+  <header style="background:#111214; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 48px;">
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="MenCollection.dc.html" style="white-space:nowrap;">MEN</a>
+      <a href="WomenCollection.dc.html" style="white-space:nowrap;">WOMEN</a>
+    </nav>
+    <a href="Homepage.dc.html" style="font-family:'Marcellus', serif; font-size:22px; letter-spacing:4px; color:#f2f0eb; white-space:nowrap;">WRIST WATCH CLUB</a>
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="JoinTheClub.dc.html" style="white-space:nowrap;">THE CLUB</a>
+      <a href="StoreCreditApplication.dc.html" aria-current="page" style="white-space:nowrap; color:#f2f0eb; border-bottom:1px solid #f2f0eb; padding-bottom:2px;">CREDIT</a>
+      <a href="Checkout.dc.html" style="white-space:nowrap;">BAG (0)</a>
+      <a href="AccountDashboard.dc.html" style="white-space:nowrap;">ACCOUNT</a>
+    </nav>
+  </header>
+
+  <div style="max-width:860px; margin:0 auto; padding:0 48px;">
+
+  <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+  <section style="padding:72px 0 40px 0;">
+    <div style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:4px; color:#55585c; margin-bottom:20px;">STORE CREDIT · SOFT INQUIRY · NO SCORE IMPACT</div>
+    <h1 style="font-family:'Marcellus', serif; font-size:46px; font-weight:400; line-height:1.08; margin:0 0 16px 0;">Store Credit Application</h1>
+    <p style="font-size:17px; line-height:1.6; color:#6d685c; margin:0; max-width:60ch;">Apply to finance your watches with 0% interest store credit. We run a <strong>soft credit check</strong> that does not affect your credit score. A decision is typically returned in minutes.</p>
+  </section>
+
+  <!-- Schumer Box -->
+  <section style="padding-bottom:40px;">
+    <h3 style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:3px; color:#55585c; margin:0 0 14px 0; font-weight:400;">COST OF CREDIT SUMMARY</h3>
+    <div style="border:1px solid #111214;">
+      <sc-for list="{{ schumer }}" as="r" hint-placeholder-count="8">
+        <div style="display:grid; grid-template-columns:1fr 1.4fr; border-top:1px solid #dedbd4;">
+          <div style="padding:14px 18px; font-family:'Space Grotesk', sans-serif; font-size:12px; letter-spacing:0.5px; background:#f1efe9; border-right:1px solid #dedbd4;">{{ r.k }}</div>
+          <div style="padding:14px 18px; font-size:15px; line-height:1.5;">{{ r.v }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <p style="font-size:13px; margin:10px 0 0 0; color:#8b857a;">Placeholder disclosure values — replace with your counsel-approved TILA terms before launch. The $150 Club membership is a separate purchase and is not a condition of receiving this credit.</p>
+  </section>
+
+  <!-- Steps -->
+  <section style="display:flex; gap:32px; padding:18px 0; border-top:1px solid #dedbd4; border-bottom:1px solid #dedbd4; margin-bottom:40px;">
+    <div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2px; color:{{ c1 }};"><span style="width:26px; height:26px; border-radius:50%; border:1px solid {{ c1 }}; display:grid; place-items:center; font-size:11px; background:{{ b1 }}; color:{{ t1 }};">1</span> APPLICANT</div>
+    <div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2px; color:{{ c2 }};"><span style="width:26px; height:26px; border-radius:50%; border:1px solid {{ c2 }}; display:grid; place-items:center; font-size:11px; background:{{ b2 }}; color:{{ t2 }};">2</span> ADDRESS &amp; INCOME</div>
+    <div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2px; color:{{ c3 }};"><span style="width:26px; height:26px; border-radius:50%; border:1px solid {{ c3 }}; display:grid; place-items:center; font-size:11px; background:{{ b3 }}; color:{{ t3 }};">3</span> CONSENT &amp; SUBMIT</div>
+  </section>
+
+  <form onSubmit="{{ onSubmit }}">
+
+    <!-- Step 1 -->
+    <div style="display:{{ s1 }};">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px;">
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">LEGAL FIRST NAME</span><input name="first_name" autocomplete="given-name" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">LEGAL LAST NAME</span><input name="last_name" autocomplete="family-name" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">EMAIL</span><input type="email" name="email" autocomplete="email" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">MOBILE PHONE</span><input type="tel" name="phone" autocomplete="tel" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">DATE OF BIRTH</span><input type="date" name="dob" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+      </div>
+      <div style="display:flex; justify-content:flex-end; margin-top:36px;">
+        <button type="button" onClick="{{ next }}" style="background:#111214; color:#fbfaf7; border:none; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:14px 28px; cursor:pointer; white-space:nowrap;">CONTINUE →</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div style="display:{{ s2 }};">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px;">
+        <label style="display:flex; flex-direction:column; gap:7px; grid-column:1/-1;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">STREET ADDRESS</span><input name="street" autocomplete="address-line1" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">CITY</span><input name="city" autocomplete="address-level2" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">STATE</span><input name="state" autocomplete="address-level1" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">ZIP</span><input name="zip" autocomplete="postal-code" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">HOUSING STATUS</span><select name="housing" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"><option>Rent</option><option>Own</option><option>Other</option></select></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">EMPLOYMENT STATUS</span><select name="employment" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"><option>Employed</option><option>Self-employed</option><option>Retired</option><option>Other</option></select></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">GROSS ANNUAL INCOME (USD)</span><input type="number" name="income" min="0" step="1000" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-top:36px;">
+        <button type="button" onClick="{{ back }}" style="background:none; border:1px solid #111214; color:#111214; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:13px 28px; cursor:pointer; white-space:nowrap;">← BACK</button>
+        <button type="button" onClick="{{ next }}" style="background:#111214; color:#fbfaf7; border:none; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:14px 28px; cursor:pointer; white-space:nowrap;">CONTINUE →</button>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div style="display:{{ s3 }};">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px;">
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">SOCIAL SECURITY NUMBER</span><input name="ssn" inputmode="numeric" placeholder="•••-••-••••" autocomplete="off" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">REQUESTED CREDIT LIMIT (USD)</span><input type="number" name="requested_limit" min="150" step="50" placeholder="500" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+      </div>
+      <p style="font-size:14px; color:#6d685c; margin:14px 0 28px 0; line-height:1.6;">🔒 Your SSN is transmitted directly to our secure underwriting service over an encrypted connection and is <strong>never stored on this website</strong>.</p>
+
+      <div style="background:#f1efe9; padding:26px 28px;">
+        <label style="display:flex; gap:12px; align-items:flex-start; font-size:14px; line-height:1.6; cursor:pointer; padding:8px 0;"><input type="checkbox" name="consent_softpull" style="margin-top:4px; flex:none; width:16px; height:16px; accent-color:#111214;"><span>I authorize Wrist Watch Club and its underwriting partner to obtain a <strong>soft-inquiry consumer credit report</strong> from Equifax for the purpose of evaluating this store-credit application. I understand a soft inquiry does not affect my credit score. <em>[FCRA permissible-purpose language — replace with counsel-approved text.]</em></span></label>
+        <label style="display:flex; gap:12px; align-items:flex-start; font-size:14px; line-height:1.6; cursor:pointer; padding:8px 0;"><input type="checkbox" name="consent_ecoa" style="margin-top:4px; flex:none; width:16px; height:16px; accent-color:#111214;"><span>I understand that if my application is declined I will receive an <strong>adverse-action notice</strong> explaining the decision, and that the Equal Credit Opportunity Act prohibits discrimination in credit decisions. <em>[ECOA/Reg B disclosure — replace with counsel-approved text.]</em></span></label>
+        <label style="display:flex; gap:12px; align-items:flex-start; font-size:14px; line-height:1.6; cursor:pointer; padding:8px 0;"><input type="checkbox" name="consent_terms" style="margin-top:4px; flex:none; width:16px; height:16px; accent-color:#111214;"><span>I have reviewed the Cost of Credit Summary above and agree to the store-credit terms and the electronic signature disclosure.</span></label>
+      </div>
+
+      <label style="display:flex; flex-direction:column; gap:7px; max-width:340px; margin-top:28px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">TYPE YOUR FULL LEGAL NAME TO SIGN</span><input name="esignature" placeholder="Full legal name" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:36px;">
+        <button type="button" onClick="{{ back }}" style="background:none; border:1px solid #111214; color:#111214; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:13px 28px; cursor:pointer; white-space:nowrap;">← BACK</button>
+        <button type="submit" style="background:#111214; color:#fbfaf7; border:none; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:14px 30px; cursor:pointer; white-space:nowrap;">SUBMIT APPLICATION</button>
+      </div>
+    </div>
+
+  </form>
+  </sc-if>
+
+  <!-- Confirmation -->
+  <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+    <section style="padding:96px 0; text-align:center; max-width:54ch; margin:0 auto;">
+      <div style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:4px; color:#55585c; margin-bottom:22px;">APPLICATION RECEIVED</div>
+      <h1 style="font-family:'Marcellus', serif; font-size:42px; font-weight:400; line-height:1.08; margin:0 0 18px 0;">Your application is being reviewed.</h1>
+      <p style="font-size:17px; line-height:1.6; color:#6d685c;">Our underwriting service is processing your soft credit check now. You'll receive your decision by email — usually within a few minutes. If approved, your store credit limit will appear in your account.</p>
+      <div style="display:flex; gap:14px; justify-content:center; margin-top:30px;">
+        <a href="AccountDashboard.dc.html" style="background:#111214; color:#fbfaf7; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:14px 26px; white-space:nowrap;">GO TO MY ACCOUNT</a>
+        <a href="MenCollection.dc.html" style="border:1px solid #111214; color:#111214; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:13px 26px; white-space:nowrap;">KEEP BROWSING</a>
+      </div>
+    </section>
+  </sc-if>
+
+  <footer style="padding:56px 0; text-align:center; border-top:1px solid #dedbd4; margin-top:56px;">
+    <div style="font-family:'Marcellus', serif; font-size:16px; letter-spacing:3px; color:#111214; margin-bottom:18px;">WRIST WATCH CLUB</div>
+    <p style="font-size:13px; color:#8b857a; margin:0 auto; max-width:72ch; line-height:1.6;">Store credit is offered subject to approval based on a soft credit inquiry. 0% interest, no late fees. Membership is not required to apply and does not guarantee approval. Disclosures shown are placeholders pending final counsel-approved terms. <a href="Legal.dc.html#credit" style="color:#55585c; text-decoration:underline;">Store-Credit Agreement</a></p>
+  </footer>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { step: 1, submitted: false };
+  renderVals() {
+    const { step, submitted } = this.state;
+    const stepColors = (n) => ({
+      ['c'+n]: step >= n ? '#111214' : '#a8a5a0',
+      ['b'+n]: step >= n ? '#111214' : 'transparent',
+      ['t'+n]: step >= n ? '#fbfaf7' : '#a8a5a0',
+    });
+    return {
+      notSubmitted: !submitted,
+      submitted,
+      s1: step === 1 ? 'block' : 'none',
+      s2: step === 2 ? 'block' : 'none',
+      s3: step === 3 ? 'block' : 'none',
+      ...stepColors(1), ...stepColors(2), ...stepColors(3),
+      next: () => this.setState(s => ({ step: Math.min(3, s.step + 1) })),
+      back: () => this.setState(s => ({ step: Math.max(1, s.step - 1) })),
+      onSubmit: (e) => {
+        e.preventDefault();
+        // SUBMIT_ENDPOINT — POST the form payload to your secure underwriting
+        // service here. Do NOT persist SSN/report data in WordPress.
+        this.setState({ submitted: true });
+      },
+      schumer: [
+        { k: 'APR FOR PURCHASES', v: '0.00% — this is a 0% interest store-credit plan.' },
+        { k: 'APR FOR CASH ADVANCES', v: 'Not applicable. Store credit cannot be drawn as cash.' },
+        { k: 'PAYING INTEREST', v: 'You will never be charged interest on purchases financed with store credit.' },
+        { k: 'MINIMUM INTEREST CHARGE', v: 'None.' },
+        { k: 'ANNUAL / MEMBERSHIP FEE', v: 'None for the credit line. (Club membership is a separate one-time $150 purchase and is not required to apply.)' },
+        { k: 'PENALTY FEES — LATE PAYMENT', v: 'None. There are no late fees on this plan.' },
+        { k: 'PENALTY FEES — RETURNED PAYMENT', v: 'Up to $[XX] per returned payment. [Placeholder]' },
+        { k: 'REPAYMENT TERMS', v: '50% down at checkout; remaining balance in installments over up to 4 months.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

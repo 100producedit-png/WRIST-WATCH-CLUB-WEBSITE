@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap">
+  <style>
+    body { margin:0; background:#fbfaf7; }
+    a { color:inherit; text-decoration:none; }
+    a:hover { opacity:0.8; }
+    ::selection { background:#111214; color:#fbfaf7; }
+  </style>
+</helmet>
+<div style="font-family:'EB Garamond', Georgia, serif; color:#1c1b18; background:#fbfaf7; min-height:100vh;">
+
+  <header style="background:#111214; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 48px;">
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="MenCollection.dc.html" style="white-space:nowrap;">MEN</a>
+      <a href="WomenCollection.dc.html" style="white-space:nowrap;">WOMEN</a>
+    </nav>
+    <a href="Homepage.dc.html" style="font-family:'Marcellus', serif; font-size:22px; letter-spacing:4px; color:#f2f0eb; white-space:nowrap;">WRIST WATCH CLUB</a>
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="JoinTheClub.dc.html" style="white-space:nowrap;">THE CLUB</a>
+      <a href="StoreCreditApplication.dc.html" style="white-space:nowrap;">CREDIT</a>
+      <a href="Checkout.dc.html" style="white-space:nowrap;">BAG (0)</a>
+      <a href="AccountDashboard.dc.html" style="white-space:nowrap;">ACCOUNT</a>
+    </nav>
+  </header>
+
+  <div style="max-width:1000px; margin:0 auto; padding:0 48px;">
+
+  <section style="padding:80px 0 56px 0;">
+    <div style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:4px; color:#55585c; margin-bottom:20px;">0% INTEREST · NO LATE FEES</div>
+    <h1 style="font-family:'Marcellus', serif; font-size:56px; font-weight:400; line-height:1.06; margin:0 0 18px 0;">How it works.</h1>
+    <p style="font-size:18px; line-height:1.6; color:#6d685c; margin:0; max-width:56ch;">Anyone can buy. Members pay less — and can split any watch into payments.</p>
+  </section>
+
+  <!-- Four steps -->
+  <section style="display:grid; grid-template-columns:repeat(4,1fr); gap:32px; padding:40px 0 56px 0; border-top:1px solid #dedbd4;">
+    <sc-for list="{{ steps }}" as="step" hint-placeholder-count="4">
+      <div>
+        <div style="font-family:'Marcellus', serif; font-size:44px; color:#c9c8c3; margin-bottom:12px;">{{ step.n }}</div>
+        <h4 style="font-family:'Marcellus', serif; font-size:19px; font-weight:400; margin:0 0 8px 0;">{{ step.title }}</h4>
+        <p style="font-size:14.5px; margin:0; line-height:1.6; color:#6d685c;">{{ step.body }}</p>
+      </div>
+    </sc-for>
+  </section>
+
+  <!-- Two paths -->
+  <section style="display:grid; grid-template-columns:1fr 1fr; gap:28px; padding:0 0 64px 0;">
+    <div style="border:1px solid #dedbd4; padding:34px 32px;">
+      <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:3px; color:#55585c; margin-bottom:12px;">SHOPPING WITHOUT MEMBERSHIP</div>
+      <div style="font-family:'Marcellus', serif; font-size:24px; margin-bottom:10px;">Pay in full</div>
+      <p style="font-size:15px; line-height:1.6; color:#6d685c; margin:0 0 22px 0;">Browse the open catalog and check out with your card. Simple.</p>
+      <a href="MenCollection.dc.html" style="display:inline-block; border:1px solid #111214; color:#111214; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:12px 24px; white-space:nowrap;">SHOP WATCHES</a>
+    </div>
+    <div style="border:1px solid #111214; padding:34px 32px;">
+      <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:3px; color:#55585c; margin-bottom:12px;">SHOPPING AS A MEMBER</div>
+      <div style="font-family:'Marcellus', serif; font-size:24px; margin-bottom:10px;">50% down, up to 4 months</div>
+      <p style="font-size:15px; line-height:1.6; color:#6d685c; margin:0 0 22px 0;">Member pricing on every watch, plus 0% financing — from your approved store credit or your own card on file. No interest, no late fees.</p>
+      <a href="JoinTheClub.dc.html" style="display:inline-block; background:#111214; color:#fbfaf7; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:13px 24px; white-space:nowrap;">JOIN THE CLUB</a>
+    </div>
+  </section>
+
+  <!-- Example -->
+  <section style="display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; padding:56px 0; border-top:1px solid #dedbd4;">
+    <div>
+      <h3 style="font-family:'Marcellus', serif; font-size:28px; font-weight:400; margin:0 0 12px 0;">The math on a $200 watch.</h3>
+      <p style="font-size:15px; line-height:1.6; max-width:44ch; color:#6d685c; margin:0;">Members put half down at checkout and clear the rest over four months — the price never grows.</p>
+    </div>
+    <div style="background:#f1efe9; padding:28px 30px;">
+      <sc-for list="{{ example }}" as="r" hint-placeholder-count="5">
+        <div style="display:flex; justify-content:space-between; font-size:15px; padding:8px 0; border-bottom:1px solid #dedbd4;">
+          <span style="color:#6d685c;">{{ r.k }}</span>
+          <span style="font-family:'Space Grotesk', sans-serif; font-size:13px; letter-spacing:0.5px;">{{ r.v }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding:40px 0 88px 0; max-width:64ch; border-top:1px solid #dedbd4;">
+    <h3 style="font-family:'Marcellus', serif; font-size:28px; font-weight:400; margin:0 0 24px 0;">Common questions.</h3>
+    <sc-for list="{{ faq }}" as="q" hint-placeholder-count="8">
+      <div style="padding:16px 0; border-bottom:1px solid #e4e1da;">
+        <h4 style="font-family:'Marcellus', serif; font-size:17px; font-weight:400; margin:0 0 6px 0;">{{ q.q }}</h4>
+        <p style="font-size:14.5px; margin:0; line-height:1.6; color:#6d685c;">{{ q.a }}</p>
+      </div>
+    </sc-for>
+  </section>
+
+  </div>
+
+  <footer style="padding:56px 48px; text-align:center; border-top:1px solid #dedbd4;">
+    <div style="font-family:'Marcellus', serif; font-size:16px; letter-spacing:3px; color:#111214; margin-bottom:22px;">WRIST WATCH CLUB</div>
+    <nav style="display:flex; justify-content:center; gap:32px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2px; color:#6d685c; flex-wrap:wrap;">
+      <a href="MenCollection.dc.html">MEN</a>
+      <a href="WomenCollection.dc.html">WOMEN</a>
+      <a href="JoinTheClub.dc.html">MEMBERSHIP</a>
+      <a href="AccountDashboard.dc.html">ACCOUNT</a>
+      <a href="Legal.dc.html">LEGAL</a>
+    </nav>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      steps: [
+        { n:'1', title:'Join the Club', body:'Create an account and add the one-time $150 membership with a qualifying watch ($100+). No monthly fee, ever.' },
+        { n:'2', title:'Get approved', body:'Optionally apply for store credit — a soft check with no impact to your score. Your limit is ready before checkout.' },
+        { n:'3', title:'Put 50% down', body:'Pick your watch at member pricing and pay half at checkout, by card.' },
+        { n:'4', title:'Four months, 0%', body:'The balance splits over up to four monthly payments. No interest, no late fees.' },
+      ],
+      example: [
+        { k:'Member price (10% off $200)', v:'$180.00' },
+        { k:'Down payment today (50%)', v:'$90.00' },
+        { k:'Month 1–4 payments', v:'$22.50 / MO' },
+        { k:'Interest & fees', v:'$0.00' },
+        { k:'Total paid', v:'$180.00' },
+      ],
+      faq: [
+        { q:'Does applying for store credit hurt my credit score?', a:'No. We use a soft inquiry, which never affects your score. You will see the check on your own report, but lenders don\u2019t.' },
+        { q:'When am I charged?', a:'At checkout you pay the membership fee (first order only), tax, and 50% of the watch. The remaining payments are charged automatically each month to your card on file \u2014 you\u2019ll get a reminder email before each one.' },
+        { q:'How long does shipping take?', a:'Most watches ship from our suppliers within 2\u20135 business days and arrive in 7\u201315 business days. You\u2019ll get a tracking number the moment your order ships.' },
+        { q:'What if I return the watch?', a:'Returns are accepted within 30 days in original condition. Anything you\u2019ve paid toward the watch is refunded and any remaining payment schedule is cancelled. [Return policy pending counsel.]' },
+        { q:'Are the watches authentic?', a:'Every reference is checked against our authenticity standards before it\u2019s listed, and every shipment is covered by our guarantee.' },
+        { q:'Can I pay the balance off early?', a:'Anytime, with no prepayment penalty \u2014 use the Pay Early button in your account.' },
+        { q:'What happens if I miss a payment?', a:'There are no late fees \u2014 but your payment history, including missed payments, is reported to the credit bureaus. We\u2019ll retry the card and email you \u2014 you can update your payment method in your account. Financing on new purchases pauses until the balance is current.' },
+        { q:'Is my payment history reported to the credit bureaus?', a:'Yes. We report payment history on store-credit plans to the credit bureaus \u2014 on-time payments can help build your credit, and missed payments can hurt it. [Furnishing disclosure pending counsel.]' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

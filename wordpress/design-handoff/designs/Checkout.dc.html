@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap">
+  <style>
+    body { margin:0; background:#fbfaf7; }
+    a { color:inherit; text-decoration:none; }
+    a:hover { opacity:0.8; }
+    ::selection { background:#111214; color:#fbfaf7; }
+    input:focus-visible { outline:2px solid #111214; outline-offset:1px; }
+  </style>
+</helmet>
+<div style="font-family:'EB Garamond', Georgia, serif; color:#1c1b18; background:#fbfaf7; min-height:100vh;">
+
+  <header style="background:#111214; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 48px;">
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="MenCollection.dc.html" style="white-space:nowrap;">MEN</a>
+      <a href="WomenCollection.dc.html" style="white-space:nowrap;">WOMEN</a>
+    </nav>
+    <a href="Homepage.dc.html" style="font-family:'Marcellus', serif; font-size:22px; letter-spacing:4px; color:#f2f0eb; white-space:nowrap;">WRIST WATCH CLUB</a>
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="JoinTheClub.dc.html" style="white-space:nowrap;">THE CLUB</a>
+      <a href="StoreCreditApplication.dc.html" style="white-space:nowrap;">CREDIT</a>
+      <a href="Checkout.dc.html" aria-current="page" style="white-space:nowrap; color:#f2f0eb; border-bottom:1px solid #f2f0eb; padding-bottom:2px;">BAG (2)</a>
+      <a href="AccountDashboard.dc.html" style="white-space:nowrap;">ACCOUNT</a>
+    </nav>
+  </header>
+
+  <div style="max-width:1160px; margin:0 auto; padding:0 48px;">
+
+  <div style="display:flex; justify-content:space-between; align-items:baseline; padding:56px 0 32px 0;">
+    <h1 style="font-family:'Marcellus', serif; font-size:44px; font-weight:400; margin:0;">Checkout</h1>
+    <span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2.5px; color:#55585c; white-space:nowrap;">ENCRYPTED · PCI-COMPLIANT GATEWAY</span>
+  </div>
+
+  <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:56px; align-items:start; padding-bottom:88px;">
+
+    <!-- Left column -->
+    <div>
+      <h3 style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:3px; color:#55585c; margin:0 0 14px 0; font-weight:400;">YOUR BAG</h3>
+      <sc-for list="{{ items }}" as="it" hint-placeholder-count="2">
+        <div style="display:flex; gap:18px; align-items:center; padding:16px 0; border-bottom:1px solid #e4e1da;">
+          <span style="width:64px; height:64px; flex:none; background:#f1efe9; display:block; overflow:hidden;"><sc-if value="{{ it.img }}" hint-placeholder-val="{{ false }}"><img loading="lazy" src="{{ it.img }}" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></sc-if></span>
+          <div style="flex:1;">
+            <div style="font-family:'Marcellus', serif; font-size:18px;">{{ it.name }}</div>
+            <div style="font-size:13px; color:#8b857a;">{{ it.meta }}</div>
+          </div>
+          <div style="font-family:'Space Grotesk', sans-serif; font-size:14px; letter-spacing:0.5px;">{{ it.price }}</div>
+        </div>
+      </sc-for>
+
+      <p style="display:flex; gap:10px; align-items:baseline; margin:20px 0 0 0; font-size:14px; color:#1c1b18;"><span>✓</span><span>Membership eligible — your order includes a qualifying watch of $100 or more.</span></p>
+
+      <!-- Account -->
+      <h3 style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:3px; color:#55585c; margin:44px 0 10px 0; font-weight:400; border-top:1px solid #dedbd4; padding-top:32px;">CREATE YOUR ACCOUNT</h3>
+      <p style="font-size:14px; color:#8b857a; margin:0 0 16px 0;">An account is required to become a member and track your payments.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">EMAIL</span><input type="email" autocomplete="email" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+        <label style="display:flex; flex-direction:column; gap:7px;"><span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c;">PASSWORD</span><input type="password" autocomplete="new-password" style="font-family:'EB Garamond', serif; font-size:16px; padding:12px 14px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18;"></label>
+      </div>
+
+      <!-- Payment -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin:44px 0 14px 0; border-top:1px solid #dedbd4; padding-top:32px;">
+        <h3 style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:3px; color:#55585c; margin:0; font-weight:400;">PAYMENT METHOD</h3>
+        <div style="display:flex; border:1px solid #c9c8c3;">
+          <label style="display:flex; align-items:center; gap:6px; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:8px 14px; cursor:pointer; background:{{ segGuestBg }}; color:{{ segGuestColor }};"><input type="radio" name="who" checked="{{ isMemberFalse }}" onChange="{{ setGuest }}" style="display:none;">GUEST</label>
+          <label style="display:flex; align-items:center; gap:6px; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:8px 14px; cursor:pointer; background:{{ segMemberBg }}; color:{{ segMemberColor }};"><input type="radio" name="who" checked="{{ isMember }}" onChange="{{ setMember }}" style="display:none;">MEMBER</label>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <label style="display:block; border:1px solid {{ bFull }}; padding:18px 20px; cursor:pointer;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; gap:12px; align-items:center;">
+              <input type="radio" name="pm" checked="{{ isFull }}" onChange="{{ pickFull }}" style="accent-color:#111214;">
+              <span style="font-family:'Marcellus', serif; font-size:17px;">Pay in full</span>
+            </div>
+            <span style="font-family:'Space Grotesk', sans-serif; font-size:13px; letter-spacing:0.5px;">{{ total }}</span>
+          </div>
+          <div style="font-size:13px; color:#8b857a; margin-left:28px;">One charge today via card.</div>
+        </label>
+
+        <label style="display:block; border:1px solid {{ bCredit }}; padding:18px 20px; cursor:pointer; opacity:{{ oCredit }};">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; gap:12px; align-items:center;">
+              <input type="radio" name="pm" checked="{{ isCredit }}" onChange="{{ pickCredit }}" disabled="{{ notMember }}" style="accent-color:#111214;">
+              <span style="font-family:'Marcellus', serif; font-size:17px;">Store credit — 0% financing</span>
+            </div>
+            <sc-if value="{{ isMember }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family:'Space Grotesk', sans-serif; font-size:9px; letter-spacing:2px; background:#111214; color:#f2f0eb; padding:5px 10px; white-space:nowrap;">APPROVED · {{ limitLabel }}</span>
+            </sc-if>
+          </div>
+          <div style="font-size:13px; color:#8b857a; margin-left:28px;">50% down by card; balance financed from your approved store-credit limit, repaid over up to 4 months.</div>
+        </label>
+
+        <label style="display:block; border:1px solid {{ bInstall }}; padding:18px 20px; cursor:pointer; opacity:{{ oInstall }};">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; gap:12px; align-items:center;">
+              <input type="radio" name="pm" checked="{{ isInstall }}" onChange="{{ pickInstall }}" disabled="{{ notMember }}" style="accent-color:#111214;">
+              <span style="font-family:'Marcellus', serif; font-size:17px;">Pay 50% now, rest on my card</span>
+            </div>
+            <span style="font-family:'Space Grotesk', sans-serif; font-size:9px; letter-spacing:2px; border:1px solid #111214; color:#111214; padding:4px 10px; white-space:nowrap;">MEMBERS</span>
+          </div>
+          <div style="font-size:13px; color:#8b857a; margin-left:28px;">Card vaulted securely; installments auto-charged, 0% interest.</div>
+        </label>
+
+        <sc-if value="{{ notMember }}" hint-placeholder-val="{{ true }}">
+          <p style="font-size:14px; margin:8px 0 0 0;"><a href="JoinTheClub.dc.html" style="text-decoration:underline;">Join the Club →</a> to unlock 0% financing.</p>
+        </sc-if>
+      </div>
+    </div>
+
+    <!-- Right column: summary -->
+    <aside style="border:1px solid #111214; padding:34px 32px; position:sticky; top:24px; background:#fbfaf7;">
+      <h3 style="font-family:'Marcellus', serif; font-size:24px; font-weight:400; margin:0 0 18px 0;">Order summary</h3>
+      <div style="display:flex; justify-content:space-between; font-size:15px; padding:6px 0;"><span>Watch subtotal</span><span style="font-family:'Space Grotesk', sans-serif; font-size:13px;">{{ watchSub }}</span></div>
+      <div style="display:flex; justify-content:space-between; font-size:15px; padding:6px 0;"><span>Club membership</span><span style="font-family:'Space Grotesk', sans-serif; font-size:13px;">{{ memFee }}</span></div>
+      <div style="display:flex; justify-content:space-between; font-size:15px; padding:6px 0; color:#8b857a;"><span>Estimated tax</span><span style="font-family:'Space Grotesk', sans-serif; font-size:13px;">{{ tax }}</span></div>
+      <div style="border-top:1px solid #dedbd4; margin:10px 0; padding-top:10px; display:flex; justify-content:space-between; font-family:'Marcellus', serif; font-size:18px;"><span>Order total</span><span>{{ total }}</span></div>
+
+      <div style="border-top:2px solid #111214; margin:18px 0 0 0; padding-top:16px; display:flex; justify-content:space-between; font-family:'Marcellus', serif; font-size:21px;">
+        <span>Due today</span><span>{{ dueToday }}</span>
+      </div>
+
+      <sc-if value="{{ usingCredit }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:16px; background:#f1efe9; padding:14px 16px;">
+          <div style="display:flex; justify-content:space-between; font-size:14px; padding:3px 0;"><span>Financed from store credit</span><span style="font-family:'Space Grotesk', sans-serif; font-size:12px;">{{ financed }}</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:14px; padding:3px 0; color:#8b857a;"><span>Store credit remaining</span><span style="font-family:'Space Grotesk', sans-serif; font-size:12px;">{{ creditRemaining }}</span></div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ hasSchedule }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:16px;">
+          <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c; margin-bottom:6px;">THEN</div>
+          <sc-for list="{{ schedule }}" as="p" hint-placeholder-count="4">
+            <div style="display:flex; justify-content:space-between; font-size:14px; padding:6px 0; border-bottom:1px solid #e4e1da;"><span>{{ p.when }}</span><span style="font-family:'Space Grotesk', sans-serif; font-size:12px;">{{ p.amt }}</span></div>
+          </sc-for>
+          <p style="font-size:12px; margin:10px 0 0 0; color:#8b857a;">0% interest. No late fees. Card charged automatically on each date.</p>
+        </div>
+      </sc-if>
+
+      <button style="display:block; width:100%; background:#111214; color:#fbfaf7; border:none; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:16px; margin-top:22px; cursor:pointer; white-space:nowrap;">PLACE ORDER — {{ dueToday }}</button>
+      <p style="font-size:12px; text-align:center; margin:12px 0 0 0; color:#8b857a; line-height:1.6;">By placing your order you agree to the <a href="Legal.dc.html#membership" style="text-decoration:underline;">Membership Terms</a> and, if financing, the <a href="Legal.dc.html#credit" style="text-decoration:underline;">Store-Credit Agreement</a>.</p>
+    </aside>
+  </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;memberDiscount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:10,&quot;min&quot;:0,&quot;max&quot;:30,&quot;step&quot;:1,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { member: false, pm: 'full' };
+  money(n) { return '$' + n.toFixed(2); }
+  renderVals() {
+    const disc = this.props.memberDiscount ?? 10;
+    const baseWatch = 212, memFee = 150;
+    const watch = this.state.member ? +(baseWatch*(1-disc/100)).toFixed(2) : baseWatch;
+    const sub = watch + memFee;
+    const tax = +(sub * 0.07).toFixed(2);
+    const total = sub + tax;
+    const member = this.state.member;
+    let pm = this.state.pm;
+    if (!member && pm !== 'full') pm = 'full';
+
+    const approvedLimit = 6500;
+    let dueToday = total, schedule = [], hasSchedule = false;
+    let usingCredit = false, financed = 0;
+    if (member && (pm === 'credit' || pm === 'install')) {
+      const down = +(watch * 0.5).toFixed(2);
+      const remaining = +(watch - down).toFixed(2);
+      const per = +(remaining / 4).toFixed(2);
+      dueToday = +(down + memFee + tax).toFixed(2);
+      hasSchedule = true;
+      schedule = [1,2,3,4].map(i => ({ when: 'Month ' + i, amt: this.money(per) }));
+      if (pm === 'credit') { usingCredit = true; financed = remaining; }
+    }
+
+    return {
+      items: [
+        { name: 'Casio-style Heritage Chrono', meta: this.state.member ? 'Stainless · 42mm · member price applied' : 'Stainless · 42mm · qualifying item', price: this.money(watch), img: 'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_2573f164-8020-4dd9-aee6-9aa7f8d8a457.png' },
+        { name: 'Club Membership', meta: 'One-time · lifetime access', price: this.money(memFee) },
+      ],
+      isMember: member, isMemberFalse: !member, notMember: !member,
+      isFull: pm === 'full', isCredit: pm === 'credit', isInstall: pm === 'install',
+      bFull: pm === 'full' ? '#111214' : '#dedbd4',
+      bCredit: pm === 'credit' ? '#111214' : '#dedbd4',
+      bInstall: pm === 'install' ? '#111214' : '#dedbd4',
+      oCredit: member ? 1 : 0.45,
+      oInstall: member ? 1 : 0.45,
+      segGuestBg: member ? 'transparent' : '#111214', segGuestColor: member ? '#55585c' : '#fbfaf7',
+      segMemberBg: member ? '#111214' : 'transparent', segMemberColor: member ? '#fbfaf7' : '#55585c',
+      setMember: () => this.setState({ member: true }),
+      setGuest: () => this.setState({ member: false, pm: 'full' }),
+      pickFull: () => this.setState({ pm: 'full' }),
+      pickCredit: () => this.setState({ pm: 'credit' }),
+      pickInstall: () => this.setState({ pm: 'install' }),
+      watchSub: this.money(watch), memFee: this.money(memFee), tax: this.money(tax),
+      total: this.money(total), dueToday: this.money(dueToday),
+      hasSchedule, schedule,
+      limitLabel: this.money(approvedLimit) + ' AVAILABLE',
+      usingCredit, financed: this.money(financed),
+      creditRemaining: this.money(approvedLimit - financed),
+    };
+  }
+}
+</script>
+</body>
+</html>

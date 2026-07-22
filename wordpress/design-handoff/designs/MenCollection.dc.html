@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap">
+  <style>
+    body { margin:0; background:#fbfaf7; }
+    a { color:inherit; text-decoration:none; }
+    a:hover { opacity:0.8; }
+    ::selection { background:#111214; color:#fbfaf7; }
+  </style>
+</helmet>
+<div style="font-family:'EB Garamond', Georgia, serif; color:#1c1b18; background:#fbfaf7; min-height:100vh;">
+
+  <header style="background:#111214; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 48px;">
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="MenCollection.dc.html" aria-current="page" style="white-space:nowrap; color:#f2f0eb; border-bottom:1px solid #f2f0eb; padding-bottom:2px;">MEN</a>
+      <a href="WomenCollection.dc.html" style="white-space:nowrap;">WOMEN</a>
+    </nav>
+    <a href="Homepage.dc.html" style="font-family:'Marcellus', serif; font-size:22px; letter-spacing:4px; color:#f2f0eb; white-space:nowrap;">WRIST WATCH CLUB</a>
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="JoinTheClub.dc.html" style="white-space:nowrap;">THE CLUB</a>
+      <a href="StoreCreditApplication.dc.html" style="white-space:nowrap;">CREDIT</a>
+      <a href="Checkout.dc.html" style="white-space:nowrap;">BAG (0)</a>
+      <a href="AccountDashboard.dc.html" style="white-space:nowrap;">ACCOUNT</a>
+    </nav>
+  </header>
+
+  <section style="display:grid; grid-template-columns:1.1fr 1fr; gap:56px; align-items:center; max-width:1280px; margin:0 auto; padding:72px 48px 56px 48px;">
+    <div>
+      <div style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:4px; color:#55585c; margin-bottom:20px;">MEN'S COLLECTION · {{ count }} REFERENCES</div>
+      <h1 style="font-family:'Marcellus', serif; font-size:52px; font-weight:400; line-height:1.08; margin:0 0 18px 0; text-wrap:balance;">Divers, chronographs &amp; dress automatics.</h1>
+      <p style="font-size:18px; line-height:1.6; color:#6d685c; margin:0; max-width:48ch;">Hand-picked references built to last. Every piece ships with the club's authenticity check and members finance at checkout.</p>
+    </div>
+    <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023216_8d1ed47c-808f-4fd0-8d6a-4a0ea0103773.png" alt="Men's editorial wrist shot" style="width:100%; aspect-ratio:3/2; object-fit:cover; display:block;">
+  </section>
+
+  <section style="max-width:1280px; margin:0 auto; padding:0 48px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; border-top:1px solid #dedbd4; border-bottom:1px solid #dedbd4;">
+    <div style="display:flex; gap:8px; flex-wrap:wrap; padding:14px 0;">
+      <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
+        <button type="button" onClick="{{ f.onClick }}" style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:9px 18px; border:1px solid {{ f.border }}; background:{{ f.bg }}; color:{{ f.color }}; cursor:pointer; white-space:nowrap;">{{ f.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex; align-items:center; gap:10px; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c; padding:14px 0;">
+      <span>SORT</span>
+      <select value="{{ sort }}" onChange="{{ onSort }}" style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:1px; border:1px solid #c9c8c3; background:#fbfaf7; color:#1c1b18; padding:8px 10px;">
+        <option value="featured">Featured</option>
+        <option value="low">Price: low to high</option>
+        <option value="high">Price: high to low</option>
+      </select>
+    </div>
+  </section>
+
+  <section style="max-width:1280px; margin:0 auto; padding:56px 48px 88px 48px;">
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:40px 28px;">
+      <sc-for list="{{ products }}" as="w" hint-placeholder-count="8">
+        <a href="#" style="display:block; text-align:center;">
+          <span style="background:#f1efe9; padding:26px; display:block; position:relative;">
+            <sc-if value="{{ w.img }}" hint-placeholder-val="{{ false }}"><img loading="lazy" src="{{ w.img }}" alt="" style="width:100%; aspect-ratio:1/1; object-fit:cover; display:block;"></sc-if>
+            <sc-if value="{{ w.member }}" hint-placeholder-val="{{ false }}">
+              <span style="position:absolute; top:10px; left:10px; background:#111214; color:#f2f0eb; font-family:'Space Grotesk', sans-serif; font-size:9px; letter-spacing:2px; padding:5px 10px; white-space:nowrap;">MEMBERS ONLY</span>
+            </sc-if>
+          </span>
+          <span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2.5px; color:#55585c; display:block; margin-top:14px;">{{ w.brand }}</span>
+          <span style="font-family:'Marcellus', serif; font-size:19px; display:block; margin:4px 0 8px 0;">{{ w.name }}</span>
+          <span style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:1.5px; color:#6d685c; display:block;"><span style="text-decoration:line-through;">{{ w.price }}</span><span style="margin-left:10px; color:#111214;">MEMBER {{ w.memberPrice }}</span></span>
+          <button type="button" onClick="{{ w.addToCart }}" style="margin-top:12px; background:none; border:1px solid #111214; color:#111214; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:10px 20px; cursor:pointer; white-space:nowrap;" style-hover="background:#111214; color:#fbfaf7;">ADD TO BAG</button>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="padding:56px 48px; text-align:center; border-top:1px solid #dedbd4;">
+    <div style="font-family:'Marcellus', serif; font-size:16px; letter-spacing:3px; color:#111214; margin-bottom:22px;">WRIST WATCH CLUB</div>
+    <nav style="display:flex; justify-content:center; gap:32px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2px; color:#6d685c; flex-wrap:wrap;">
+      <a href="MenCollection.dc.html">MEN</a>
+      <a href="WomenCollection.dc.html">WOMEN</a>
+      <a href="JoinTheClub.dc.html">MEMBERSHIP</a>
+      <a href="HowItWorks.dc.html" style="white-space:nowrap;">HOW IT WORKS</a>
+      <a href="AccountDashboard.dc.html">ACCOUNT</a>
+      <a href="Legal.dc.html">LEGAL</a>
+    </nav>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;memberDiscount&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:20,&quot;min&quot;:0,&quot;max&quot;:30,&quot;step&quot;:1,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  state = { active: 'All', sort: 'featured' };
+  all() {
+    return [
+      { brand:'SEIKO-STYLE', name:'Prospex Diver 200m', price:189, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_f18923b4-2379-446c-b5a8-2b572d0bf221.png', cat:'Divers', member:false },
+      { brand:'ORIENT-STYLE', name:'Bambino Automatic', price:164, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_ae1fc991-5c86-40ee-9fd2-5db7ebac3eb9.png', cat:'Dress', member:false },
+      { brand:'CASIO-STYLE', name:'Heritage Chrono', price:212, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_2573f164-8020-4dd9-aee6-9aa7f8d8a457.png', cat:'Chronographs', member:false },
+      { brand:'CITIZEN-STYLE', name:'Eco Field Watch', price:178, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023125_95d79655-f913-4cac-a8f7-bf52aa254f9f.png', cat:'Field', member:false },
+      { brand:'SEIKO-STYLE', name:'Turtle SRP Diver', price:245, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023125_95d79655-f913-4cac-a8f7-bf52aa254f9f.png', cat:'Divers', member:true },
+      { brand:'ORIENT-STYLE', name:'Mako II Automatic', price:159, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_f18923b4-2379-446c-b5a8-2b572d0bf221.png', cat:'Divers', member:false },
+      { brand:'CASIO-STYLE', name:'Edifice Solar Chrono', price:198, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_2573f164-8020-4dd9-aee6-9aa7f8d8a457.png', cat:'Chronographs', member:false },
+      { brand:'CITIZEN-STYLE', name:'Promaster Pilot', price:289, img:'https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_ae1fc991-5c86-40ee-9fd2-5db7ebac3eb9.png', cat:'Field', member:true },
+    ];
+  }
+  renderVals() {
+    const disc = this.props.memberDiscount ?? 10;
+    const cats = ['All','Divers','Chronographs','Dress','Field'];
+    let list = this.all().filter(w => this.state.active==='All' || w.cat===this.state.active);
+    if (this.state.sort==='low') list = [...list].sort((a,b)=>a.price-b.price);
+    if (this.state.sort==='high') list = [...list].sort((a,b)=>b.price-a.price);
+    return {
+      count: this.all().length,
+      sort: this.state.sort,
+      onSort: (e)=> this.setState({ sort: e.target.value }),
+      filters: cats.map(c => {
+        const on = this.state.active===c;
+        return { label: c.toUpperCase(), border: on ? '#111214' : '#c9c8c3', bg: on ? '#111214' : 'transparent', color: on ? '#fbfaf7' : '#55585c', onClick: ()=> this.setState({ active: c }) };
+      }),
+      products: list.map(w => ({ ...w, price: '$'+w.price, memberPrice: '$'+Math.round(w.price*(1-disc/100)), addToCart: (e) => { e.preventDefault(); e.stopPropagation(); window.location.href='Checkout.dc.html'; } })),
+    };
+  }
+}
+</script>
+</body>
+</html>

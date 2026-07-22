@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap">
+  <style>
+    body { margin:0; background:#fbfaf7; }
+    a { color:inherit; text-decoration:none; }
+    a:hover { opacity:0.8; }
+    ::selection { background:#111214; color:#fbfaf7; }
+  </style>
+</helmet>
+<div style="font-family:'EB Garamond', Georgia, serif; color:#1c1b18; background:#fbfaf7; min-height:100vh;">
+
+  <header style="background:#111214; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 48px;">
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="MenCollection.dc.html" style="white-space:nowrap;">MEN</a>
+      <a href="WomenCollection.dc.html" style="white-space:nowrap;">WOMEN</a>
+    </nav>
+    <a href="Homepage.dc.html" style="font-family:'Marcellus', serif; font-size:22px; letter-spacing:4px; color:#f2f0eb; white-space:nowrap;">WRIST WATCH CLUB</a>
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="JoinTheClub.dc.html" style="white-space:nowrap;">THE CLUB</a>
+      <a href="StoreCreditApplication.dc.html" style="white-space:nowrap;">CREDIT</a>
+      <a href="Checkout.dc.html" style="white-space:nowrap;">BAG (0)</a>
+      <a href="AccountDashboard.dc.html" aria-current="page" style="white-space:nowrap; color:#f2f0eb; border-bottom:1px solid #f2f0eb; padding-bottom:2px;">ACCOUNT</a>
+    </nav>
+  </header>
+
+  <div style="max-width:1120px; margin:0 auto; padding:0 48px;">
+
+  <section style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:16px; padding:64px 0 36px 0;">
+    <h1 style="font-family:'Marcellus', serif; font-size:44px; font-weight:400; margin:0;">Hello, {{ name }}.</h1>
+    <span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2.5px; color:#55585c; white-space:nowrap;">CLUB MEMBER · SINCE {{ memberSince }}</span>
+  </section>
+
+  <!-- Store credit summary -->
+  <section style="display:grid; grid-template-columns:1fr 1fr; gap:28px; padding-bottom:48px;">
+    <div style="background:#111214; color:#e8e6e1; padding:34px 32px;">
+      <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:3px; color:#8f9296; margin-bottom:14px;">STORE CREDIT AVAILABLE</div>
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-family:'Marcellus', serif; font-size:46px; line-height:1; color:#f2f0eb;">{{ available }}</span>
+        <span style="font-size:14px; color:#8f9296;">of {{ limit }} limit</span>
+      </div>
+      <div style="height:6px; background:#33353a; margin:20px 0 12px 0;"><span style="display:block; height:100%; background:#f2f0eb; width:{{ usedPct }};"></span></div>
+      <div style="display:flex; justify-content:space-between; font-size:13px; color:#8f9296;">
+        <span>In use: {{ used }}</span>
+        <span>0% interest · no late fees</span>
+      </div>
+    </div>
+    <div style="border:1px solid #dedbd4; padding:34px 32px; display:flex; flex-direction:column; gap:8px; justify-content:center;">
+      <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:3px; color:#55585c;">NEXT PAYMENT</div>
+      <div style="font-family:'Marcellus', serif; font-size:32px;">{{ nextAmt }}</div>
+      <div style="font-size:14px; color:#8b857a;">Due {{ nextDate }} · auto-charged to Visa •••• {{ card }}</div>
+      <a href="#" style="align-self:flex-start; margin-top:10px; border:1px solid #111214; color:#111214; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:11px 22px; white-space:nowrap;">PAY EARLY</a>
+    </div>
+  </section>
+
+  <!-- Active plans -->
+  <section style="padding:40px 0; border-top:1px solid #dedbd4;">
+    <h3 style="font-family:'Marcellus', serif; font-size:26px; font-weight:400; margin:0 0 22px 0;">Active payment plans</h3>
+    <sc-for list="{{ plans }}" as="pl" hint-placeholder-count="1">
+      <div style="border:1px solid #dedbd4; padding:24px 26px; margin-bottom:14px;">
+        <div style="display:flex; gap:18px; align-items:center;">
+          <span style="width:56px; height:56px; flex:none; background:#f1efe9; display:block; overflow:hidden;"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3FNvaPQ5fqKnghvkSrSOCzKDybZ/hf_20260722_023124_2573f164-8020-4dd9-aee6-9aa7f8d8a457.png" alt="" style="width:100%; height:100%; object-fit:cover; display:block;"></span>
+          <div style="flex:1;">
+            <div style="font-family:'Marcellus', serif; font-size:18px;">{{ pl.name }}</div>
+            <div style="font-size:13px; color:#8b857a;">Order {{ pl.order }} · {{ pl.method }}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Space Grotesk', sans-serif; font-size:14px;">{{ pl.remaining }} left</div>
+            <div style="font-size:13px; color:#8b857a;">of {{ pl.principal }}</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:20px;">
+          <sc-for list="{{ pl.steps }}" as="st" hint-placeholder-count="4">
+            <div style="flex:1; text-align:center; border-top:2px solid {{ st.bar }}; padding-top:10px;">
+              <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:1.5px; color:#8b857a;">{{ st.when }}</div>
+              <div style="font-family:'Space Grotesk', sans-serif; font-size:14px; margin:3px 0; color:{{ st.color }};">{{ st.amt }}</div>
+              <div style="font-family:'Space Grotesk', sans-serif; font-size:9px; letter-spacing:1.5px; color:#8b857a;">{{ st.status }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </section>
+
+  <!-- Order history -->
+  <section style="padding:40px 0; border-top:1px solid #dedbd4;">
+    <h3 style="font-family:'Marcellus', serif; font-size:26px; font-weight:400; margin:0 0 18px 0;">Order history</h3>
+    <div style="display:grid; grid-template-columns:0.7fr 1fr 1.8fr 0.8fr 1.1fr; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#55585c; border-bottom:1px solid #111214; padding-bottom:10px; gap:12px;">
+      <span>ORDER</span><span>DATE</span><span>ITEM</span><span>TOTAL</span><span>STATUS</span>
+    </div>
+    <sc-for list="{{ orders }}" as="o" hint-placeholder-count="3">
+      <div style="display:grid; grid-template-columns:0.7fr 1fr 1.8fr 0.8fr 1.1fr; font-size:15px; padding:13px 0; border-bottom:1px solid #e4e1da; gap:12px; align-items:baseline;">
+        <span style="font-family:'Space Grotesk', sans-serif; font-size:13px;">{{ o.id }}</span>
+        <span>{{ o.date }}</span>
+        <span>{{ o.item }}</span>
+        <span style="font-family:'Space Grotesk', sans-serif; font-size:13px;">{{ o.total }}</span>
+        <span style="font-size:14px; color:#6d685c;">{{ o.status }}</span>
+      </div>
+    </sc-for>
+  </section>
+
+  <!-- Settings row -->
+  <section style="display:grid; grid-template-columns:repeat(4,1fr); gap:20px; padding:40px 0 80px 0; border-top:1px solid #dedbd4;">
+    <a href="#" style="border:1px solid #dedbd4; padding:22px;"><span style="font-family:'Marcellus', serif; font-size:17px; display:block; margin-bottom:6px;">Payment methods</span><span style="font-size:14px; color:#8b857a;">Manage your vaulted cards.</span></a>
+    <a href="#" style="border:1px solid #dedbd4; padding:22px;"><span style="font-family:'Marcellus', serif; font-size:17px; display:block; margin-bottom:6px;">Profile &amp; addresses</span><span style="font-size:14px; color:#8b857a;">Update your details.</span></a>
+    <a href="StoreCreditApplication.dc.html" style="border:1px solid #dedbd4; padding:22px;"><span style="font-family:'Marcellus', serif; font-size:17px; display:block; margin-bottom:6px;">Store credit</span><span style="font-size:14px; color:#8b857a;">Request a limit increase.</span></a>
+    <a href="Legal.dc.html" style="border:1px solid #dedbd4; padding:22px;"><span style="font-family:'Marcellus', serif; font-size:17px; display:block; margin-bottom:6px;">Legal</span><span style="font-size:14px; color:#8b857a;">Terms, privacy &amp; agreements.</span></a>
+  </section>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  money(n){ return '$' + n.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  renderVals() {
+    const limit = 6500, used = 106.00;
+    const available = limit - used;
+    return {
+      name: 'Marcus',
+      memberSince: 'MAR 2026',
+      limit: this.money(limit),
+      used: this.money(used),
+      available: this.money(available),
+      usedPct: (used/limit*100).toFixed(1) + '%',
+      nextAmt: this.money(26.50),
+      nextDate: 'Aug 15',
+      card: '4242',
+      plans: [
+        { name:'Casio-style Heritage Chrono', order:'#10428', method:'Store credit · 0%',
+          principal:this.money(212), remaining:this.money(106),
+          steps:[
+            { when:'JUL 15', amt:this.money(106), status:'DOWN', bar:'#111214', color:'#111214' },
+            { when:'AUG 15', amt:this.money(26.50), status:'DUE', bar:'#111214', color:'#111214' },
+            { when:'SEP 15', amt:this.money(26.50), status:'SCHEDULED', bar:'#dedbd4', color:'#8b857a' },
+            { when:'OCT 15', amt:this.money(26.50), status:'SCHEDULED', bar:'#dedbd4', color:'#8b857a' },
+          ] },
+      ],
+      orders: [
+        { id:'#10428', date:'Jul 15, 2026', item:'Heritage Chrono + Membership', total:this.money(387.34), status:'Financing active' },
+        { id:'#10390', date:'May 02, 2026', item:'Mako II Automatic', total:this.money(170.13), status:'Paid in full' },
+        { id:'#10362', date:'Mar 20, 2026', item:'Club Membership', total:this.money(150.00), status:'Complete' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

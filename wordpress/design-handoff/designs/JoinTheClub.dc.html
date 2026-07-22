@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Space+Grotesk:wght@300;400;500&amp;display=swap">
+  <style>
+    body { margin:0; background:#fbfaf7; }
+    a { color:inherit; text-decoration:none; }
+    a:hover { opacity:0.8; }
+    ::selection { background:#111214; color:#fbfaf7; }
+  </style>
+</helmet>
+<div style="font-family:'EB Garamond', Georgia, serif; color:#1c1b18; background:#fbfaf7; min-height:100vh;">
+
+  <header style="background:#111214; display:flex; justify-content:space-between; align-items:center; gap:24px; padding:20px 48px;">
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="MenCollection.dc.html" style="white-space:nowrap;">MEN</a>
+      <a href="WomenCollection.dc.html" style="white-space:nowrap;">WOMEN</a>
+    </nav>
+    <a href="Homepage.dc.html" style="font-family:'Marcellus', serif; font-size:22px; letter-spacing:4px; color:#f2f0eb; white-space:nowrap;">WRIST WATCH CLUB</a>
+    <nav style="display:flex; gap:26px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; color:#8f9296;">
+      <a href="JoinTheClub.dc.html" aria-current="page" style="white-space:nowrap; color:#f2f0eb; border-bottom:1px solid #f2f0eb; padding-bottom:2px;">THE CLUB</a>
+      <a href="StoreCreditApplication.dc.html" style="white-space:nowrap;">CREDIT</a>
+      <a href="Checkout.dc.html" style="white-space:nowrap;">BAG (0)</a>
+      <a href="AccountDashboard.dc.html" style="white-space:nowrap;">ACCOUNT</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section style="max-width:1000px; margin:0 auto; padding:80px 48px 56px 48px;">
+    <div style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:4px; color:#55585c; margin-bottom:20px;">MEMBERSHIP · ONE-TIME · NO MONTHLY FEE</div>
+    <h1 style="font-family:'Marcellus', serif; font-size:56px; font-weight:400; line-height:1.06; margin:0 0 18px 0;">Join the Club.</h1>
+    <p style="font-size:18px; line-height:1.6; color:#6d685c; margin:0; max-width:56ch;">One-time membership — no monthly fee, ever. Choose the tier that fits how you want to buy.</p>
+    <p style="font-size:14px; line-height:1.6; color:#8b857a; margin:14px 0 0 0; max-width:60ch;">To join, create a free account and add at least one watch ($100+) to your order alongside the membership fee.</p>
+  </section>
+
+  <!-- Tiers -->
+  <section style="max-width:1000px; margin:0 auto; padding:0 48px 88px 48px; display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:stretch;">
+    <sc-for list="{{ tiers }}" as="t" hint-placeholder-count="2">
+      <div style="border:1px solid #111214; padding:40px 36px; display:flex; flex-direction:column; background:#fbfaf7;">
+        <div style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:3px; color:#55585c; margin-bottom:14px;">{{ t.name }}</div>
+        <div style="display:flex; align-items:baseline; gap:12px;">
+          <span style="font-family:'Marcellus', serif; font-size:52px; line-height:1;">{{ t.price }}</span>
+          <span style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; color:#8b857a;">ONE-TIME</span>
+        </div>
+        <div style="font-size:15px; font-style:italic; color:#6d685c; margin:10px 0 26px 0;">{{ t.tagline }}</div>
+        <div style="flex:1;">
+          <sc-for list="{{ t.benefits }}" as="b" hint-placeholder-count="4">
+            <div style="display:flex; gap:12px; align-items:baseline; padding:11px 0; border-bottom:1px solid #e4e1da; font-size:15px; line-height:1.5;">
+              <span style="font-family:'Space Grotesk', sans-serif; font-size:11px; color:#111214;">—</span>
+              <span>{{ b }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <a href="{{ t.href }}" style="display:block; text-align:center; background:#111214; color:#fbfaf7; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2.5px; padding:16px; margin-top:28px; white-space:nowrap;">{{ t.cta }}</a>
+        <p style="font-size:13px; text-align:center; margin:12px 0 0 0; color:#8b857a;">{{ t.note }}</p>
+      </div>
+    </sc-for>
+  </section>
+
+  <!-- Two ways to pay -->
+  <section style="background:#111214; color:#e8e6e1; padding:80px 48px;">
+    <div style="max-width:1000px; margin:0 auto;">
+      <div style="font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:4px; color:#8f9296; margin-bottom:16px;">ONCE YOU'RE IN</div>
+      <h3 style="font-family:'Marcellus', serif; font-size:32px; font-weight:400; margin:0 0 8px 0; color:#f2f0eb;">Two ways to buy.</h3>
+      <p style="font-size:15px; color:#8f9296; margin:0 0 40px 0;">Financing is optional — members can always pay in full.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px;">
+        <div style="border:1px solid #33353a; padding:34px 32px;">
+          <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:3px; color:#8f9296; margin-bottom:12px;">OPTION A</div>
+          <div style="font-family:'Marcellus', serif; font-size:24px; margin-bottom:10px; color:#f2f0eb;">Pay your own way</div>
+          <p style="font-size:15px; line-height:1.6; color:#b5b2ab; margin:0 0 22px 0;">Check out with card or pay in full. No application, nothing to approve — available to every member.</p>
+          <a href="MenCollection.dc.html" style="display:inline-block; border:1px solid #f2f0eb; color:#f2f0eb; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:12px 24px; white-space:nowrap;">SHOP WATCHES</a>
+        </div>
+        <div style="border:1px solid #f2f0eb; padding:34px 32px;">
+          <div style="font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:3px; color:#8f9296; margin-bottom:12px;">OPTION B</div>
+          <div style="font-family:'Marcellus', serif; font-size:24px; margin-bottom:10px; color:#f2f0eb;">Apply for store credit</div>
+          <p style="font-size:15px; line-height:1.6; color:#b5b2ab; margin:0 0 22px 0;">0% interest financing — 50% down, up to four months to pay. A soft credit check with no impact to your score.</p>
+          <a href="StoreCreditApplication.dc.html" style="display:inline-block; background:#f2f0eb; color:#111214; font-family:'Space Grotesk', sans-serif; font-size:10px; letter-spacing:2px; padding:13px 24px; white-space:nowrap;">START APPLICATION</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="padding:56px 48px; text-align:center;">
+    <div style="font-family:'Marcellus', serif; font-size:16px; letter-spacing:3px; color:#111214; margin-bottom:22px;">WRIST WATCH CLUB</div>
+    <nav style="display:flex; justify-content:center; gap:32px; font-family:'Space Grotesk', sans-serif; font-size:11px; letter-spacing:2px; color:#6d685c; flex-wrap:wrap;">
+      <a href="MenCollection.dc.html">MEN</a>
+      <a href="WomenCollection.dc.html">WOMEN</a>
+      <a href="HowItWorks.dc.html" style="white-space:nowrap;">HOW IT WORKS</a>
+      <a href="AccountDashboard.dc.html">ACCOUNT</a>
+      <a href="Legal.dc.html">LEGAL</a>
+    </nav>
+    <p style="font-size:13px; color:#8b857a; margin:28px auto 0 auto; max-width:72ch; line-height:1.6;">Membership is a one-time $150 purchase granting pricing and access; it is not a condition of and does not guarantee credit approval. Store credit is subject to a soft-inquiry approval. 0% interest, no late fees. <a href="Legal.dc.html" style="color:#55585c; text-decoration:underline;">Legal</a></p>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      tiers: [
+        {
+          name: 'CLUB',
+          price: '$150',
+          tagline: 'Lifetime membership · no recurring charge',
+          cta: 'BECOME A MEMBER — $150',
+          href: 'Checkout.dc.html',
+          note: 'Activates the moment payment clears.',
+          benefits: [
+            'Member pricing across the entire catalog',
+            'Access to exclusive, members-only references',
+            'First access to new drops',
+            'Pay in full or by card at checkout',
+          ],
+        },
+        {
+          name: 'CLUB + CREDIT',
+          price: '$150',
+          tagline: 'Everything in Club, plus store-credit eligibility',
+          cta: 'JOIN & APPLY — $150',
+          href: 'StoreCreditApplication.dc.html',
+          note: 'Approval subject to a soft credit check (no score impact).',
+          benefits: [
+            'Everything in Club membership',
+            'Apply for store credit up to $6,500 (subject to approval)',
+            '0% interest financing — 50% down, up to 4 months',
+            'Soft credit check only — no impact to your score',
+          ],
+        },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
