@@ -36,7 +36,10 @@ function wwc_cart_has_qualifying_watch() {
 			continue;
 		}
 		$product = $item['data'];
-		$list    = (float) ( $product->get_regular_price() ? $product->get_regular_price() : $product->get_price() );
+		$list    = (float) get_post_meta( $product->get_id(), '_regular_price', true );
+		if ( $list <= 0 ) {
+			$list = (float) $product->get_price();
+		}
 		if ( $list >= WWC_QUALIFYING_MIN ) {
 			return true;
 		}
@@ -86,7 +89,10 @@ function wwc_maybe_grant_membership( $order_id ) {
 		}
 		$product = $item->get_product();
 		if ( $product ) {
-			$list = (float) ( $product->get_regular_price() ? $product->get_regular_price() : $product->get_price() );
+			$list = (float) get_post_meta( $product->get_id(), '_regular_price', true );
+			if ( $list <= 0 ) {
+				$list = (float) $product->get_price();
+			}
 			if ( $list >= WWC_QUALIFYING_MIN ) {
 				$has_watch = true;
 			}
@@ -118,7 +124,9 @@ function wwc_apply_member_price( $price, $product ) {
 	if ( in_array( (int) $product->get_id(), array_values( wwc_membership_product_ids() ), true ) ) {
 		return $price;
 	}
-	$base = (float) $product->get_regular_price( 'edit' );
+	// Read the list price straight from meta: object-cache layers on managed
+	// hosting can serve stale product objects, but the meta cache is reliable.
+	$base = (float) get_post_meta( $product->get_id(), '_regular_price', true );
 	if ( $base <= 0 ) {
 		return $price;
 	}

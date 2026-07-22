@@ -5,13 +5,18 @@
 
 defined( 'ABSPATH' ) || exit;
 
-/** Member price for a product, per the configurable club discount. */
-function wwc_member_price( $product ) {
-	$base = (float) $product->get_regular_price();
-	if ( ! $base ) {
+/** List price read from meta (stale-object-cache safe). */
+function wwc_list_price( $product ) {
+	$base = (float) get_post_meta( $product->get_id(), '_regular_price', true );
+	if ( $base <= 0 ) {
 		$base = (float) $product->get_price();
 	}
-	return round( $base * ( 1 - wwc_member_discount() / 100 ) );
+	return $base;
+}
+
+/** Member price for a product, per the configurable club discount. */
+function wwc_member_price( $product ) {
+	return round( wwc_list_price( $product ) * ( 1 - wwc_member_discount() / 100 ) );
 }
 
 /** Short display brand pulled from the first word of the product title. */
@@ -28,7 +33,7 @@ function wwc_card_brand( $product ) {
 function wwc_render_card( $product ) {
 	$id           = $product->get_id();
 	$members_only = has_term( 'members-only', 'product_tag', $id );
-	$price        = (float) ( $product->get_regular_price() ? $product->get_regular_price() : $product->get_price() );
+	$price        = wwc_list_price( $product );
 	$member_price = wwc_member_price( $product );
 	$img          = $product->get_image( 'woocommerce_thumbnail', array( 'loading' => 'lazy' ) );
 	$cats         = wp_list_pluck( (array) get_the_terms( $id, 'product_cat' ), 'slug' );
